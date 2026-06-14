@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>M-Approval BPR - Login</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bpr-yellow': '#FBBF24',
+                        'bpr-dark': '#1F2937',
+                        'bpr-gray': '#6B7280',
+                        'bpr-lightgray': '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom splash screen animation */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        .splash-logo {
+            animation: fadeInScale 1.2s ease;
+        }
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        /* Custom password toggle */
+        .password-toggle {
+            cursor: pointer;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        /* Modal backdrop */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 90%;
+            width: 320px;
+            padding: 24px;
+        }
+        @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+.animate-bounce {
+    animation: bounce 0.5s ease;
+}
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash" class="splash-screen">
+        <div class="text-center splash-logo">
+    <div class="flex justify-center mb-4">
+        <img src="images/m_approval.png" alt="M-Approval Logo" class="w-32 h-auto">
+    </div>
+    <!-- <p class="text-bpr-gray mt-2">Mobile Persetujuan Direksi</p> -->
+</div>
+    </div>
+
+    <!-- HOST IP POPUP (modal wajib) -->
+    <div id="hostModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <div class="flex justify-center mb-3">
+                <i data-lucide="server" class="w-12 h-12" style="color: #FBBF24;"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-bpr-dark">Konfigurasi Host</h3>
+            <p class="text-sm text-bpr-gray text-center mt-1 mb-4">Masukkan host name Anda</p>
+            <input type="text" id="hostIpInput" placeholder="Contoh: 192.168.1.100" class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-bpr-yellow">
+            <button id="saveHostBtn" class="w-full bg-bpr-yellow text-black font-semibold py-3 rounded-xl shadow-md transition hover:bg-yellow-400">Simpan & Lanjutkan</button>
+        </div>
+    </div>
+
+    <!-- MAIN LOGIN PAGE -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center p-4" style="display: none;">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden">
+            <!-- Header with logo -->
+                
+            <div class="bg-bpr-white p-4">
+                    <img src="images/m_approval.png" alt="M-Approval Logo" class="w-[90px] h-auto">
+                </div>
+            
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-bpr-dark">Masuk M-Approval</h3>
+                <p class="text-sm text-bpr-gray mb-6">Masuk detail pengguna anda</p>
+
+                <!-- Form -->
+                <div class="space-y-4">
+                    <!-- Username -->
+                    <div>
+                        <label class="block text-sm font-medium text-bpr-dark mb-1">Nama Pengguna</label>
+                        <div class="relative">
+                            <i data-lucide="user" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-bpr-gray"></i>
+                            <input type="text" id="username" placeholder="username" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bpr-yellow">
+                        </div>
+                    </div>
+
+                    <!-- Password with toggle -->
+                    <div>
+                        <label class="block text-sm font-medium text-bpr-dark mb-1">Kata Sandi</label>
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-bpr-gray"></i>
+                            <input type="password" id="password" placeholder="••••••••" class="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bpr-yellow">
+                            <i data-lucide="eye" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-bpr-gray cursor-pointer"></i>
+                        </div>
+                    </div>
+
+                    <!-- Language Select -->
+                    <div>
+                        <label class="block text-sm font-medium text-bpr-dark mb-1">Bahasa</label>
+                        <div class="relative">
+                            <select id="language" class="w-full appearance-none border border-gray-200 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-bpr-yellow">
+                                <option value="id">Bahasa Indonesia</option>
+                                <option value="en">English</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-bpr-gray pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <!-- Forgot Password & Login Btn -->
+                    <div class="flex justify-between items-center text-sm">
+                        <button id="forgotBtn" class="text-bpr-yellow font-semibold hover:underline">Lupa Kata Sandi?</button>
+                        <button id="loginBtn" class="bg-bpr-yellow text-black font-bold px-6 py-2 rounded-xl shadow transition hover:bg-yellow-400">Login</button>
+                    </div>
+                </div>
+
+                <!-- Info host yang tersimpan -->
+                <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                    <p class="text-xs text-bpr-gray flex items-center justify-center gap-1">
+                        <i data-lucide="wifi" class="w-3 h-3"></i> 
+                        Host: <span id="displayHostIp">-</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LUPA KATA SANDI (step 1) -->
+    <div id="forgotModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-lg font-bold text-bpr-dark">Lupa Kata Sandi</h3>
+                <button id="closeForgotModal" class="text-gray-400">&times;</button>
+            </div>
+            <p class="text-sm text-bpr-gray mb-4">Kata sandi pemulihan akan dikirim ke email Anda.</p>
+            <input type="text" id="forgotUsername" placeholder="Nama Pengguna" class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-3">
+            <input type="email" id="forgotEmail" placeholder="Email" class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4">
+            <button id="sendResetBtn" class="w-full bg-bpr-yellow text-black font-semibold py-3 rounded-xl">Kirim Password</button>
+        </div>
+    </div>
+
+    <!-- MODAL GANTI PASSWORD (step 2 setelah reset) -->
+    <div id="changePasswordModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <h3 class="text-lg font-bold text-center text-bpr-dark mb-2">Ganti Password</h3>
+            <p class="text-xs text-center text-bpr-gray mb-4">Password sementara telah dikirim. Silakan buat password baru.</p>
+            <input type="password" id="newPassword" placeholder="Kata Sandi Baru" class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-3">
+            <input type="password" id="confirmPassword" placeholder="Konfirmasi Kata Sandi" class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4">
+            <button id="changePasswordConfirmBtn" class="w-full bg-bpr-yellow text-black font-semibold py-3 rounded-xl">Simpan & Masuk</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // ------ SIMULATED DATABASE / STATE ------
+        let storedHost = localStorage.getItem('bpr_host_ip');
+        let tempRandomPassword = ""; // simulate generated random password
+        let resetUserData = { username: "", email: "" };
+
+        // Splash screen + host check
+        setTimeout(() => {
+            const splash = document.getElementById('splash');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                // Show host modal if host not set
+                if (!storedHost) {
+                    document.getElementById('hostModal').style.display = 'flex';
+                } else {
+                    document.getElementById('loginPage').style.display = 'flex';
+                    document.getElementById('displayHostIp').innerText = storedHost;
+                }
+            }, 500);
+        }, 2000); // 2 detik splash
+
+        // Save host IP
+        document.getElementById('saveHostBtn').addEventListener('click', () => {
+            const hostIp = document.getElementById('hostIpInput').value.trim();
+            if (hostIp === "") {
+                alert("IP Host harus diisi!");
+                return;
+            }
+            localStorage.setItem('bpr_host_ip', hostIp);
+            storedHost = hostIp;
+            document.getElementById('hostModal').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('displayHostIp').innerText = storedHost;
+        });
+
+        // Toggle password visibility
+        const togglePass = document.getElementById('togglePassword');
+        const passInput = document.getElementById('password');
+        togglePass.addEventListener('click', () => {
+            const type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passInput.setAttribute('type', type);
+            togglePass.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+            lucide.createIcons();
+        });
+
+        // ----- LUPA PASSWORD FLOW -----
+        const forgotBtn = document.getElementById('forgotBtn');
+        const forgotModal = document.getElementById('forgotModal');
+        const closeForgot = document.getElementById('closeForgotModal');
+        const sendResetBtn = document.getElementById('sendResetBtn');
+        const changePwdModal = document.getElementById('changePasswordModal');
+        const changePwdConfirm = document.getElementById('changePasswordConfirmBtn');
+
+        forgotBtn.addEventListener('click', () => {
+            forgotModal.style.display = 'flex';
+        });
+
+        closeForgot.addEventListener('click', () => {
+            forgotModal.style.display = 'none';
+        });
+        // ========== FUNGSI VALIDASI ==========
+function showAlert(message, type = 'error') {
+    // Hapus alert existing jika ada
+    const existingAlert = document.querySelector('.custom-alert');
+    if (existingAlert) existingAlert.remove();
+    
+    // Warna berdasarkan type
+    const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
+    const icon = type === 'error' ? 'alert-circle' : 'check-circle';
+    
+    // Buat elemen alert custom
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `custom-alert fixed top-4 left-1/2 transform -translate-x-1/2 z-50 ${bgColor} text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 animate-bounce`;
+    alertDiv.style.minWidth = '280px';
+    alertDiv.innerHTML = `
+        <i data-lucide="${icon}" class="w-5 h-5"></i>
+        <span class="text-sm font-medium">${message}</span>
+    `;
+    document.body.appendChild(alertDiv);
+    lucide.createIcons();
+    
+    // Hilangkan setelah 3 detik
+    setTimeout(() => {
+        alertDiv.style.opacity = '0';
+        setTimeout(() => alertDiv.remove(), 300);
+    }, 3000);
+}
+
+// Validasi email format
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Validasi password strength (minimal 6 karakter)
+function isStrongPassword(password) {
+    return password.length >= 6;
+}
+
+        sendResetBtn.addEventListener('click', () => {
+    const username = document.getElementById('forgotUsername').value.trim();
+    const email = document.getElementById('forgotEmail').value.trim();
+    
+    // Validasi username kosong
+    if (!username) {
+        showAlert('Nama pengguna harus diisi!', 'error');
+        return;
+    }
+    
+    // Validasi email kosong
+    if (!email) {
+        showAlert('Email harus diisi!', 'error');
+        return;
+    }
+    
+    // Validasi format email
+    if (!isValidEmail(email)) {
+        showAlert('Format email tidak valid! Contoh: nama@domain.com', 'error');
+        return;
+    }
+    
+    // Simulasi generate random password (8 digit alfanumerik)
+    tempRandomPassword = Math.random().toString(36).slice(-8);
+    resetUserData = { username, email };
+    
+    // Simulasi kirim ke sistem
+    showAlert(`Password sementara telah dikirim ke ${email}`, 'success');
+    
+    setTimeout(() => {
+        forgotModal.style.display = 'none';
+        changePwdModal.style.display = 'flex';
+    }, 1500);
+});
+
+        // Handle change password & redirect to home
+        changePwdConfirm.addEventListener('click', () => {
+    const newPwd = document.getElementById('newPassword').value;
+    const confirmPwd = document.getElementById('confirmPassword').value;
+    
+    // Validasi password baru kosong
+    if (!newPwd) {
+        showAlert('Kata sandi baru harus diisi!', 'error');
+        return;
+    }
+    
+    // Validasi konfirmasi kosong
+    if (!confirmPwd) {
+        showAlert('Konfirmasi kata sandi harus diisi!', 'error');
+        return;
+    }
+    
+    // Validasi minimal panjang password
+    if (!isStrongPassword(newPwd)) {
+        showAlert('Kata sandi minimal 6 karakter!', 'error');
+        return;
+    }
+    
+    // Validasi password tidak cocok
+    if (newPwd !== confirmPwd) {
+        showAlert('Password dan konfirmasi tidak cocok!', 'error');
+        return;
+    }
+    
+    showAlert('Password berhasil diubah! Mengarahkan ke home...', 'success');
+    
+    // TAMBAHKAN INI
+localStorage.setItem('loggedInUser', resetUserData.username);
+localStorage.setItem('userName', resetUserData.username);
+
+setTimeout(() => {
+    changePwdModal.style.display = 'none';
+    window.location.href = "home.html";
+}, 1500);
+});
+
+        
+        document.getElementById('loginBtn').addEventListener('click', () => {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    
+    // Validasi username kosong
+    if (!username) {
+        showAlert('Nama pengguna harus diisi!', 'error');
+        return;
+    }
+    
+    // Validasi password kosong
+    if (!password) {
+        showAlert('Kata sandi harus diisi!', 'error');
+        return;
+    }
+    
+    // Simulasi validasi kredensial (contoh: user demo, password: 123456)
+    const demoUsername = "admin";
+    const demoPassword = "123456";
+    
+    if (username !== demoUsername || password !== demoPassword) {
+    showAlert('Nama pengguna atau kata sandi salah!', 'error');
+    return;
+}
+
+// TAMBAHKAN INI SEBELUM REDIRECT
+localStorage.setItem('loggedInUser', username);
+localStorage.setItem('userName', 'John Doe'); // atau ambil dari database
+
+showAlert(`Selamat datang ${username}, login berhasil!`, 'success');
+
+setTimeout(() => {
+    window.location.href = "home.html";
+}, 1500);
+});
+
+        // Jika sudah login sebelumnya tanpa flow reset, user bisa langsung home
+        // Juga close modal with backdrop click
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal-backdrop')) {
+                e.target.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

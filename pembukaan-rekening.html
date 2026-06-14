@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>M-Approval - Pembukaan Rekening</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bpr-primary': '#1E3A8A',
+                        'bpr-dark': '#0F172A',
+                        'bpr-gray': '#64748B',
+                        'bpr-pending': '#F97316',
+                        'bpr-approved': '#10B981',
+                        'bpr-rejected': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .mobile-container {
+            max-width: 428px;
+            margin: 0 auto;
+            background: #F8FAFC;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* Tab bubble with value inside */
+        .tab-bubble {
+            background: #F1F5F9;
+            transition: all 0.2s ease;
+        }
+        .tab-bubble.active {
+            background: #1E3A8A;
+            color: white;
+        }
+        .tab-bubble.active .tab-count {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+        .tab-count {
+            background: #E2E8F0;
+            color: #1E293B;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        /* Step line simple */
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+        .step-line {
+            width: 2px;
+            background: #E2E8F0;
+        }
+        .card-item {
+            transition: all 0.15s ease;
+        }
+        .card-item:active {
+            transform: scale(0.98);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .detail-page {
+            animation: slideUp 0.3s ease;
+        }
+        .screen-hidden {
+            display: none !important;
+        }
+       .tab-modern.active {
+    color: #1E3A8A;
+    border-bottom: 2px solid #1E3A8A;
+}
+.tab-modern.active .tab-badge {
+    background: #1E3A8A;
+    color: white;
+}
+.tab-modern.active span {
+    color: #1E3A8A;
+}
+/* Horizontal step line */
+.step-line-horizontal {
+    transition: all 0.3s ease;
+}
+    </style>
+</head>
+<body class="bg-slate-900 flex justify-center items-start">
+
+<div class="mobile-container shadow-2xl">
+    
+    <!-- LIST SCREEN -->
+    <div id="listScreen" class="w-full min-h-screen flex flex-col">
+        <!-- Header -->
+        <div class="bg-white px-5 pt-5 pb-3 sticky top-0 z-40 shadow-sm border-b border-slate-100">
+            <div class="flex items-center gap-3 mb-4">
+                <button onclick="history.back()" class="p-1.5 active:bg-slate-100 rounded-xl transition">
+                    <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
+                </button>
+                <div class="flex-1">
+                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Pembukaan Rekening</h1>
+                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Giro Korporasi</p>
+                </div>
+                <button id="filterBtn" class="p-2 active:bg-slate-100 relative rounded-xl transition border border-slate-200">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4 text-bpr-dark"></i>
+                    <span id="filterBadge" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-bpr-pending rounded-full hidden ring-2 ring-white"></span>
+                </button>
+            </div>
+            
+            <!-- Filter Panel -->
+            <div id="filterPanel" class="bg-slate-50 rounded-2xl p-4 mt-2 hidden border border-slate-100">
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-[11px] font-bold text-bpr-dark block mb-1.5">Filter Tanggal</label>
+                        <input type="date" id="dateFilter" class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-bpr-primary">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-bpr-dark block mb-1.5">Prioritas</label>
+                        <select id="priorityFilter" class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-bpr-primary">
+                            <option value="all">Semua</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <button id="resetFilterBtn" class="w-full bg-white border border-slate-200 text-bpr-dark py-2 rounded-xl text-sm font-semibold active:bg-slate-50 transition">Reset</button>
+                </div>
+            </div>
+            
+           <!-- Tabs modern tanpa bubble/frame -->
+            <!-- Tabs modern dengan bubble angka di atas -->
+            <div class="flex gap-6 mt-4 border-b border-slate-200">
+                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="pending">
+                    <span id="pendingTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
+                    <span>Pending</span>
+                </button>
+                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="approved">
+                    <span id="approvedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
+                    <span>Approve</span>
+                </button>
+                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="rejected">
+                    <span id="rejectedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
+                    <span>Reject</span>
+                </button>
+                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="history">
+                    <span id="historyTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
+                    <span>Riwayat</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="px-4 py-4 pb-28 flex-1">
+            <!-- Batch Actions -->
+            <div id="batchActions" class="bg-white rounded-2xl p-3 shadow-md mb-4 hidden">
+                <div class="flex gap-2">
+                    <button id="batchApproveBtn" class="flex-1 bg-bpr-approved text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Approve Terpilih
+                    </button>
+                    <button id="batchRejectBtn" class="flex-1 bg-bpr-rejected text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i> Reject Terpilih
+                    </button>
+                </div>
+            </div>
+            
+            <!-- List Container -->
+            <div id="listContainer" class="space-y-3"></div>
+        </div>
+    </div>
+
+    <!-- DETAIL SCREEN -->
+    <!-- <div id="detailScreen" class="w-full min-h-screen bg-slate-50 flex flex-col screen-hidden detail-page">
+        <div class="bg-white px-5 py-4 sticky top-0 z-40 shadow-sm border-b border-slate-100">
+            <div class="flex items-center gap-3">
+                <button onclick="closeDetailPage()" class="p-1.5 active:bg-slate-100 rounded-xl transition">
+                    <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
+                </button>
+                <div>
+                    <h3 class="text-lg font-bold text-bpr-dark">Detail Pengajuan</h3>
+                    <p class="text-xs text-bpr-gray">Review kelengkapan dokumen</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4 flex-1 overflow-y-auto pb-32 space-y-4" id="detailContent"></div>
+        
+        <div id="detailActions" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-4 shadow-lg" style="max-width: 428px; margin: 0 auto;">
+            <!-- Dynamic buttons -->
+        </div>
+    </div> -->
+</div>
+
+<script>
+    lucide.createIcons();
+
+    // ========== DATA ==========
+    let approvalData = [
+        { 
+            id: 1,
+            noApproval: "APV/2026/001",
+            judul: "Pembukaan Rekening Giro",
+            namaPengaju: "Ahmad Firmansyah",
+            posisiPengaju: "Teller",
+            tanggalPengajuan: "2026-06-14",
+            waktuPengajuan: "09:30",
+            prioritas: "urgent",
+            status: "pending",
+            approvalBy: null,
+            tanggalApproval: null,
+            komentar: "",
+            detailData: {
+                namaPerusahaan: "PT Digital Tekno Makmur",
+                jenisRekening: "Giro Bisnis",
+                setoranAwal: 25000000,
+                noHP: "081234567890",
+                alamat: "Gedung Cyber Lt. 7, Jakarta Selatan",
+                npwp: "01.234.567.8-999.000"
+            }
+        },
+        { 
+            id: 2,
+            noApproval: "APV/2026/002",
+            judul: "Pembukaan Rekening Giro",
+            namaPengaju: "Siti Nurhaliza",
+            posisiPengaju: "Customer Service",
+            tanggalPengajuan: "2026-06-14",
+            waktuPengajuan: "10:15",
+            prioritas: "high",
+            status: "pending",
+            approvalBy: null,
+            tanggalApproval: null,
+            komentar: "",
+            detailData: {
+                namaPerusahaan: "CV Berkah Pangan Mandiri",
+                jenisRekening: "Giro Rupiah",
+                setoranAwal: 15000000,
+                noHP: "087654321098",
+                alamat: "Jl. Asia Afrika No. 88, Bandung",
+                npwp: "02.881.234.1-888.000"
+            }
+        },
+        { 
+            id: 3,
+            noApproval: "APV/2026/003",
+            judul: "Pembukaan Rekening Giro",
+            namaPengaju: "Budi Santoso",
+            posisiPengaju: "Supervisor",
+            tanggalPengajuan: "2026-06-13",
+            waktuPengajuan: "14:20",
+            prioritas: "medium",
+            status: "approved",
+            approvalBy: "John Doe (Direksi)",
+            tanggalApproval: "2026-06-13 15:30",
+            komentar: "Dokumen lengkap, disetujui",
+            detailData: {
+                namaPerusahaan: "UD Maju Jaya Elektronik",
+                jenisRekening: "Giro Dagang",
+                setoranAwal: 10000000,
+                noHP: "085678901234",
+                alamat: "Ruko Raden Saleh No. 4, Surabaya",
+                npwp: "33.123.456.7-111.000"
+            }
+        },
+        { 
+            id: 4,
+            noApproval: "APV/2026/004",
+            judul: "Pembukaan Rekening Giro",
+            namaPengaju: "Dewi Anggraeni",
+            posisiPengaju: "Customer Service",
+            tanggalPengajuan: "2026-06-12",
+            waktuPengajuan: "11:00",
+            prioritas: "low",
+            status: "rejected",
+            approvalBy: "John Doe (Direksi)",
+            tanggalApproval: "2026-06-12 16:45",
+            komentar: "NPWP tidak terdaftar",
+            detailData: {
+                namaPerusahaan: "PT Sinar Global",
+                jenisRekening: "Giro Korporasi",
+                setoranAwal: 50000000,
+                noHP: "081298765432",
+                alamat: "Kawasan Industri Candi, Semarang",
+                npwp: "01.000.111.2-000.000"
+            }
+        }
+    ];
+
+    let currentTab = "pending";
+    let currentFilter = { date: "", priority: "all" };
+    let selectedItems = new Set();
+
+    function getPriorityColor(priority) {
+        switch(priority) {
+            case 'urgent': return 'bg-red-100 text-red-700';
+            case 'high': return 'bg-orange-100 text-orange-700';
+            case 'medium': return 'bg-amber-100 text-amber-700';
+            case 'low': return 'bg-emerald-100 text-emerald-700';
+            default: return 'bg-slate-100 text-slate-700';
+        }
+    }
+
+    function getPriorityText(priority) {
+        switch(priority) {
+            case 'urgent': return 'Urgent';
+            case 'high': return 'High';
+            case 'medium': return 'Medium';
+            case 'low': return 'Low';
+            default: return priority;
+        }
+    }
+
+    function filterData() {
+        let filtered = [...approvalData];
+        if (currentFilter.date) {
+            filtered = filtered.filter(item => item.tanggalPengajuan === currentFilter.date);
+        }
+        if (currentFilter.priority !== 'all') {
+            filtered = filtered.filter(item => item.prioritas === currentFilter.priority);
+        }
+        const hasFilter = currentFilter.date !== '' || currentFilter.priority !== 'all';
+        document.getElementById('filterBadge').style.display = hasFilter ? 'block' : 'none';
+        return filtered;
+    }
+
+    function getDataByTab(tab) {
+        const filtered = filterData();
+        switch(tab) {
+            case 'pending': return filtered.filter(item => item.status === 'pending');
+            case 'approved': return filtered.filter(item => item.status === 'approved');
+            case 'rejected': return filtered.filter(item => item.status === 'rejected');
+            case 'history': return filtered.filter(item => item.status !== 'pending');
+            default: return [];
+        }
+    }
+
+    function updateTabCounts() {
+        document.getElementById('pendingTabCount').innerText = getDataByTab('pending').length;
+        document.getElementById('approvedTabCount').innerText = getDataByTab('approved').length;
+        document.getElementById('rejectedTabCount').innerText = getDataByTab('rejected').length;
+        document.getElementById('historyTabCount').innerText = getDataByTab('history').length;
+    }
+
+    function renderEmptyState() {
+    return `
+        <div class="text-center py-16 bg-white rounded-2xl">
+            <img src="images/empty-data.png" alt="Tidak ada data" class="w-32 h-32 mx-auto mb-4" onerror="this.src='https://placehold.co/128x128?text=📋'">
+            <h4 class="text-base font-bold text-slate-800 mb-1">Belum Ada Data</h4>
+            <p class="text-sm text-slate-400">Silakan coba filter tanggal lain</p>
+        </div>
+    `;
+}
+   function renderCard(item) {
+    // Tentukan teks status approval yang benar
+    let approvalStatusText = '';
+    let approvalStatusColor = '';
+    
+    if (item.status === 'approved') {
+        approvalStatusText = 'Disetujui';
+        approvalStatusColor = 'text-emerald-600';
+    } else if (item.status === 'rejected') {
+        approvalStatusText = 'Ditolak';
+        approvalStatusColor = 'text-red-600';
+    } else {
+        approvalStatusText = 'Menunggu';
+        approvalStatusColor = 'text-slate-400';
+    }
+    
+    // Tentukan tanggal approval yang ditampilkan
+    let approvalDateText = '';
+    if (item.tanggalApproval) {
+        approvalDateText = item.tanggalApproval;
+    } else if (item.status !== 'pending') {
+        approvalDateText = '-';
+    }
+    
+    return `
+        <div class="card-item bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer" onclick="goToDetail(${item.id})">
+            <!-- Header card dengan warna sesuai status -->
+            <div class="px-4 py-3 ${item.status === 'pending' ? 'bg-bpr-pending' : item.status === 'approved' ? 'bg-bpr-approved' : 'bg-bpr-rejected'}">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
+                        <span class="text-white font-bold text-sm">${item.judul}</span>
+                    </div>
+                    <span class="text-white text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/20">${getPriorityText(item.prioritas)}</span>
+                </div>
+            </div>
+            
+            <div class="p-4">
+                ${currentTab === 'pending' ? `
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100" onclick="event.stopPropagation()">
+                        <input type="checkbox" class="batch-checkbox w-4 h-4 rounded border-slate-300 text-bpr-primary" data-id="${item.id}" ${selectedItems.has(item.id) ? 'checked' : ''}>
+                        <span class="text-xs text-slate-400 font-medium">Pilih untuk batch approval</span>
+                    </div>
+                ` : ''}
+                
+                <!-- No Approval -->
+                <p class="text-xs text-slate-400 font-medium mb-2">No: ${item.noApproval}</p>
+                
+                <!-- Diajukan oleh -->
+                <div class="flex items-center gap-2 mb-3">
+                    <i data-lucide="user" class="w-3 h-3 text-slate-400"></i>
+                    <span class="text-xs text-slate-500">Diajukan oleh <span class="font-semibold text-slate-700">${item.namaPengaju}</span> • ${item.posisiPengaju}</span>
+                </div>
+                
+                <!-- Horizontal step approval -->
+                <div class="flex items-center justify-between mt-3 pt-2 border-t border-slate-100">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <div class="step-dot bg-bpr-primary"></div>
+                            <div class="step-line-horizontal flex-1 h-0.5 ${item.status !== 'pending' ? 'bg-bpr-primary' : 'bg-slate-200'}"></div>
+                            <div class="step-dot ${item.status === 'pending' ? 'bg-slate-300' : item.status === 'approved' ? 'bg-bpr-approved' : 'bg-bpr-rejected'}"></div>
+                        </div>
+                        <div class="flex justify-between mt-1">
+                            <span class="text-[10px] text-slate-400">Pengajuan</span>
+                            <span class="text-[10px] text-slate-400">Approval</span>
+                        </div>
+                        <div class="flex justify-between mt-0.5">
+                            <span class="text-[11px] font-medium text-slate-600">${item.tanggalPengajuan} • ${item.waktuPengajuan}</span>
+                            <span class="text-[11px] font-medium ${approvalStatusColor}">${approvalStatusText}</span>
+                        </div>
+                        ${approvalDateText ? `
+                            <div class="flex justify-end mt-0.5">
+                                <span class="text-[9px] text-slate-400">${approvalDateText}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+    function renderList() {
+        const data = getDataByTab(currentTab);
+        const container = document.getElementById('listContainer');
+        
+        if (data.length === 0) {
+            container.innerHTML = renderEmptyState();
+            lucide.createIcons();
+            return;
+        }
+        
+        container.innerHTML = data.map(item => renderCard(item)).join('');
+        
+        if (currentTab === 'pending') {
+            document.querySelectorAll('.batch-checkbox').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (e.target.checked) selectedItems.add(id);
+                    else selectedItems.delete(id);
+                    updateBatchMode();
+                });
+            });
+        }
+        
+        lucide.createIcons();
+    }
+
+    function updateBatchMode() {
+        const hasSelected = selectedItems.size > 0;
+        document.getElementById('batchActions').style.display = hasSelected ? 'flex' : 'none';
+    }
+
+    // Detail page functions
+    function goToDetail(id) {
+    // Redirect ke halaman terpisah
+    window.location.href = `detail-approval1.html?id=${id}`;
+}
+
+
+        function batchApprove() {
+        if (selectedItems.size === 0) {
+            showToast('Tidak ada item yang dipilih');
+            return;
+        }
+        const count = selectedItems.size;
+        selectedItems.forEach(id => {
+            const item = approvalData.find(d => d.id === id);
+            if (item && item.status === 'pending') {
+                item.status = 'approved';
+                item.approvalBy = "John Doe (Direksi)";
+                item.tanggalApproval = new Date().toLocaleString('id-ID');
+                item.komentar = "Disetujui massal";
+            }
+        });
+        selectedItems.clear();
+        updateBatchMode();
+        updateTabCounts();
+        renderList();
+        showToast(`${count} pengajuan berhasil disetujui`);
+    }
+
+    function batchReject() {
+        if (selectedItems.size === 0) {
+            showToast('Tidak ada item yang dipilih');
+            return;
+        }
+        const count = selectedItems.size;
+        selectedItems.forEach(id => {
+            const item = approvalData.find(d => d.id === id);
+            if (item && item.status === 'pending') {
+                item.status = 'rejected';
+                item.approvalBy = "John Doe (Direksi)";
+                item.tanggalApproval = new Date().toLocaleString('id-ID');
+                item.komentar = "Ditolak massal";
+            }
+        });
+        selectedItems.clear();
+        updateBatchMode();
+        updateTabCounts();
+        renderList();
+        showToast(`${count} pengajuan berhasil ditolak`);
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl shadow-lg bg-slate-800 text-white text-sm font-medium';
+        toast.innerText = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+
+    // Event listeners
+    document.getElementById('batchApproveBtn')?.addEventListener('click', batchApprove);
+    document.getElementById('batchRejectBtn')?.addEventListener('click', batchReject);
+    
+    let filterOpen = false;
+    document.getElementById('filterBtn')?.addEventListener('click', () => {
+        const panel = document.getElementById('filterPanel');
+        filterOpen = !filterOpen;
+        panel.style.display = filterOpen ? 'block' : 'none';
+    });
+    
+    document.getElementById('resetFilterBtn')?.addEventListener('click', () => {
+        currentFilter.date = '';
+        currentFilter.priority = 'all';
+        document.getElementById('dateFilter').value = '';
+        document.getElementById('priorityFilter').value = 'all';
+        renderList();
+        updateTabCounts();
+        filterOpen = false;
+        document.getElementById('filterPanel').style.display = 'none';
+        showToast('Filter direset');
+    });
+    
+    document.getElementById('dateFilter')?.addEventListener('change', (e) => {
+        currentFilter.date = e.target.value;
+        renderList();
+        updateTabCounts();
+    });
+    
+    document.getElementById('priorityFilter')?.addEventListener('change', (e) => {
+        currentFilter.priority = e.target.value;
+        renderList();
+        updateTabCounts();
+    });
+    
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    if (document.getElementById('dateFilter')) {
+        document.getElementById('dateFilter').value = today;
+        currentFilter.date = today;
+    }
+    
+    // Tab switching
+    document.querySelectorAll('.tab-modern').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-modern').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTab = btn.dataset.tab;
+            selectedItems.clear();
+            updateBatchMode();
+            renderList();
+        });
+    });
+    
+    // Aktifkan tab pertama (Pending)
+    const firstTab = document.querySelector('.tab-modern');
+    if (firstTab) {
+        firstTab.classList.add('active');
+    }
+    
+    // Initial render
+    renderList();
+    updateTabCounts();
+</script>
+</body>
+</html>
