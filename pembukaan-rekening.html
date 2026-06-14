@@ -140,42 +140,47 @@
                             <option value="low">Low</option>
                         </select>
                     </div>
-                    <button id="resetFilterBtn" class="w-full bg-white border border-slate-200 text-bpr-dark py-2 rounded-xl text-sm font-semibold active:bg-slate-50 transition">Reset</button>
+                    <button id="resetFilterBtn" class="w-full bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold active:bg-slate-900 transition shadow-sm">
+                        Reset Filter
+                    </button>
                 </div>
             </div>
             
            <!-- Tabs modern tanpa bubble/frame -->
             <!-- Tabs modern dengan bubble angka di atas -->
-            <div class="flex gap-6 mt-4 border-b border-slate-200">
-                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="pending">
-                    <span id="pendingTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
-                    <span>Pending</span>
-                </button>
-                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="approved">
-                    <span id="approvedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
-                    <span>Approve</span>
-                </button>
-                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="rejected">
-                    <span id="rejectedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
-                    <span>Reject</span>
-                </button>
-                <button class="tab-modern pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center" data-tab="history">
-                    <span id="historyTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mb-1">0</span>
-                    <span>Riwayat</span>
-                </button>
-            </div>
+            <div class="flex mt-4 border-b border-slate-200 w-full">
+    <button class="tab-modern flex-1 pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center justify-end h-12" data-tab="pending">
+        <span id="pendingTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full hidden">0</span>
+        <span class="mt-1">Menunggu</span>
+    </button>
+    <button class="tab-modern flex-1 pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center justify-end h-12" data-tab="approved">
+        <span id="approvedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full hidden">0</span>
+        <span class="mt-1">Disetujui</span>
+    </button>
+    <button class="tab-modern flex-1 pb-2 text-sm font-semibold text-slate-500 transition relative flex flex-col items-center justify-end h-12" data-tab="rejected">
+        <span id="rejectedTabCount" class="tab-badge text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full hidden">0</span>
+        <span class="mt-1">Ditolak</span>
+    </button>
+</div>
         </div>
 
         <!-- Content -->
         <div class="px-4 py-4 pb-28 flex-1">
             <!-- Batch Actions -->
+                    
             <div id="batchActions" class="bg-white rounded-2xl p-3 shadow-md mb-4 hidden">
-                <div class="flex gap-2">
-                    <button id="batchApproveBtn" class="flex-1 bg-bpr-approved text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i> Approve Terpilih
+                <div class="flex items-center justify-between mb-2 pb-2 border-b border-slate-100">
+                    <button id="selectAllBtn" class="text-xs font-semibold text-bpr-primary flex items-center gap-1">
+                        <i data-lucide="check-square" class="w-3 h-3"></i> Pilih Semua
                     </button>
-                    <button id="batchRejectBtn" class="flex-1 bg-bpr-rejected text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2">
-                        <i data-lucide="x-circle" class="w-4 h-4"></i> Reject Terpilih
+                    <span id="selectedCount" class="text-xs text-slate-400">0 dipilih</span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="batchApproveBtn" class="flex-1 bg-bpr-approved text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2 shadow-md">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Setujui Terpilih
+                    </button>
+                    <button id="batchRejectBtn" class="flex-1 bg-bpr-rejected text-white py-2.5 rounded-xl text-sm font-bold active:scale-95 transition flex items-center justify-center gap-2 shadow-md">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i> Tolak Terpilih
                     </button>
                 </div>
             </div>
@@ -185,122 +190,237 @@
         </div>
     </div>
 
-    <!-- DETAIL SCREEN -->
-    <!-- <div id="detailScreen" class="w-full min-h-screen bg-slate-50 flex flex-col screen-hidden detail-page">
-        <div class="bg-white px-5 py-4 sticky top-0 z-40 shadow-sm border-b border-slate-100">
-            <div class="flex items-center gap-3">
-                <button onclick="closeDetailPage()" class="p-1.5 active:bg-slate-100 rounded-xl transition">
-                    <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
-                </button>
-                <div>
-                    <h3 class="text-lg font-bold text-bpr-dark">Detail Pengajuan</h3>
-                    <p class="text-xs text-bpr-gray">Review kelengkapan dokumen</p>
-                </div>
-            </div>
         </div>
-        
-        <div class="p-4 flex-1 overflow-y-auto pb-32 space-y-4" id="detailContent"></div>
-        
-        <div id="detailActions" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-4 shadow-lg" style="max-width: 428px; margin: 0 auto;">
-            <!-- Dynamic buttons -->
-        </div>
-    </div> -->
+    </div> 
 </div>
+
 
 <script>
     lucide.createIcons();
 
     // ========== DATA ==========
     let approvalData = [
-        { 
-            id: 1,
-            noApproval: "APV/2026/001",
-            judul: "Pembukaan Rekening Giro",
-            namaPengaju: "Ahmad Firmansyah",
-            posisiPengaju: "Teller",
-            tanggalPengajuan: "2026-06-14",
-            waktuPengajuan: "09:30",
-            prioritas: "urgent",
-            status: "pending",
-            approvalBy: null,
-            tanggalApproval: null,
-            komentar: "",
-            detailData: {
-                namaPerusahaan: "PT Digital Tekno Makmur",
-                jenisRekening: "Giro Bisnis",
-                setoranAwal: 25000000,
-                noHP: "081234567890",
-                alamat: "Gedung Cyber Lt. 7, Jakarta Selatan",
-                npwp: "01.234.567.8-999.000"
-            }
-        },
-        { 
-            id: 2,
-            noApproval: "APV/2026/002",
-            judul: "Pembukaan Rekening Giro",
-            namaPengaju: "Siti Nurhaliza",
-            posisiPengaju: "Customer Service",
-            tanggalPengajuan: "2026-06-14",
-            waktuPengajuan: "10:15",
-            prioritas: "high",
-            status: "pending",
-            approvalBy: null,
-            tanggalApproval: null,
-            komentar: "",
-            detailData: {
-                namaPerusahaan: "CV Berkah Pangan Mandiri",
-                jenisRekening: "Giro Rupiah",
-                setoranAwal: 15000000,
-                noHP: "087654321098",
-                alamat: "Jl. Asia Afrika No. 88, Bandung",
-                npwp: "02.881.234.1-888.000"
-            }
-        },
-        { 
-            id: 3,
-            noApproval: "APV/2026/003",
-            judul: "Pembukaan Rekening Giro",
-            namaPengaju: "Budi Santoso",
-            posisiPengaju: "Supervisor",
-            tanggalPengajuan: "2026-06-13",
-            waktuPengajuan: "14:20",
-            prioritas: "medium",
-            status: "approved",
-            approvalBy: "John Doe (Direksi)",
-            tanggalApproval: "2026-06-13 15:30",
-            komentar: "Dokumen lengkap, disetujui",
-            detailData: {
-                namaPerusahaan: "UD Maju Jaya Elektronik",
-                jenisRekening: "Giro Dagang",
-                setoranAwal: 10000000,
-                noHP: "085678901234",
-                alamat: "Ruko Raden Saleh No. 4, Surabaya",
-                npwp: "33.123.456.7-111.000"
-            }
-        },
-        { 
-            id: 4,
-            noApproval: "APV/2026/004",
-            judul: "Pembukaan Rekening Giro",
-            namaPengaju: "Dewi Anggraeni",
-            posisiPengaju: "Customer Service",
-            tanggalPengajuan: "2026-06-12",
-            waktuPengajuan: "11:00",
-            prioritas: "low",
-            status: "rejected",
-            approvalBy: "John Doe (Direksi)",
-            tanggalApproval: "2026-06-12 16:45",
-            komentar: "NPWP tidak terdaftar",
-            detailData: {
-                namaPerusahaan: "PT Sinar Global",
-                jenisRekening: "Giro Korporasi",
-                setoranAwal: 50000000,
-                noHP: "081298765432",
-                alamat: "Kawasan Industri Candi, Semarang",
-                npwp: "01.000.111.2-000.000"
-            }
+    { 
+        id: 1,
+        noApproval: "APV/2026/001",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Ahmad Firmansyah",
+        posisiPengaju: "Teller",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "09:30",
+        prioritas: "urgent",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Digital Tekno Makmur",
+            jenisRekening: "Giro Bisnis",
+            setoranAwal: 25000000,
+            noHP: "081234567890",
+            alamat: "Gedung Cyber Lt. 7, Jakarta Selatan",
+            npwp: "01.234.567.8-999.000"
         }
-    ];
+    },
+    { 
+        id: 2,
+        noApproval: "APV/2026/002",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Siti Nurhaliza",
+        posisiPengaju: "Customer Service",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "10:15",
+        prioritas: "high",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "CV Berkah Pangan Mandiri",
+            jenisRekening: "Giro Rupiah",
+            setoranAwal: 15000000,
+            noHP: "087654321098",
+            alamat: "Jl. Asia Afrika No. 88, Bandung",
+            npwp: "02.881.234.1-888.000"
+        }
+    },
+    { 
+        id: 3,
+        noApproval: "APV/2026/003",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Rina Andriani",
+        posisiPengaju: "Marketing",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "08:45",
+        prioritas: "high",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Cipta Karya Abadi",
+            jenisRekening: "Giro Bisnis",
+            setoranAwal: 75000000,
+            noHP: "082233445566",
+            alamat: "Jl. Gatot Subroto No. 45, Jakarta",
+            npwp: "03.456.789.2-777.000"
+        }
+    },
+    { 
+        id: 4,
+        noApproval: "APV/2026/004",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Bagus Pratama",
+        posisiPengaju: "Customer Service",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "11:30",
+        prioritas: "medium",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "CV Karya Mandiri Sejati",
+            jenisRekening: "Giro Rupiah",
+            setoranAwal: 25000000,
+            noHP: "085577889900",
+            alamat: "Jl. Diponegoro No. 12, Bandung",
+            npwp: "08.123.456.7-555.000"
+        }
+    },
+    { 
+        id: 5,
+        noApproval: "APV/2026/005",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Maya Sari",
+        posisiPengaju: "Teller",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "13:20",
+        prioritas: "urgent",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Sumber Rezeki",
+            jenisRekening: "Giro Korporasi",
+            setoranAwal: 100000000,
+            noHP: "081377788899",
+            alamat: "Jl. Pemuda No. 78, Semarang",
+            npwp: "05.678.901.2-444.000"
+        }
+    },
+    { 
+        id: 6,
+        noApproval: "APV/2026/006",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Fajar Nugroho",
+        posisiPengaju: "Supervisor",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "09:15",
+        prioritas: "low",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Bina Usaha Mandiri",
+            jenisRekening: "Giro Bisnis",
+            setoranAwal: 45000000,
+            noHP: "082244556677",
+            alamat: "Jl. Sudirman No. 23, Jakarta",
+            npwp: "07.890.123.4-333.000"
+        }
+    },
+    { 
+        id: 7,
+        noApproval: "APV/2026/007",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Nia Kurniawati",
+        posisiPengaju: "Customer Service",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "14:00",
+        prioritas: "high",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "CV Mutiara Abadi",
+            jenisRekening: "Giro Rupiah",
+            setoranAwal: 35000000,
+            noHP: "085688990011",
+            alamat: "Jl. Ahmad Yani No. 45, Surabaya",
+            npwp: "09.112.334.5-666.000"
+        }
+    },
+    { 
+        id: 8,
+        noApproval: "APV/2026/008",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Rizki Febriansyah",
+        posisiPengaju: "Teller",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "10:30",
+        prioritas: "urgent",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Telkom Akses",
+            jenisRekening: "Giro Korporasi",
+            setoranAwal: 200000000,
+            noHP: "081288899900",
+            alamat: "Jl. Gatot Subroto No. 99, Bandung",
+            npwp: "10.223.445.6-777.000"
+        }
+    },
+    { 
+        id: 9,
+        noApproval: "APV/2026/009",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Budi Santoso",
+        posisiPengaju: "Supervisor",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "14:20",
+        prioritas: "medium",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "UD Maju Jaya Elektronik",
+            jenisRekening: "Giro Dagang",
+            setoranAwal: 10000000,
+            noHP: "085678901234",
+            alamat: "Ruko Raden Saleh No. 4, Surabaya",
+            npwp: "33.123.456.7-111.000"
+        }
+    },
+    { 
+        id: 10,
+        noApproval: "APV/2026/010",
+        judul: "Pembukaan Rekening Giro",
+        namaPengaju: "Dewi Anggraeni",
+        posisiPengaju: "Customer Service",
+        tanggalPengajuan: "2026-06-14",
+        waktuPengajuan: "11:00",
+        prioritas: "low",
+        status: "pending",
+        approvalBy: null,
+        tanggalApproval: null,
+        komentar: "",
+        detailData: {
+            namaPerusahaan: "PT Sinar Global",
+            jenisRekening: "Giro Korporasi",
+            setoranAwal: 50000000,
+            noHP: "081298765432",
+            alamat: "Kawasan Industri Candi, Semarang",
+            npwp: "01.000.111.2-000.000"
+        }
+    }
+];
 
     let currentTab = "pending";
     let currentFilter = { date: "", priority: "all" };
@@ -340,27 +460,50 @@
     }
 
     function getDataByTab(tab) {
-        const filtered = filterData();
-        switch(tab) {
-            case 'pending': return filtered.filter(item => item.status === 'pending');
-            case 'approved': return filtered.filter(item => item.status === 'approved');
-            case 'rejected': return filtered.filter(item => item.status === 'rejected');
-            case 'history': return filtered.filter(item => item.status !== 'pending');
-            default: return [];
-        }
+    // Kita filter langsung dari array utama agar datanya real-time ter-update
+    switch(tab) {
+        case 'pending': 
+            return approvalData.filter(item => item.status === 'pending');
+        case 'approved': 
+            return approvalData.filter(item => item.status === 'approved');
+        case 'rejected': 
+            return approvalData.filter(item => item.status === 'rejected');
+        default: 
+            return [];
     }
+}
 
     function updateTabCounts() {
-        document.getElementById('pendingTabCount').innerText = getDataByTab('pending').length;
-        document.getElementById('approvedTabCount').innerText = getDataByTab('approved').length;
-        document.getElementById('rejectedTabCount').innerText = getDataByTab('rejected').length;
-        document.getElementById('historyTabCount').innerText = getDataByTab('history').length;
-    }
+    const counts = {
+        pending: getDataByTab('pending').length,
+        approved: getDataByTab('approved').length,
+        rejected: getDataByTab('rejected').length
+    };
+
+    // Mapping ID element ke data
+    const badges = {
+        pending: document.getElementById('pendingTabCount'),
+        approved: document.getElementById('approvedTabCount'),
+        rejected: document.getElementById('rejectedTabCount')
+    };
+
+    Object.keys(badges).forEach(key => {
+        const badge = badges[key];
+        const count = counts[key];
+
+        if (count > 0) {
+            badge.innerText = count;
+            badge.classList.remove('hidden'); // Tampilkan badge
+        } else {
+            badge.classList.add('hidden');    // Sembunyikan badge, layout akan otomatis merapat
+        }
+    });
+}
 
     function renderEmptyState() {
     return `
         <div class="text-center py-16 bg-white rounded-2xl">
-            <img src="images/empty-data.png" alt="Tidak ada data" class="w-32 h-32 mx-auto mb-4" onerror="this.src='https://placehold.co/128x128?text=📋'">
+            <img src="images/empty-data.png" alt="Tidak ada data" class="w-48 h-48 mx-auto mb-4" onerror="this.src='https://placehold.co/128x128?text=📋'">
             <h4 class="text-base font-bold text-slate-800 mb-1">Belum Ada Data</h4>
             <p class="text-sm text-slate-400">Silakan coba filter tanggal lain</p>
         </div>
@@ -391,7 +534,7 @@
     }
     
     return `
-        <div class="card-item bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer" onclick="goToDetail(${item.id})">
+        <div class="card-item bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
             <!-- Header card dengan warna sesuai status -->
             <div class="px-4 py-3 ${item.status === 'pending' ? 'bg-bpr-pending' : item.status === 'approved' ? 'bg-bpr-approved' : 'bg-bpr-rejected'}">
                 <div class="flex justify-between items-center">
@@ -437,10 +580,17 @@
                             <span class="text-[11px] font-medium ${approvalStatusColor}">${approvalStatusText}</span>
                         </div>
                         ${approvalDateText ? `
-                            <div class="flex justify-end mt-0.5">
-                                <span class="text-[9px] text-slate-400">${approvalDateText}</span>
+                                <div class="flex justify-end mt-0.5">
+                                    <span class="text-[9px] text-slate-400">${approvalDateText}</span>
+                                </div>
+                            ` : ''}
+                            <!-- Tombol Detail di pojok kanan bawah -->
+                            <div class="flex justify-end mt-2 pt-2 border-t border-slate-100">
+                                <button onclick="event.stopPropagation(); goToDetail(${item.id})" class="text-xs font-semibold text-bpr-primary flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-50 active:bg-slate-100 transition">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Lihat Detail
+                                </button>
                             </div>
-                        ` : ''}
+                       
                     </div>
                 </div>
             </div>
@@ -449,6 +599,7 @@
 }
 
     function renderList() {
+        resetSelectAllButton();
         const data = getDataByTab(currentTab);
         const container = document.getElementById('listContainer');
         
@@ -475,9 +626,80 @@
     }
 
     function updateBatchMode() {
-        const hasSelected = selectedItems.size > 0;
-        document.getElementById('batchActions').style.display = hasSelected ? 'flex' : 'none';
-    }
+    const hasSelected = selectedItems.size > 0;
+    document.getElementById('batchActions').style.display = hasSelected ? 'block' : 'none';
+    document.getElementById('selectedCount').innerText = `${selectedItems.size} dipilih`;
+}
+
+// Fungsi Pilih Semua
+function selectAllItems() {
+    const pendingData = getDataByTab('pending');
+    if (pendingData.length === 0) return;
+    
+    pendingData.forEach(item => {
+        selectedItems.add(item.id);
+    });
+    updateBatchMode();
+    renderList();
+}
+
+// Fungsi Unselect Semua
+function unselectAllItems() {
+    selectedItems.clear();
+    updateBatchMode();
+    renderList();
+}
+
+// Fungsi showConfirmPopup dengan gambar (Sudah Diperbaiki Logic Button-nya)
+function showConfirmPopup(title, message, onConfirm, type = 'approve') {
+    const popup = document.createElement('div');
+    popup.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6';
+    
+    let imageSrc = '';
+    if (type === 'approve') imageSrc = 'images/confirmed.png';
+    else if (type === 'reject') imageSrc = 'images/reject.png';
+    else if (type === 'error') imageSrc = 'images/server-error.png';
+    
+    popup.innerHTML = `
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 text-center" style="animation: slideUp 0.3s ease;">
+            <img src="${imageSrc}" alt="${type}" class="w-48 h-48 mx-auto mb-4" onerror="this.src='https://placehold.co/80x80?text=❓'">
+            <h3 class="text-lg font-bold text-slate-800 mb-2">${title}</h3>
+            <p class="text-sm text-slate-500 mb-6">${message}</p>
+            <div class="flex gap-3">
+                <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-semibold">Batal</button>
+                <button id="popupConfirmExecBtn" class="flex-1 ${type === 'approve' ? 'bg-bpr-approved' : 'bg-bpr-rejected'} text-white py-2.5 rounded-xl font-semibold shadow-md">Ya, ${type === 'approve' ? 'Setujui' : 'Tolak'}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    // BINDING EVENT AMAN VIA JAVASCRIPT (Scope parameter onConfirm terjamin aman di sini)
+    popup.querySelector('#popupConfirmExecBtn').onclick = () => {
+        popup.remove(); // Hapus popup konfirmasi dari layar
+        onConfirm();    // Jalankan fungsi executeBatchApprove / executeBatchReject
+    };
+}
+
+// Show error popup khusus
+function showErrorPopup(title, message) {
+    const popup = document.createElement('div');
+    popup.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6';
+    
+    popup.innerHTML = `
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 text-center" style="animation: slideUp 0.3s ease;">
+            <img src="images/server-error.png" alt="error" class="w-20 h-20 mx-auto mb-4" onerror="this.src='https://placehold.co/80x80?text=⚠️'">
+            <h3 class="text-lg font-bold text-red-600 mb-2">${title}</h3>
+            <p class="text-sm text-slate-500 mb-6">${message}</p>
+            <button onclick="this.closest('.fixed').remove()" class="w-full bg-slate-800 text-white py-2.5 rounded-xl font-semibold">Tutup</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+    
+    // Auto close setelah 5 detik
+    setTimeout(() => {
+        if (popup && popup.remove) popup.remove();
+    }, 5000);
+}
 
     // Detail page functions
     function goToDetail(id) {
@@ -487,48 +709,122 @@
 
 
         function batchApprove() {
-        if (selectedItems.size === 0) {
-            showToast('Tidak ada item yang dipilih');
-            return;
-        }
-        const count = selectedItems.size;
-        selectedItems.forEach(id => {
-            const item = approvalData.find(d => d.id === id);
-            if (item && item.status === 'pending') {
+    if (selectedItems.size === 0) {
+        showToast('Tidak ada item yang dipilih');
+        return;
+    }
+    
+    const selectedIds = [...selectedItems];
+    
+    // Tampilkan popup konfirmasi approve massal dengan gambar
+    showConfirmPopup(
+        'Setujui Persetujuan',
+        `Anda akan menyetujui ${selectedIds.length} pengajuan. Lanjutkan?`,
+        () => {
+            executeBatchApprove(selectedIds);
+        },
+        'approve'
+    );
+}
+
+function batchReject() {
+    if (selectedItems.size === 0) {
+        showToast('Tidak ada item yang dipilih');
+        return;
+    }
+    
+    const selectedIds = [...selectedItems];
+    
+    showConfirmPopup(
+        'Tolak Persetujuan',
+        `Anda akan menolak ${selectedIds.length} pengajuan. Lanjutkan?`,
+        () => {
+            executeBatchReject(selectedIds);
+        },
+        'reject'
+    );
+}
+
+
+function executeBatchApprove(selectedIds) {
+    const successIds = [];
+    const failedIds = []; // <--- Siapkan penampung data gagal
+    
+    selectedIds.forEach(id => {
+        const item = approvalData.find(d => d.id === id);
+        if (item && item.status === 'pending') {
+            // Simulasi error 30% khusus jika memilih ALL DATA (10 data terpilih)
+            const isError = selectedIds.length >= 10 ? (Math.random() < 0.3) : false;
+            
+            if (isError) {
+                failedIds.push(id); // Masuk list gagal jika terkena internal server error
+            } else {
                 item.status = 'approved';
                 item.approvalBy = "John Doe (Direksi)";
                 item.tanggalApproval = new Date().toLocaleString('id-ID');
                 item.komentar = "Disetujui massal";
+                successIds.push(id);
             }
-        });
-        selectedItems.clear();
-        updateBatchMode();
-        updateTabCounts();
-        renderList();
-        showToast(`${count} pengajuan berhasil disetujui`);
-    }
-
-    function batchReject() {
-        if (selectedItems.size === 0) {
-            showToast('Tidak ada item yang dipilih');
-            return;
         }
-        const count = selectedItems.size;
-        selectedItems.forEach(id => {
-            const item = approvalData.find(d => d.id === id);
-            if (item && item.status === 'pending') {
+    });
+    
+    successIds.forEach(id => selectedItems.delete(id));
+    updateBatchMode();
+    updateTabCounts();
+    renderList();
+    
+    // Tampilkan popup error jika ada data yang gagal masuk database
+    if (failedIds.length > 0) {
+        showErrorPopup(
+            'Internal Server Error',
+            `${failedIds.length} dari ${selectedIds.length} pengajuan gagal disetujui.\n\nKode error: 500 - Database connection timeout.\nSilakan coba beberapa saat lagi.`
+        );
+    }
+    
+    if (successIds.length > 0) {
+        showToast(`${successIds.length} pengajuan berhasil disetujui`);
+    }
+}
+
+function executeBatchReject(selectedIds) {
+    const successIds = [];
+    const failedIds = []; // <--- Siapkan penampung data gagal
+    
+    selectedIds.forEach(id => {
+        const item = approvalData.find(d => d.id === id);
+        if (item && item.status === 'pending') {
+            // Simulasi error 30% khusus jika memilih ALL DATA (10 data terpilih)
+            const isError = selectedIds.length >= 10 ? (Math.random() < 0.3) : false;
+            
+            if (isError) {
+                failedIds.push(id);
+            } else {
                 item.status = 'rejected';
                 item.approvalBy = "John Doe (Direksi)";
                 item.tanggalApproval = new Date().toLocaleString('id-ID');
                 item.komentar = "Ditolak massal";
+                successIds.push(id);
             }
-        });
-        selectedItems.clear();
-        updateBatchMode();
-        updateTabCounts();
-        renderList();
-        showToast(`${count} pengajuan berhasil ditolak`);
+        }
+    });
+    
+    successIds.forEach(id => selectedItems.delete(id));
+    updateBatchMode();
+    updateTabCounts();
+    renderList();
+    
+    // Tampilkan popup error jika ada data yang gagal masuk database
+    if (failedIds.length > 0) {
+        showErrorPopup(
+            'Internal Server Error',
+            `${failedIds.length} dari ${selectedIds.length} pengajuan gagal ditolak.\n\nKode error: 500 - Service unavailable.\nSilakan coba beberapa saat lagi.`
+        );
     }
+    
+    if (successIds.length > 0) {
+        showToast(`${successIds.length} pengajuan berhasil ditolak`);
+    }
+}
 
     function showToast(message) {
         const toast = document.createElement('div');
@@ -541,7 +837,32 @@
     // Event listeners
     document.getElementById('batchApproveBtn')?.addEventListener('click', batchApprove);
     document.getElementById('batchRejectBtn')?.addEventListener('click', batchReject);
-    
+    // Pilih Semua / Unselect All
+document.getElementById('selectAllBtn')?.addEventListener('click', () => {
+    const pendingData = getDataByTab('pending');
+    if (selectedItems.size === pendingData.length && pendingData.length > 0) {
+        unselectAllItems();
+        document.getElementById('selectAllBtn').innerHTML = '<i data-lucide="check-square" class="w-3 h-3"></i> Pilih Semua';
+    } else {
+        selectAllItems();
+        document.getElementById('selectAllBtn').innerHTML = '<i data-lucide="x-square" class="w-3 h-3"></i> Batal Pilih';
+    }
+    lucide.createIcons();
+});
+
+
+// Reset tombol select all ketika ganti tab
+function resetSelectAllButton() {
+    const selectBtn = document.getElementById('selectAllBtn');
+    if (selectBtn) {
+        selectBtn.innerHTML = '<i data-lucide="check-square" class="w-3 h-3"></i> Pilih Semua';
+        lucide.createIcons();
+    }
+}
+
+// Update fungsi renderList untuk panggil resetSelectAllButton
+// Cari function renderList, tambahkan di awal:
+// resetSelectAllButton();
     let filterOpen = false;
     document.getElementById('filterBtn')?.addEventListener('click', () => {
         const panel = document.getElementById('filterPanel');
@@ -574,11 +895,10 @@
     });
     
     // Set default date to today
-    const today = new Date().toISOString().split('T')[0];
-    if (document.getElementById('dateFilter')) {
-        document.getElementById('dateFilter').value = today;
-        currentFilter.date = today;
-    }
+    // Set default date ke tanggal yang ada data (2026-06-14)
+// SET DEFAULT FILTER KE TANGGAL YANG ADA DATANYA (2026-06-14)
+currentFilter.date = '2026-06-14';
+document.getElementById('dateFilter').value = '2026-06-14';
     
     // Tab switching
     document.querySelectorAll('.tab-modern').forEach(btn => {
