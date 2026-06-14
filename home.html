@@ -233,7 +233,7 @@
         <!-- Menu Section -->
         <div class="mb-4">
             <div class="flex justify-between items-center mb-3">
-                <h3 class="text-sm font-bold text-bpr-dark">📋 Menu Approval</h3>
+                <h1 class="text-sm font-bold text-bpr-dark">Menu Approval</h1>
                 <button id="showAllMenuBtn" class="text-bpr-yellow text-xs font-semibold active:opacity-70">Lihat Semua →</button>
             </div>
             
@@ -296,26 +296,26 @@ let currentUser = {
     ];
     
     const menus = [
-        { id: 1, name: "Pembukaan Rekening", icon: "user-plus", pending: 3, urgent: 1, color: "text-blue-500" },
-        { id: 2, name: "Perubahan Data", icon: "users", pending: 2, urgent: 0, color: "text-emerald-500" },
-        { id: 3, name: "Pembukaan Pinjaman", icon: "credit-card", pending: 4, urgent: 2, color: "text-amber-500" },
-        { id: 4, name: "Approval A", icon: "file-check", pending: 1, urgent: 0, color: "text-purple-500" },
+        { id: 1, name: "Pembukaan Rekening", icon: "user-plus", pending: 2, urgent: 0, color: "text-blue-500" },
+        { id: 2, name: "Perubahan Data", icon: "users", pending: 0, urgent: 0, color: "text-emerald-500" },
+        { id: 3, name: "Pembukaan Pinjaman", icon: "credit-card", pending: 0, urgent: 0, color: "text-amber-500" },
+        { id: 4, name: "Approval A", icon: "file-check", pending: 0, urgent: 0, color: "text-purple-500" },
         { id: 5, name: "Approval B", icon: "file-text", pending: 0, urgent: 0, color: "text-gray-500" },
-        { id: 6, name: "Approval C", icon: "clipboard", pending: 2, urgent: 1, color: "text-rose-500" },
+        { id: 6, name: "Approval C", icon: "clipboard", pending: 0, urgent: 0, color: "text-rose-500" },
         { id: 7, name: "Approval D", icon: "check-square", pending: 0, urgent: 0, color: "text-indigo-500" },
-        { id: 8, name: "Approval E", icon: "shield", pending: 1, urgent: 0, color: "text-cyan-500" },
+        { id: 8, name: "Approval E", icon: "shield", pending: 0, urgent: 0, color: "text-cyan-500" },
         { id: 9, name: "Approval F", icon: "lock", pending: 0, urgent: 0, color: "text-slate-500" },
-        { id: 10, name: "Approval G", icon: "key", pending: 3, urgent: 1, color: "text-yellow-600" },
+        { id: 10, name: "Approval G", icon: "key", pending: 0, urgent: 0, color: "text-yellow-600" },
         { id: 11, name: "Approval H", icon: "mail", pending: 0, urgent: 0, color: "text-sky-500" },
-        { id: 12, name: "Approval I", icon: "message-circle", pending: 1, urgent: 0, color: "text-lime-500" },
+        { id: 12, name: "Approval I", icon: "message-circle", pending: 0, urgent: 0, color: "text-lime-500" },
         { id: 13, name: "Approval J", icon: "phone", pending: 0, urgent: 0, color: "text-teal-500" },
-        { id: 14, name: "Approval K", icon: "video", pending: 2, urgent: 0, color: "text-violet-500" },
+        { id: 14, name: "Approval K", icon: "video", pending: 0, urgent: 0, color: "text-violet-500" },
         { id: 15, name: "Approval L", icon: "camera", pending: 0, urgent: 0, color: "text-fuchsia-500" },
-        { id: 16, name: "Approval M", icon: "image", pending: 1, urgent: 0, color: "text-pink-500" },
+        { id: 16, name: "Approval M", icon: "image", pending: 0, urgent: 0, color: "text-pink-500" },
         { id: 17, name: "Approval N", icon: "map-pin", pending: 0, urgent: 0, color: "text-red-500" },
-        { id: 18, name: "Approval O", icon: "compass", pending: 2, urgent: 0, color: "text-orange-500" },
+        { id: 18, name: "Approval O", icon: "compass", pending: 0, urgent: 0, color: "text-orange-500" },
         { id: 19, name: "Approval P", icon: "globe", pending: 0, urgent: 0, color: "text-emerald-600" },
-        { id: 20, name: "Approval Q", icon: "cloud", pending: 1, urgent: 0, color: "text-blue-400" }
+        { id: 20, name: "Approval Q", icon: "cloud", pending: 0, urgent: 0, color: "text-blue-400" }
     ];
     
     function renderMenuGrid() {
@@ -324,63 +324,71 @@ let currentUser = {
         
         menuGrid.innerHTML = visibleMenus.map(menu => {
             const totalPending = menu.pending + menu.urgent;
-            const badgeText = `Wait:${menu.pending} Urgent:${menu.urgent}`;
+            // Merapikan format bubble: Tampilkan angkanya saja (misal: 3) agar tidak merusak layout grid mobile
+            const badgeText = `${totalPending}`; 
+            
             return `
-            <div class="menu-item flex flex-col items-center gap-1 cursor-pointer" data-menu="${menu.id}">
-                <div class="relative">
-                    <i data-lucide="${menu.icon}" class="w-7 h-7 ${menu.color}"></i>
-                    ${totalPending > 0 ? `<span class="notification-badge" style="background-color:#EF4444; color:#F3F4F6;">${badgeText}</span>` : ''}
+            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu="${menu.id}">
+                <div class="relative w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                    
+                    ${totalPending > 0 ? `
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                            ${badgeText}
+                        </span>` : ''}
                 </div>
-                <span class="text-[10px] text-center text-bpr-dark font-medium">${menu.name}</span>
+                <span class="text-[10px] text-center text-bpr-dark font-semibold leading-tight px-1">${menu.name}</span>
             </div>
         `}).join('');
         
         lucide.createIcons();
         
         document.querySelectorAll('[data-menu]').forEach(el => {
-    el.addEventListener('click', () => {
-        const menuId = parseInt(el.dataset.menu);
-        const menu = menus.find(m => m.id === menuId);
-        
-        // Arahkan ke halaman sesuai menu
-        if (menu.name === "Pembukaan Rekening") {
-            window.location.href = "pembukaan-rekening.html";
-        } else {
-            alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
-        }
-    });
-});
+            el.addEventListener('click', () => {
+                const menuId = parseInt(el.dataset.menu);
+                const menu = menus.find(m => m.id === menuId);
+                
+                if (menu.name === "Pembukaan Rekening") {
+                    window.location.href = "pembukaan-rekening.html";
+                } else {
+                    alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
+                }
+            });
+        });
     }
     
     function renderAllMenuModal() {
         const allMenuList = document.getElementById('allMenuList');
         allMenuList.innerHTML = menus.map(menu => {
             const totalPending = menu.pending + menu.urgent;
-            const badgeText = `Wait:${menu.pending} Urgent:${menu.urgent}`;
+            const badgeText = `${totalPending}`;
             return `
-            <div class="menu-item flex flex-col items-center gap-1 cursor-pointer" data-menu-all="${menu.id}">
-                <div class="relative">
-                    <i data-lucide="${menu.icon}" class="w-7 h-7 ${menu.color}"></i>
-                    ${totalPending > 0 ? `<span class="notification-badge" style="background-color:#EF4444; color:#F3F4F6; font-size:8px; min-width:34px;">${badgeText}</span>` : ''}
+            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu-all="${menu.id}">
+                <div class="relative w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                    ${totalPending > 0 ? `
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                            ${badgeText}
+                        </span>` : ''}
                 </div>
-                <span class="text-[7px] text-center">${menu.name}</span>
+                <span class="text-[9px] text-center text-bpr-dark font-medium leading-tight">${menu.name}</span>
             </div>
         `}).join('');
         lucide.createIcons();
         
         document.querySelectorAll('[data-menu-all]').forEach(el => {
-    el.addEventListener('click', () => {
-        const menuId = parseInt(el.dataset.menuAll);
-        const menu = menus.find(m => m.id === menuId);
-        
-        if (menu.name === "Pembukaan Rekening") {
-            window.location.href = "pembukaan-rekening.html";
-        } else {
-            alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
-            document.getElementById('allMenuModal').style.display = 'none';
-        }
-    });
-});
+            el.addEventListener('click', () => {
+                const menuId = parseInt(el.dataset.menuAll);
+                const menu = menus.find(m => m.id === menuId);
+                
+                if (menu.name === "Pembukaan Rekening") {
+                    window.location.href = "pembukaan-rekening.html";
+                } else {
+                    alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
+                    document.getElementById('allMenuModal').style.display = 'none';
+                }
+            });
+        });
     }
     
     function updateStatistics() {
