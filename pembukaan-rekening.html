@@ -25,14 +25,15 @@
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
         }
         .mobile-container {
             max-width: 428px;
             margin: 0 auto;
-            background: #F8FAFC;
+            background: #F9FAFB;
             min-height: 100vh;
             position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
         /* Tab bubble with value inside */
         .tab-bubble {
@@ -100,9 +101,9 @@
 }
     </style>
 </head>
-<body class="bg-slate-900 flex justify-center items-start">
+<body class="bg-gray-200 flex justify-center items-start font-sans">
 
-<div class="mobile-container shadow-2xl">
+<div class="mobile-container">
     
     <!-- LIST SCREEN -->
     <div id="listScreen" class="w-full min-h-screen flex flex-col">
