@@ -168,23 +168,23 @@
 
         <!-- Stats Cards (2 kolom grid) -->
         <!-- Stats Cards - Desain Modern Tanpa Persentase -->
-<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="grid grid-cols-2 gap-2 mb-2">
     <!-- Card Pending -->
-    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-4 shadow-lg">
+    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-2 shadow-lg">
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-xs text-white opacity-90">Pending</p>
-                <p class="text-3xl font-bold text-white mt-1" id="pendingCount">0</p>
+                <p class="text-2xl font-bold text-white mt-1" id="pendingCount">0</p>
             </div>
             <div class="bg-white/20 rounded-full p-2 backdrop-blur">
-                <i data-lucide="clock" class="w-6 h-6 text-white"></i>
+                <i data-lucide="clock" class="w-5 h-5 text-white"></i>
             </div>
         </div>
         <p class="text-[10px] text-white/80 mt-2">Menunggu persetujuan</p>
     </div>
 
     <!-- Card Ditolak -->
-    <div class="status-card bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-4 shadow-lg">
+    <div class="status-card bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-2 shadow-lg">
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-xs text-white opacity-90">Ditolak</p>
@@ -198,7 +198,7 @@
     </div>
 
     <!-- Card Disetujui -->
-    <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-4 shadow-lg">
+    <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-2 shadow-lg">
         <div class="flex justify-between items-start">
             <div>
                 <p class="text-xs text-white opacity-90">Disetujui</p>
@@ -212,7 +212,7 @@
     </div>
 
     <!-- Card Urgent (sejajar, bukan full width) -->
-    <div class="status-card bg-gradient-to-br from-orange-500 to-red-500 rounded-xl p-4 shadow-lg relative overflow-hidden">
+    <div class="status-card bg-gradient-to-br from-orange-500 to-red-500 rounded-xl p-2 shadow-lg relative overflow-hidden">
         <div class="absolute inset-0 bg-white/5"></div>
         <div class="flex justify-between items-start relative z-10">
             <div>
@@ -296,7 +296,7 @@ let currentUser = {
     ];
     
     const menus = [
-        { id: 1, name: "Pembukaan Rekening", icon: "user-plus", pending: 2, urgent: 0, color: "text-blue-500" },
+        { id: 1, name: "Pembukaan Rekening", icon: "user-plus", pending: 10, urgent: 0, color: "text-blue-500" },
         { id: 2, name: "Perubahan Data", icon: "users", pending: 0, urgent: 0, color: "text-emerald-500" },
         { id: 3, name: "Pembukaan Pinjaman", icon: "credit-card", pending: 0, urgent: 0, color: "text-amber-500" },
         { id: 4, name: "Approval A", icon: "file-check", pending: 0, urgent: 0, color: "text-purple-500" },
