@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>M-Approval - Detail Notifikasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bpr-yellow': '#FBBF24',
+                        'bpr-dark': '#1F2937',
+                        'bpr-gray': '#6B7280',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-container {
+            max-width: 428px;
+            margin: 0 auto;
+            background: #F8FAFC;
+            min-height: 100vh;
+            position: relative;
+        }
+        .detail-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #6B7280;
+            font-weight: 500;
+            min-width: 100px;
+        }
+        .info-value {
+            font-size: 13px;
+            color: #1F2937;
+            font-weight: 600;
+            text-align: right;
+            flex: 1;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-pending { background: #FEF3C7; color: #D97706; }
+        .status-approved { background: #D1FAE5; color: #059669; }
+        .status-rejected { background: #FEE2E2; color: #DC2626; }
+        .status-done { background: #E0E7FF; color: #4338CA; }
+        .priority-urgent { background: #FEE2E2; color: #DC2626; }
+        .priority-high { background: #FFEDD5; color: #EA580C; }
+        .priority-medium { background: #FEF3C7; color: #D97706; }
+        .priority-low { background: #D1FAE5; color: #059669; }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .delete-popup {
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-backdrop {
+            animation: fadeIn 0.2s ease;
+        }
+        .note-box {
+            background: #F9FAFB;
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-start font-sans">
+
+<div class="mobile-container">
+    <!-- Header -->
+    <div class="bg-white px-5 pt-5 pb-4 sticky top-0 z-40 shadow-sm">
+        <div class="flex items-center gap-3">
+            <button onclick="history.back()" class="p-2 active:bg-gray-100 rounded-xl transition">
+                <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
+            </button>
+            <div class="flex-1">
+                <h1 class="text-xl font-bold text-bpr-dark">Detail Notifikasi</h1>
+                <p class="text-xs text-bpr-gray mt-0.5">Informasi lengkap pemberitahuan</p>
+            </div>
+            <button id="deleteNotifBtn" class="p-2 active:bg-gray-100 rounded-xl transition">
+                <i data-lucide="trash-2" class="w-5 h-5 text-red-500"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 pb-28" id="detailContent">
+        <!-- Dynamic content will be inserted here -->
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    // ========== DATA NOTIFIKASI ==========
+    let notifications = [
+        { 
+            id: 1, 
+            title: "Pembukaan Rekening", 
+            message: "Nasabah Ahmad Firmansyah mengajukan pembukaan rekening dengan setoran awal Rp 25.000.000", 
+            time: "2026-06-15 09:30", 
+            date: "2026-06-15", 
+            read: false, 
+            detail: {
+                noApproval: "APV/2026/001",
+                namaNasabah: "Ahmad Firmansyah",
+                jenisRekening: "Giro Bisnis",
+                prioritas: "high",
+                nominal: "Rp 25.000.000",
+                status: "pending",
+                catatan: "Dokumen sudah lengkap, menunggu approval dari Direksi"
+            }
+        },
+        { 
+            id: 2, 
+            title: "Perubahan Data Alamat", 
+            message: "Nasabah Siti Nurhaliza meminta perubahan data alamat", 
+            time: "2026-06-15 10:15", 
+            date: "2026-06-15", 
+            read: false,
+            detail: {
+                noApproval: "APV/2026/002",
+                namaNasabah: "Siti Nurhaliza",
+                jenisPerubahan: "Alamat",
+                dataLama: "Jl. Asia Afrika No. 88, Bandung",
+                dataBaru: "Jl. Ciumbuleuit No. 45, Bandung",
+                prioritas: "medium",
+                status: "pending",
+                catatan: "Foto KTP dan dokumen pendukung sudah diupload"
+            }
+        },
+        { 
+            id: 3, 
+            title: "Pembukaan Pinjaman", 
+            message: "Nasabah Budi Santoso mengajukan pinjaman Rp 50 Juta", 
+            time: "2026-06-14 14:20", 
+            date: "2026-06-14", 
+            read: true,
+            detail: {
+                noApproval: "APV/2026/003",
+                namaNasabah: "Budi Santoso",
+                jenisPinjaman: "Kredit Modal Kerja",
+                nominal: "Rp 50.000.000",
+                tenor: "12 bulan",
+                prioritas: "low",
+                status: "approved",
+                catatan: "Pinjaman telah disetujui oleh Direksi"
+            }
+        },
+        { 
+            id: 4, 
+            title: "Approval Urgent", 
+            message: "Nasabah membutuhkan persetujuan segera", 
+            time: "2026-06-14 09:00", 
+            date: "2026-06-14", 
+            read: false,
+            detail: {
+                noApproval: "APV/2026/004",
+                namaNasabah: "PT Sumber Rezeki",
+                jenisPengajuan: "Pembukaan Rekening Korporasi",
+                nominal: "Rp 100.000.000",
+                prioritas: "urgent",
+                status: "pending",
+                catatan: "Nasabah membutuhkan rekening untuk transaksi hari ini"
+            }
+        },
+        { 
+            id: 5, 
+            title: "Dokumen Lengkap", 
+            message: "Dokumen nasabah Dewi Anggraeni sudah lengkap", 
+            time: "2026-06-13 16:45", 
+            date: "2026-06-13", 
+            read: true,
+            detail: {
+                noApproval: "APV/2026/005",
+                namaNasabah: "Dewi Anggraeni",
+                jenisDokumen: "KTP, NPWP, Akta Perusahaan",
+                prioritas: "low",
+                status: "done",
+                catatan: "Dokumen sudah diverifikasi, siap diproses"
+            }
+        },
+        { 
+            id: 6, 
+            title: "Pembukaan Rekening", 
+            message: "Nasabah Rina Andriani mengajukan rekening giro", 
+            time: "2026-06-13 11:30", 
+            date: "2026-06-13", 
+            read: false,
+            detail: {
+                noApproval: "APV/2026/006",
+                namaNasabah: "Rina Andriani",
+                jenisRekening: "Giro Bisnis",
+                prioritas: "high",
+                nominal: "Rp 75.000.000",
+                status: "pending",
+                catatan: "Dokumen perusahaan sudah lengkap"
+            }
+        },
+        { 
+            id: 7, 
+            title: "Perubahan Data Telepon", 
+            message: "Nasabah Bagus Pratama mengubah nomor telepon", 
+            time: "2026-06-12 08:45", 
+            date: "2026-06-12", 
+            read: true,
+            detail: {
+                noApproval: "APV/2026/007",
+                namaNasabah: "Bagus Pratama",
+                jenisPerubahan: "Nomor Telepon",
+                dataLama: "08123456789",
+                dataBaru: "081298765432",
+                prioritas: "low",
+                status: "approved",
+                catatan: "Perubahan nomor telepon telah disetujui"
+            }
+        },
+        { 
+            id: 8, 
+            title: "Pembukaan Pinjaman", 
+            message: "Nasabah Maya Sari mengajukan pinjaman Rp 100 Juta", 
+            time: "2026-06-12 13:20", 
+            date: "2026-06-12", 
+            read: false,
+            detail: {
+                noApproval: "APV/2026/008",
+                namaNasabah: "Maya Sari",
+                jenisPinjaman: "Kredit Investasi",
+                nominal: "Rp 100.000.000",
+                tenor: "24 bulan",
+                prioritas: "urgent",
+                status: "pending",
+                catatan: "Analisa kredit sedang berlangsung"
+            }
+        }
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const notifId = parseInt(urlParams.get('id'));
+    let notificationData = notifications.find(n => n.id === notifId);
+    
+    if (!notificationData) {
+        notificationData = notifications[0];
+    }
+    
+    if (notificationData && !notificationData.read) {
+        notificationData.read = true;
+    }
+
+    function getStatusLabel(status) {
+        const statusMap = {
+            'pending': { label: 'Menunggu Persetujuan', class: 'status-pending' },
+            'approved': { label: 'Disetujui', class: 'status-approved' },
+            'rejected': { label: 'Ditolak', class: 'status-rejected' },
+            'done': { label: 'Selesai', class: 'status-done' }
+        };
+        return statusMap[status] || { label: status, class: 'status-pending' };
+    }
+
+    function getPriorityLabel(priority) {
+        const priorityMap = {
+            'urgent': { label: 'Urgent', class: 'priority-urgent' },
+            'high': { label: 'High', class: 'priority-high' },
+            'medium': { label: 'Medium', class: 'priority-medium' },
+            'low': { label: 'Low', class: 'priority-low' }
+        };
+        return priorityMap[priority] || { label: priority, class: 'priority-medium' };
+    }
+
+    function formatDate(dateString) {
+        const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(dateString).toLocaleDateString('id-ID', options);
+    }
+
+    function renderDetail() {
+        const container = document.getElementById('detailContent');
+        const detail = notificationData.detail;
+        const status = getStatusLabel(detail.status);
+        const priority = getPriorityLabel(detail.prioritas);
+        
+        let detailRows = '';
+        
+        if (notificationData.title.includes("Pembukaan Rekening")) {
+            detailRows = `
+                <div class="info-row">
+                    <span class="info-label">No. Approval</span>
+                    <span class="info-value">${detail.noApproval}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nama Nasabah</span>
+                    <span class="info-value">${detail.namaNasabah}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Jenis Rekening</span>
+                    <span class="info-value">${detail.jenisRekening}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Setoran Awal</span>
+                    <span class="info-value font-bold text-emerald-600">${detail.nominal}</span>
+                </div>
+            `;
+        } else if (notificationData.title.includes("Perubahan Data")) {
+            detailRows = `
+                <div class="info-row">
+                    <span class="info-label">No. Approval</span>
+                    <span class="info-value">${detail.noApproval}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nama Nasabah</span>
+                    <span class="info-value">${detail.namaNasabah}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Jenis Perubahan</span>
+                    <span class="info-value">${detail.jenisPerubahan}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Data Lama</span>
+                    <span class="info-value">${detail.dataLama}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Data Baru</span>
+                    <span class="info-value font-bold text-emerald-600">${detail.dataBaru}</span>
+                </div>
+            `;
+        } else if (notificationData.title.includes("Pembukaan Pinjaman")) {
+            detailRows = `
+                <div class="info-row">
+                    <span class="info-label">No. Approval</span>
+                    <span class="info-value">${detail.noApproval}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nama Nasabah</span>
+                    <span class="info-value">${detail.namaNasabah}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Jenis Pinjaman</span>
+                    <span class="info-value">${detail.jenisPinjaman}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nominal</span>
+                    <span class="info-value font-bold text-emerald-600">${detail.nominal}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Tenor</span>
+                    <span class="info-value">${detail.tenor}</span>
+                </div>
+            `;
+        } else {
+            detailRows = `
+                <div class="info-row">
+                    <span class="info-label">No. Approval</span>
+                    <span class="info-value">${detail.noApproval}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nama / Perusahaan</span>
+                    <span class="info-value">${detail.namaNasabah}</span>
+                </div>
+            `;
+        }
+        
+        const html = `
+            <div class="detail-card">
+                <!-- Header -->
+                <div class="p-5 bg-gradient-to-r from-bpr-yellow/10 to-transparent border-b border-gray-100">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 bg-bpr-yellow/20 rounded-full flex items-center justify-center">
+                            <i data-lucide="bell" class="w-5 h-5 text-bpr-yellow"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-bold text-bpr-dark">${notificationData.title}</h2>
+                            <p class="text-xs text-bpr-gray mt-0.5">${formatDate(notificationData.time)}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-3">
+                        <span class="status-badge ${priority.class}">${priority.label}</span>
+                    </div>
+                </div>
+                
+                <!-- Detail Informasi -->
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-bpr-dark mb-4">Detail Informasi</h3>
+                    <div class="divide-y divide-gray-100">
+                        ${detailRows}
+                        <div class="info-row pt-3">
+                            <span class="info-label">Status</span>
+                            <span class="status-badge ${status.class}">${status.label}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Catatan -->
+                <div class="p-5 bg-gray-50">
+                    <p class="text-xs font-bold text-bpr-gray uppercase tracking-wide mb-2">Catatan</p>
+                    <div class="note-box">
+                        <div class="flex items-start gap-2">
+                            <i data-lucide="message-square" class="w-4 h-4 text-bpr-gray mt-0.5"></i>
+                            <p class="text-sm text-bpr-dark leading-relaxed">${detail.catatan}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        lucide.createIcons();
+    }
+    
+    function showDeletePopup() {
+        const popup = document.createElement('div');
+        popup.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6 modal-backdrop';
+        popup.innerHTML = `
+            <div class="bg-white rounded-2xl w-full max-w-sm p-6 text-center delete-popup">
+                <img src="images/delete.png" alt="Hapus" class="w-20 h-20 mx-auto mb-4" onerror="this.src='https://placehold.co/80x80?text=🗑️'">
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Hapus Notifikasi?</h3>
+                <p class="text-sm text-slate-500 mb-6">Notifikasi ini akan dihapus secara permanen. Yakin ingin melanjutkan?</p>
+                <div class="flex gap-3">
+                    <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-semibold">Batal</button>
+                    <button id="confirmDeletePopupBtn" class="flex-1 bg-red-500 text-white py-2.5 rounded-xl font-semibold shadow-md">Ya, Hapus</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(popup);
+        
+        popup.querySelector('#confirmDeletePopupBtn').onclick = () => {
+            popup.remove();
+            deleteNotification();
+        };
+    }
+    
+    function deleteNotification() {
+        const index = notifications.findIndex(n => n.id === notifId);
+        if (index !== -1) {
+            notifications.splice(index, 1);
+        }
+        window.location.href = 'list-notif.html';
+    }
+    
+    document.getElementById('deleteNotifBtn')?.addEventListener('click', showDeletePopup);
+    renderDetail();
+</script>
+</body>
+</html>

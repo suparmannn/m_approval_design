@@ -289,22 +289,22 @@ let currentUser = {
     let statsData = { pending: 12, rejected: 3, approved: 28, urgent: 4 };
     
     let notifications = [
-        { id: 1, title: "Pembukaan Rekening", message: "Nasabah Ahmad butuh persetujuan", time: "5 menit lalu", read: false, menu: "rekening" },
-        { id: 2, title: "Perubahan Data", message: "Perubahan alamat Budi", time: "1 jam lalu", read: false, menu: "data_nasabah" },
-        { id: 3, title: "Pembukaan Pinjaman", message: "Pinjaman Rp 50 Juta", time: "2 jam lalu", read: false, menu: "pinjaman" },
-        { id: 4, title: "Approval A", message: "Menunggu persetujuan", time: "3 jam lalu", read: true, menu: "approval_a" },
-        { id: 5, title: "URGENT!", message: "Butuh approval segera", time: "5 jam lalu", read: false, menu: "urgent" }
+        { id: 1, title: "Transaksi Umum", message: "Nasabah Ahmad butuh persetujuan", time: "5 menit lalu", read: false, menu: "rekening" },
+        { id: 2, title: "Transaksi Antar GL", message: "Perubahan alamat Budi", time: "1 jam lalu", read: false, menu: "Transaksi Antar GL" },
+        { id: 3, title: "Pembukaan Rek Deposito", message: "Deposito Rp 10 Juta", time: "2 jam lalu", read: false, menu: "Pembukaan Rek Deposito" },
+        { id: 4, title: "Pembukaan Rek Pinjaman", message: "Pinjaman Rp 50 Juta", time: "3 jam lalu", read: true, menu: "Pembukaan Rek Pinjaman" },
+        { id: 5, title: "Pembukaan Rek Tabungan", message: "Butuh approval segera", time: "5 jam lalu", read: false, menu: "Pembukaan Rek Tabungan" }
     ];
     
     const menus = [
-        { id: 1, name: "Pembukaan Rekening", icon: "user-plus", pending: 10, urgent: 0, color: "text-blue-500" },
-        { id: 2, name: "Perubahan Data", icon: "users", pending: 0, urgent: 0, color: "text-emerald-500" },
-        { id: 3, name: "Pembukaan Pinjaman", icon: "credit-card", pending: 0, urgent: 0, color: "text-amber-500" },
-        { id: 4, name: "Approval A", icon: "file-check", pending: 0, urgent: 0, color: "text-purple-500" },
-        { id: 5, name: "Approval B", icon: "file-text", pending: 0, urgent: 0, color: "text-gray-500" },
-        { id: 6, name: "Approval C", icon: "clipboard", pending: 0, urgent: 0, color: "text-rose-500" },
-        { id: 7, name: "Approval D", icon: "check-square", pending: 0, urgent: 0, color: "text-indigo-500" },
-        { id: 8, name: "Approval E", icon: "shield", pending: 0, urgent: 0, color: "text-cyan-500" },
+        { id: 1, name: "Transaksi Umum", icon: "user-plus", pending: 5, urgent: 0, color: "text-blue-500" },
+        { id: 2, name: "Transaksi Antar GL", icon: "users", pending: 10, urgent: 0, color: "text-emerald-500" },
+        { id: 3, name: "Pembukaan Rek Deposito", icon: "credit-card", pending: 1, urgent: 0, color: "text-amber-500" },
+        { id: 4, name: "Pembukaan Rek Pinjaman", icon: "file-check", pending: 1, urgent: 0, color: "text-purple-500" },
+        { id: 5, name: "Pembukaan Rek Tabungan", icon: "file-text", pending: 1, urgent: 0, color: "text-gray-500" },
+        { id: 6, name: "Pencairan/Break Bilyet Deposito", icon: "clipboard", pending: 1, urgent: 0, color: "text-rose-500" },
+        { id: 7, name: "Penutupan Rekening Pinjaman", icon: "check-square", pending: 1, urgent: 0, color: "text-indigo-500" },
+        { id: 8, name: "Penutupan Rekening Tabungan", icon: "shield", pending: 1, urgent: 0, color: "text-cyan-500" },
         { id: 9, name: "Approval F", icon: "lock", pending: 0, urgent: 0, color: "text-slate-500" },
         { id: 10, name: "Approval G", icon: "key", pending: 0, urgent: 0, color: "text-yellow-600" },
         { id: 11, name: "Approval H", icon: "mail", pending: 0, urgent: 0, color: "text-sky-500" },
@@ -319,78 +319,114 @@ let currentUser = {
         { id: 20, name: "Approval Q", icon: "cloud", pending: 0, urgent: 0, color: "text-blue-400" }
     ];
     
-    function renderMenuGrid() {
-        const menuGrid = document.getElementById('menuGrid');
-        const visibleMenus = menus.slice(0, 8);
-        
-        menuGrid.innerHTML = visibleMenus.map(menu => {
-            const totalPending = menu.pending + menu.urgent;
-            // Merapikan format bubble: Tampilkan angkanya saja (misal: 3) agar tidak merusak layout grid mobile
-            const badgeText = `${totalPending}`; 
+    // ========== EVENT LISTENER UNTUK HOME (data-menu) ==========
+function setupHomeMenuEvents() {
+    document.querySelectorAll('[data-menu]').forEach(el => {
+        el.addEventListener('click', () => {
+            const menuId = parseInt(el.dataset.menu);
+            const menu = menus.find(m => m.id === menuId);
             
-            return `
-            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu="${menu.id}">
-                <div class="relative w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
-                    
-                    ${totalPending > 0 ? `
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
-                            ${badgeText}
-                        </span>` : ''}
-                </div>
-                <span class="text-[10px] text-center text-bpr-dark font-semibold leading-tight px-1">${menu.name}</span>
-            </div>
-        `}).join('');
-        
-        lucide.createIcons();
-        
-        document.querySelectorAll('[data-menu]').forEach(el => {
-            el.addEventListener('click', () => {
-                const menuId = parseInt(el.dataset.menu);
-                const menu = menus.find(m => m.id === menuId);
-                
-                if (menu.name === "Pembukaan Rekening") {
-                    window.location.href = "pembukaan-rekening.html";
-                } else {
-                    alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
-                }
-            });
+            const menuMap = {
+                "Transaksi Umum": "pembukaan-rekening.html",
+                "Transaksi Antar GL": "transaksi-antar-gl.html",
+                "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+                "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+                "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+                "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+                "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+                "Penutupan Rekening Tabungan": "penutupan-rek-tabungan.html"
+            };
+            
+            const targetPage = menuMap[menu?.name];
+            if (targetPage) {
+                window.location.href = targetPage;
+            } else {
+                alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
+            }
         });
-    }
+    });
+}
+
+// ========== RENDER MENU GRID (HOME) ==========
+function renderMenuGrid() {
+    const menuGrid = document.getElementById('menuGrid');
+    const visibleMenus = menus.slice(0, 8);
     
-    function renderAllMenuModal() {
-        const allMenuList = document.getElementById('allMenuList');
-        allMenuList.innerHTML = menus.map(menu => {
-            const totalPending = menu.pending + menu.urgent;
-            const badgeText = `${totalPending}`;
-            return `
-            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu-all="${menu.id}">
-                <div class="relative w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
-                    ${totalPending > 0 ? `
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
-                            ${badgeText}
-                        </span>` : ''}
-                </div>
-                <span class="text-[9px] text-center text-bpr-dark font-medium leading-tight">${menu.name}</span>
+    menuGrid.innerHTML = visibleMenus.map(menu => {
+        const totalPending = menu.pending + menu.urgent;
+        const badgeText = `${totalPending}`;
+        return `
+        <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu="${menu.id}">
+            <div class="relative w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                ${totalPending > 0 ? `
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                        ${badgeText}
+                    </span>` : ''}
             </div>
-        `}).join('');
-        lucide.createIcons();
-        
-        document.querySelectorAll('[data-menu-all]').forEach(el => {
-            el.addEventListener('click', () => {
-                const menuId = parseInt(el.dataset.menuAll);
-                const menu = menus.find(m => m.id === menuId);
-                
-                if (menu.name === "Pembukaan Rekening") {
-                    window.location.href = "pembukaan-rekening.html";
-                } else {
-                    alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
-                    document.getElementById('allMenuModal').style.display = 'none';
-                }
-            });
-        });
+            <span class="text-[10px] text-center text-bpr-dark font-semibold leading-tight px-1">${menu.name}</span>
+        </div>
+    `}).join('');
+    
+    lucide.createIcons();
+    
+    // Pasang event listener untuk home
+    setupHomeMenuEvents();
+}
+
+// ========== RENDER ALL MENU MODAL ==========
+function renderAllMenuModal() {
+    const allMenuList = document.getElementById('allMenuList');
+    allMenuList.innerHTML = menus.map(menu => {
+        const totalPending = menu.pending + menu.urgent;
+        const badgeText = `${totalPending}`;
+        return `
+        <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu-all="${menu.id}">
+            <div class="relative w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                ${totalPending > 0 ? `
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                        ${badgeText}
+                    </span>` : ''}
+            </div>
+            <span class="text-[9px] text-center text-bpr-dark font-medium leading-tight">${menu.name}</span>
+        </div>
+    `}).join('');
+    lucide.createIcons();
+}
+
+// ========== EVENT DELEGATION UNTUK ALL MENU ==========
+// Cukup 1 kali di luar, pake event delegation biar otomatis
+document.getElementById('allMenuList').addEventListener('click', (e) => {
+    const target = e.target.closest('[data-menu-all]');
+    if (!target) return;
+    
+    const menuId = parseInt(target.dataset.menuAll);
+    const menu = menus.find(m => m.id === menuId);
+    
+    const menuMap = {
+        "Transaksi Umum": "pembukaan-rekening.html",
+        "Transaksi Antar GL": "transaksi-antar-gl.html",
+        "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+        "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+        "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+        "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+        "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+        "Penutupan Rekening Tabungan": "penutupan-rek-tabungan.html"
+    };
+    
+    const targetPage = menuMap[menu?.name];
+    if (targetPage) {
+        window.location.href = targetPage;
+        document.getElementById('allMenuModal').style.display = 'none';
+    } else {
+        alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
+        document.getElementById('allMenuModal').style.display = 'none';
     }
+});
+
+// Panggil renderMenuGrid di awal
+renderMenuGrid();
     
     function updateStatistics() {
     document.getElementById('pendingCount').innerText = statsData.pending;

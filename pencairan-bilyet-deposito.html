@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-Approval - Pembukaan Rekening</title>
+    <title>M-Approval - Break Bilyet Deposito</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -113,8 +114,8 @@
                     <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
                 </button>
                 <div class="flex-1">
-                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Pembukaan Rekening</h1>
-                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Giro Korporasi</p>
+                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Break Bilyet Deposito</h1>
+                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Break Bilyet Deposito</p>
                 </div>
                 <button id="filterBtn" class="p-2 active:bg-slate-100 relative rounded-xl transition border border-slate-200">
                     <i data-lucide="sliders-horizontal" class="w-4 h-4 text-bpr-dark"></i>
@@ -199,211 +200,63 @@
 
     // ========== DATA ==========
     let approvalData = [
-    // ========== TARIK TUNAI ==========
     { 
-        id: 1,
-        // ===== UNTUK GRID LIST =====
-        noApproval: "TRX/2026/001",
-        kategori: "withdraw",
-        judul: "Tarik Tunai",
-        namaPengaju: "Ahmad Firmansyah",
-        posisiPengaju: "Teller",
-        tanggalPengajuan: "2026-06-16",
-        waktuPengajuan: "09:30",
-        prioritas: "urgent",
-        status: "pending",
-        approvalBy: null,
-        tanggalApproval: null,
-        
-        
-        // ===== UNTUK DETAIL DATA =====
-        detailData: [
-            {
-                title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "No.Rekening", value: "Tarik Tunai" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" },
-                    { label: "Nominal", value: "Rp.5.000.000" }
-                ]
-            },
-            {
-                title: "Data Nasabah",
-                fields: [
-                    { label: "Nama Nasabah", value: "Akbar Tunjang" },
-                    { label: "Identitas", value: "Teller" },
-                    { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
-                ]
-            }
-        ]
-    },
-
-    { 
-        id: 2,
-        // ===== UNTUK GRID LIST =====
-        noApproval: "TRX/2026/001",
-        kategori: "withdraw",
-        judul: "Tarik Tunai",
-        namaPengaju: "Ahmad Firmansyah",
-        posisiPengaju: "Teller",
-        tanggalPengajuan: "2026-06-16",
-        waktuPengajuan: "09:30",
-        prioritas: "urgent",
-        status: "pending",
-        approvalBy: null,
-        tanggalApproval: null,
-       
-        
-        // ===== UNTUK DETAIL DATA =====
-        detailData: [
-            {
-                title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "No.Rekening", value: "Tarik Tunai" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" },
-                    { label: "Nominal", value: "Rp.5.000.000" }
-                ]
-            },
-            {
-                title: "Data Nasabah",
-                fields: [
-                    { label: "Nama Nasabah", value: "Akbar Tunjang" },
-                    { label: "Identitas", value: "Teller" },
-                    { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
-                ]
-            }
-        ]
-    },
-    { 
-        id: 3,
-        // ===== UNTUK GRID LIST =====
-        noApproval: "TRX/2026/001",
-        kategori: "withdraw",
-        judul: "Tarik Tunai",
-        namaPengaju: "Ahmad Firmansyah",
-        posisiPengaju: "Teller",
-        tanggalPengajuan: "2026-06-16",
-        waktuPengajuan: "09:30",
-        prioritas: "urgent",
-        status: "pending",
-        approvalBy: null,
-        tanggalApproval: null,
-        
-        
-        // ===== UNTUK DETAIL DATA =====
-        detailData: [
-            {
-                title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "No.Rekening", value: "Tarik Tunai" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" },
-                    { label: "Nominal", value: "Rp.5.000.000" }
-                ]
-            },
-            {
-                title: "Data Nasabah",
-                fields: [
-                    { label: "Nama Nasabah", value: "Akbar Tunjang" },
-                    { label: "Identitas", value: "Teller" },
-                    { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
-                ]
-            }
-        ]
-    },
-{ 
-    id:4,
-    noApproval: "TRX/2026/004",
-    kategori: "deposit",
-    judul: "Setor Tunai",
-    namaPengaju: "Rina Andriani",
-    posisiPengaju: "Marketing",
-    tanggalPengajuan: "2026-06-16",
-    waktuPengajuan: "13:20",
-    prioritas: "high",
-    status: "pending",
-    approvalBy: null,
-    tanggalApproval: null,
+    "id": 1,
+    // ===== UNTUK GRID LIST =====
+    "noApproval": "TRX/2026/001",
+    "kategori": "",
+    "judul": "Pencairan Bilyet Deposito",
+    "namaPengaju": "Ahmad Firmansyah", 
+    "posisiPengaju": "Teller", 
+    "tanggalPengajuan": "2026-06-17",
+    "waktuPengajuan": "09:30",
+    "prioritas": "High",
+    "status": "pending",
+    "approvalBy": null,
+    "tanggalApproval": null,
     
-    
-    detailData: [
+    // ===== UNTUK DETAIL DATA =====
+    "detailData": [
         {
-            title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" }
-                    
+            "title": "DATA REKENING",
+            "fields": [
+                { "label": "Nomor Rekening", "value": "888-3-0082939-1" },
+                { "label": "Kantor Pemilik Rekening", "value": "888 - KANTOR PUSAT" },
+                { "label": "Kantor Kas", "value": "-" },
+                { "label": "Produk Deposito", "value": "DD - DEP. BJK12" },
+                { "label": "Jangka Waktu Pokok", "value": "12 BULAN" },
+                { "label": "Suku Bunga (%)", "value": "6.5000" },
+                { "label": "Periode", "value": "28/05/2025 - 28/05/2026" },
+                { "label": "Nama Nasabah", "value": "DHARWIS HANDAYANI SUNAN TRI" },
+                { "label": "Nomor Identitas", "value": "KTP - 1640763705460449" }
             ]
         },
         {
-            title: "Data Rekening",
-            fields: [
-                { label: "No.Rekening", value: "Rina Andriani" },
-                { label: "Nama Rekening", value: "Marketing" },
-                { label: "Total Nominal", value: "Rp.400.000" },
-                { label: "Narasi", value: "-" },
-                { label: "Pokok", value: "-" },
-                { label: "Bunga", value: "-" },
-                { label: "Denda", value: "-" },
-                { label: "Pinalti", value: "-" },
-                { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
-            ]
-        }
-    ]
-},
-    { 
-    id: 5,
-    noApproval: "TRX/2026/007",
-    kategori: "transfer",
-    judul: "Pemindahbukuan",
-    namaPengaju: "Nia Kurniawati",
-    posisiPengaju: "Customer Service",
-    tanggalPengajuan: "2026-06-16",
-    waktuPengajuan: "09:15",
-    prioritas: "urgent",
-    status: "pending",
-    approvalBy: null,
-    tanggalApproval: null,
-    
-    
-    detailData: [
-        {
-            title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" },
-                    { label: "Tanggal Efektif", value: "2026-06-16 09:15" },
-                    
+            "title": "PENUTUPAN REKENING",
+            "fields": [
+                { "label": "Cara Pembayaran*", "value": "TUNAI" },
+                { "label": "Nomor Rekening", "value": "888400094525" },
+                { "label": "Nama Pemilik Rekening", "value": "DHARWIS HANDAYANI SUNAN TRI" }
             ]
         },
         {
-            title: "Data Rekening",
-            fields: [
-                { label: "No.Rekening", value: "Rina Andriani" },
-                { label: "Nama Rekening", value: "Marketing" },
-                { label: "Debet/Kredit", value: "-" },
-                { label: "Total Nominal", value: "Rp.400.000" },
-                { label: "Narasi", value: "-" },
-                { label: "Pokok", value: "-" },
-                { label: "Bunga", value: "-" },
-                { label: "Denda", value: "-" },
-                { label: "Pinalti", value: "-" },
-                { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
+            "title": "RINCIAN SALDO REKENING",
+            "fields": [
+                { "label": "Saldo", "value": "666,847,540.00" },
+                { "label": "Bunga Belum Dibayarkan", "value": "0.00" },
+                { "label": "Cadangan Bunga", "value": "2,850,096.00" },
+                { "label": "Bunga Dibayarkan", "value": "2,850,096.00" },
+                { "label": "Pajak", "value": "570,019.00" },
+                { "label": "Penalti", "value": "0.00" },
+                { "label": "Total Dibayar", "value": "669,127,617.00" }
             ]
-
         }
     ]
 }
 ];
-function syncData() {
-    localStorage.setItem('approvalData', JSON.stringify(approvalData));
-}
+	function syncData() {
+	    localStorage.setItem('approvalData', JSON.stringify(approvalData));
+	}
 
     let currentTab = "pending";
     let currentFilter = { date: "", priority: "all" };
@@ -428,23 +281,6 @@ function syncData() {
             default: return priority;
         }
     }
-    function getKategoriClass(kategori) {
-    switch(kategori) {
-        case 'withdraw': return 'bg-blue-500';
-        case 'deposit': return 'bg-emerald-500';
-        case 'transfer': return 'bg-purple-500';
-        default: return 'bg-gray-500';
-    }
-}
-
-function getKategoriText(kategori) {
-    switch(kategori) {
-        case 'withdraw': return 'Tarik Tunai';
-        case 'deposit': return 'Setor Tunai';
-        case 'transfer': return 'Pemindahbukuan';
-        default: return kategori;
-    }
-}
 
     function filterData() {
         let filtered = [...approvalData];
@@ -533,36 +369,14 @@ function getKategoriText(kategori) {
         approvalDateText = '-';
     }
     
-    // Tentukan icon berdasarkan kategori (TANPA MENGUBAH DESIGN HEADER)
-    let kategoriIcon = '';
-    if (item.kategori === 'withdraw') kategoriIcon = 'arrow-down';
-    else if (item.kategori === 'deposit') kategoriIcon = 'arrow-up';
-    else if (item.kategori === 'transfer') kategoriIcon = 'repeat';
-    else kategoriIcon = 'building-2';
-    
-    // Tentukan teks judul berdasarkan kategori
-    let judulText = '';
-    if (item.kategori === 'withdraw') judulText = 'Tarik Tunai';
-    else if (item.kategori === 'deposit') judulText = 'Setor Tunai';
-    else if (item.kategori === 'transfer') judulText = 'Pemindahbukuan';
-    else judulText = item.judul;
-    
-    // Tentukan info tambahan berdasarkan kategori (ditampilkan di bawah nominal)
-    let kategoriInfo = '';
-    if (item.kategori === 'withdraw' || item.kategori === 'deposit') {
-        kategoriInfo = `<p class="text-xs text-slate-500 mt-1">No. Rekening: ${item.norek}</p>`;
-    } else if (item.kategori === 'transfer') {
-        kategoriInfo = `<p class="text-xs text-slate-500 mt-1">Dari: ${item.norekAsal} → Ke: ${item.norekTujuan}</p>`;
-    }
-    
     return `
         <div class="card-item bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-            <!-- Header card dengan warna sesuai status (PERTAHANKAN DESIGN EXISTING) -->
+            <!-- Header card dengan warna sesuai status -->
             <div class="px-4 py-3 ${item.status === 'pending' ? 'bg-bpr-pending' : item.status === 'approved' ? 'bg-bpr-approved' : 'bg-bpr-rejected'}">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="${kategoriIcon}" class="w-4 h-4 text-white"></i>
-                        <span class="text-white font-bold text-sm">${judulText}</span>
+                        <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
+                        <span class="text-white font-bold text-sm">${item.judul}</span>
                     </div>
                     <span class="text-white text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/20">${getPriorityText(item.prioritas)}</span>
                 </div>
@@ -585,9 +399,7 @@ function getKategoriText(kategori) {
                     <span class="text-xs text-slate-500">Diajukan oleh <span class="font-semibold text-slate-700">${item.namaPengaju}</span> • ${item.posisiPengaju}</span>
                 </div>
                 
-                
-                
-                <!-- Horizontal step approval (PERTAHANKAN DESIGN EXISTING) -->
+                <!-- Horizontal step approval -->
                 <div class="flex items-center justify-between mt-3 pt-2 border-t border-slate-100">
                     <div class="flex-1">
                         <div class="flex items-center gap-2">
@@ -725,29 +537,19 @@ function showErrorPopup(title, message) {
     }, 5000);
 }
 
-    // Detail page functions
     function goToDetail(id) {
         syncData();
     const item = approvalData.find(d => d.id === id);
     if (!item) return;
     
-    // Jika status approved atau rejected, pakai halaman view (1 file saja)
+    // Jika status approved atau rejected, pakai halaman view
     if (item.status === 'approved' || item.status === 'rejected') {
-        window.location.href = `detail-view-trans-umum.html?id=${id}`;
+        window.location.href = `detail-view-breakdeposito.html?id=${id}`;
         return;
     }
     
-    // Untuk status pending, redirect ke halaman detail sesuai kategori
-    if (item.kategori === 'withdraw') {
-        window.location.href = `detail-tarik-tunai.html?id=${id}`;
-    } else if (item.kategori === 'deposit') {
-        window.location.href = `detail-setor-tunai.html?id=${id}`;
-    } else if (item.kategori === 'transfer') {
-        window.location.href = `detail-pemindahbukuan.html?id=${id}`;
-    } else {
-        // Fallback untuk data yang tidak punya kategori
-        window.location.href = `detail-approval1.html?id=${id}`;
-    }
+    // Untuk pending, redirect ke halaman detail transaksi GL
+    window.location.href = `detail-breakdeposito.html?id=${id}`;
 }
 
 
@@ -789,18 +591,18 @@ function batchReject() {
 }
 
 
-
 function executeBatchApprove(selectedIds) {
     const successIds = [];
-    const failedIds = [];
+    const failedIds = []; // <--- Siapkan penampung data gagal
     
     selectedIds.forEach(id => {
         const item = approvalData.find(d => d.id === id);
         if (item && item.status === 'pending') {
+            // Simulasi error 30% khusus jika memilih ALL DATA (10 data terpilih)
             const isError = selectedIds.length >= 10 ? (Math.random() < 0.3) : false;
             
             if (isError) {
-                failedIds.push(id);
+                failedIds.push(id); // Masuk list gagal jika terkena internal server error
             } else {
                 item.status = 'approved';
                 item.approvalBy = "John Doe (Direksi)";
@@ -812,14 +614,11 @@ function executeBatchApprove(selectedIds) {
     });
     
     successIds.forEach(id => selectedItems.delete(id));
-    
-    // ========== SIMPAN PERUBAHAN KE LOCALSTORAGE ==========
-    localStorage.setItem('approvalData', JSON.stringify(approvalData));
-    
     updateBatchMode();
     updateTabCounts();
     renderList();
     
+    // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(
             'Internal Server Error',
@@ -832,14 +631,14 @@ function executeBatchApprove(selectedIds) {
     }
 }
 
-// ========== 3. FUNCTION EXECUTE BATCH REJECT ==========
 function executeBatchReject(selectedIds) {
     const successIds = [];
-    const failedIds = [];
+    const failedIds = []; // <--- Siapkan penampung data gagal
     
     selectedIds.forEach(id => {
         const item = approvalData.find(d => d.id === id);
         if (item && item.status === 'pending') {
+            // Simulasi error 30% khusus jika memilih ALL DATA (10 data terpilih)
             const isError = selectedIds.length >= 10 ? (Math.random() < 0.3) : false;
             
             if (isError) {
@@ -855,14 +654,11 @@ function executeBatchReject(selectedIds) {
     });
     
     successIds.forEach(id => selectedItems.delete(id));
-    
-    // ========== SIMPAN PERUBAHAN KE LOCALSTORAGE ==========
-    localStorage.setItem('approvalData', JSON.stringify(approvalData));
-    
     updateBatchMode();
     updateTabCounts();
     renderList();
     
+    // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(
             'Internal Server Error',
@@ -946,8 +742,8 @@ function resetSelectAllButton() {
     // Set default date to today
     // Set default date ke tanggal yang ada data (2026-06-14)
 // SET DEFAULT FILTER KE TANGGAL YANG ADA DATANYA (2026-06-14)
-currentFilter.date = '2026-06-16';
-document.getElementById('dateFilter').value = '2026-06-16';
+currentFilter.date = '2026-06-14';
+document.getElementById('dateFilter').value = '2026-06-14';
     
     // Tab switching
     document.querySelectorAll('.tab-modern').forEach(btn => {
