@@ -321,27 +321,34 @@
                 const menuId = parseInt(el.dataset.menu || el.dataset.menuAll);
                 const menu = menus.find(m => m.id === menuId);
                 
-                const menuMap = {
-                    "Administrasi Pemakai ARB+": "pengguna-arb.html",
-                    "Transaksi Umum": "pembukaan-rekening.html",
-                    "Transaksi Antar GL": "transaksi-antar-gl.html",
-                    "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
-                    "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
-                    "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
-                    "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
-                    "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
-                    "Pinjaman Adendum": "adendum-pinjaman.html",
-                    "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
-                    "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
-                    "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
-                    "Blokir Rekening Tabungan": "blokir-rek-tab.html",
-                    "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
-                    "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
-                    "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
-                    "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
-                    "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
-                    "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
-                };
+               const menuMap = {
+                "Administrasi Pemakai ARB+": "pengguna-arb.html",
+                "Transaksi Umum": "pembukaan-rekening.html",
+                "Transaksi Antar GL": "transaksi-antar-gl.html",
+                "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+                "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+                "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+                "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+                "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+                "Pinjaman Adendum": "adendum-pinjaman.html",
+                "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
+                "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
+                "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
+                "Blokir Rekening Tabungan": "blokir-rek-tab.html",
+                "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
+                "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
+                "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
+                "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
+                "Transaksi Setoran Pinjaman Instansi": "trans-setor-pinj-instans.html", 
+                "Transaksi Slisih Kas Teller": "trans-selisih-kas.html",
+                "Hapus Buku Pinjaman": "hapus-buk-pinj.html",
+                "Restrukturisasi Pinjaman": "rest-pinj.html",
+                "Batal Restrukturisasi Pinjaman": "batal-rest-pinj.html",
+                "Batal Adendum Pinjaman": "batal-adendum-pinj.html",
+                "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
+                "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+                
+            };
                 
                 const targetPage = menuMap[menu?.name];
                 if (targetPage) {
