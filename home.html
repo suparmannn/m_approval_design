@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>M-Approval BPR - Beranda</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
@@ -45,25 +43,45 @@
         
         .notification-badge {
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: -8px;
+            right: -8px;
             background-color: #EF4444;
             color: white;
-            border-radius: 20px;
-            min-width: 65px;
-            height: 18px;
-            font-size: 7px;
+            border-radius: 9999px;
+            min-width: 22px;
+            height: 22px;
+            font-size: 11px;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            padding: 0 5px;
-            white-space: nowrap;
-            font-family: monospace;
+            padding: 0 7px;
+            border: 2.5px solid white;
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5);
+            line-height: 1;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .notification-badge-footer {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 14px;
+            height: 14px;
+            background-color: #EF4444;
+            border-radius: 9999px;
+            border: 2.5px solid white;
+            box-shadow: 0 1px 6px rgba(239, 68, 68, 0.4);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
         
         .status-card {
-            transition: transform 0.1s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .status-card:active {
@@ -95,12 +113,6 @@
             color: #FBBF24;
         }
         
-        /* Warna icon menu */
-        .icon-rekening { color: #3B82F6; }
-        .icon-data { color: #10B981; }
-        .icon-pinjaman { color: #F59E0B; }
-        .icon-default { color: #6B7280; }
-        
         ::-webkit-scrollbar {
             width: 3px;
         }
@@ -119,36 +131,13 @@
         .animate-slideUp {
             animation: slideUp 0.3s ease;
         }
-         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
-    
-    @keyframes shimmer {
-        0% { transform: translateX(-100%) skewX(-12deg); }
-        100% { transform: translateX(200%) skewX(-12deg); }
-    }
-    .animate-shimmer {
-        animation: shimmer 4s infinite ease-in-out;
-    }
-    .status-card {
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        min-height: 70px;
-        max-height: 85px;
-    }
-    .status-card:hover .animate-pulse {
-        animation-duration: 0.8s;
-    }
-    .status-card * {
-        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-</style>
-
-<!-- Include Lucide icons if not already -->
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
     </style>
 </head>
 <body class="bg-gray-200 flex justify-center items-start font-sans">
     
 <div class="mobile-container">
-    <!-- Header Section -->
-    <div class="bg-white sticky top-0 z-40">
+    <div class="bg-white sticky top-0 z-40 shadow-sm">
         <div class="px-4 pt-4 pb-3">
             <div class="flex justify-between items-start">
                 <div>
@@ -162,12 +151,14 @@
                 <div class="relative">
                     <button id="notificationBell" class="relative p-2 rounded-full active:bg-gray-100 transition">
                         <i data-lucide="bell" class="w-5 h-5 text-bpr-dark"></i>
-                        <span id="notificationCount" class="notification-badge" style="display: none; background-color: #EF4444; min-width: 18px; height: 18px; top: -5px; right: -5px;">0</span>
+                        <span id="notificationCount" class="notification-badge" style="display: none;">0</span>
                     </button>
                     
-                    <!-- Notification Dropdown -->
                     <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 hidden z-50 notification-dropdown" style="max-height: 400px; overflow-y: auto;">
-                        <div class="p-3 border-b border-gray-100 font-semibold text-bpr-dark text-sm">Notifikasi</div>
+                        <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-slate-50 rounded-t-xl">
+                            <span onclick="window.location.href='list-notif.html'" class="font-bold text-bpr-dark text-xs uppercase tracking-wider cursor-pointer hover:text-bpr-yellow transition">Notifikasi</span>
+                            <button id="markAllReadBtn" class="text-[11px] text-amber-600 font-semibold hover:underline active:opacity-70">Tandai dibaca</button>
+                        </div>
                         <div id="notificationList" class="divide-y divide-gray-100"></div>
                     </div>
                 </div>
@@ -175,10 +166,8 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="px-4 py-3 pb-24 overflow-y-auto" style="height: calc(100vh - 100px);">
         
-        <!-- Filter Date (Pertama sebelum card dashboard) -->
         <div class="bg-white rounded-xl p-3 shadow-sm mb-4">
             <div class="flex justify-between items-center">
                 <label class="text-sm font-semibold text-bpr-dark">📅 Filter Tanggal</label>
@@ -189,145 +178,76 @@
             </div>
         </div>
 
-        <!-- Stats Cards (2 kolom grid) -->
-        <!-- Stats Cards - Desain Modern Tanpa Persentase -->
-<!-- <div class="space-y-2 mb-2">
-    
-    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-3 shadow-lg w-full">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-white/20 rounded-full p-2 backdrop-blur shrink-0">
-                    <i data-lucide="clock" class="w-5 h-5 text-white"></i>
+        <div class="grid grid-cols-3 gap-3 mb-4">
+            <div class="status-card bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-600 rounded-2xl p-3 shadow-md border border-white/10 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex justify-between items-start gap-1">
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-white/75 font-bold uppercase tracking-wider truncate">Pending</p>
+                        <p class="text-2xl font-extrabold text-white mt-0.5 tracking-tight drop-shadow-sm" id="pendingCount">12</p>
+                    </div>
+                    <div class="bg-white/20 rounded-xl p-1.5 backdrop-blur-md border border-white/20 shrink-0 shadow-sm">
+                        <i data-lucide="clock" class="w-4 h-4 text-white"></i>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-xs text-white opacity-90 font-medium">Pending</p>
-                    <p class="text-[10px] text-white/80">Menunggu persetujuan</p>
-                </div>
+                <p class="text-[9px] text-white/90 font-medium mt-3 leading-tight truncate">Menunggu berkas</p>
             </div>
-            <p class="text-3xl font-bold text-white" id="pendingCount">12</p>
-        </div>
-    </div>
 
-    <div class="grid grid-cols-2 gap-2">
-        <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-3 shadow-lg">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-white opacity-90">Disetujui</p>
-                    <p class="text-2xl font-bold text-white mt-1" id="approvedCount">28</p>
+            <div class="status-card bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 rounded-2xl p-3 shadow-md border border-white/10 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex justify-between items-start gap-1">
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-white/75 font-bold uppercase tracking-wider truncate">Disetujui</p>
+                        <p class="text-2xl font-extrabold text-white mt-0.5 tracking-tight drop-shadow-sm" id="approvedCount">28</p>
+                    </div>
+                    <div class="bg-white/20 rounded-xl p-1.5 backdrop-blur-md border border-white/20 shrink-0 shadow-sm">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-white"></i>
+                    </div>
                 </div>
-                <div class="bg-white/20 rounded-full p-1.5 backdrop-blur">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-white"></i>
-                </div>
+                <p class="text-[9px] text-white/90 font-medium mt-3 leading-tight truncate">Sudah diproses</p>
             </div>
-            <p class="text-[10px] text-white/80 mt-2">Sudah diproses</p>
-        </div>
 
-        <div class="status-card relative bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-3 shadow-lg overflow-hidden">
-            <div class="absolute inset-0 bg-white/5 pointer-events-none"></div>
-            <div class="flex justify-between items-start relative z-10">
-                <div>
-                    <p class="text-xs text-white opacity-90">Ditolak</p>
-                    <p class="text-2xl font-bold text-white mt-1" id="rejectedCount">3</p>
+            <div class="status-card bg-gradient-to-br from-rose-400 via-red-500 to-pink-600 rounded-2xl p-3 shadow-md border border-white/10 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex justify-between items-start gap-1">
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-white/75 font-bold uppercase tracking-wider truncate">Ditolak</p>
+                        <p class="text-2xl font-extrabold text-white mt-0.5 tracking-tight drop-shadow-sm" id="rejectedCount">3</p>
+                    </div>
+                    <div class="bg-white/20 rounded-xl p-1.5 backdrop-blur-md border border-white/20 shrink-0 shadow-sm">
+                        <i data-lucide="x-circle" class="w-4 h-4 text-white"></i>
+                    </div>
                 </div>
-                <div class="bg-white/20 rounded-full p-1.5 backdrop-blur">
-                    <i data-lucide="x-circle" class="w-5 h-5 text-white"></i>
-                </div>
-            </div>
-            <p class="text-[10px] text-white/80 mt-2 relative z-10">Tidak disetujui</p>
-        </div>
-    </div>
-
-</div> -->
-<div class="grid grid-cols-3 gap-2 mb-2">
-    <!-- Pending Card -->
-    <div class="status-card bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-600 rounded-xl p-2.5 shadow-[0_4px_15px_rgba(245,158,11,0.25)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(245,158,11,0.35)] border border-white/10">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-[9px] text-white/90 font-bold tracking-widest uppercase">Pending</p>
-                <p class="text-xl font-black text-white mt-0.5 drop-shadow-sm tracking-tight" id="pendingCount" style="font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;">12</p>
-            </div>
-            <div class="bg-white/25 rounded-full p-1.5 backdrop-blur-sm shadow-inner shrink-0 ring-1 ring-white/20">
-                <i data-lucide="clock" class="w-3.5 h-3.5 text-white drop-shadow-sm"></i>
+                <p class="text-[9px] text-white/90 font-medium mt-3 leading-tight truncate">Tidak disetujui</p>
             </div>
         </div>
-        <p class="text-[8px] text-white/80 font-semibold mt-1 flex items-center gap-1.5 tracking-wide">
-            <span class="inline-block w-1 h-1 rounded-full bg-white/60 animate-pulse"></span>
-            Menunggu persetujuan
-        </p>
-    </div>
 
-    <!-- Approved Card -->
-    <div class="status-card bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 rounded-xl p-2.5 shadow-[0_4px_15px_rgba(34,197,94,0.25)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(34,197,94,0.35)] border border-white/10">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-[9px] text-white/90 font-bold tracking-widest uppercase">Disetujui</p>
-                <p class="text-xl font-black text-white mt-0.5 drop-shadow-sm tracking-tight" id="approvedCount" style="font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;">28</p>
-            </div>
-            <div class="bg-white/25 rounded-full p-1.5 backdrop-blur-sm shadow-inner shrink-0 ring-1 ring-white/20">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-white drop-shadow-sm"></i>
-            </div>
-        </div>
-        <p class="text-[8px] text-white/80 font-semibold mt-1 flex items-center gap-1.5 tracking-wide">
-            <span class="inline-block w-1 h-1 rounded-full bg-white/60"></span>
-            Sudah diproses
-        </p>
-    </div>
-
-    <!-- Rejected Card -->
-    <div class="status-card relative bg-gradient-to-br from-rose-400 via-red-500 to-pink-600 rounded-xl p-2.5 shadow-[0_4px_15px_rgba(239,68,68,0.25)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(239,68,68,0.35)] border border-white/10 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 pointer-events-none animate-shimmer"></div>
-        <div class="absolute -top-6 -right-6 w-16 h-16 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="flex justify-between items-start relative z-10">
-            <div>
-                <p class="text-[9px] text-white/90 font-bold tracking-widest uppercase">Ditolak</p>
-                <p class="text-xl font-black text-white mt-0.5 drop-shadow-sm tracking-tight" id="rejectedCount" style="font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;">3</p>
-            </div>
-            <div class="bg-white/25 rounded-full p-1.5 backdrop-blur-sm shadow-inner shrink-0 ring-1 ring-white/20">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5 text-white drop-shadow-sm"></i>
-            </div>
-        </div>
-        <p class="text-[8px] text-white/80 font-semibold mt-1 relative z-10 flex items-center gap-1.5 tracking-wide">
-            <span class="inline-block w-1 h-1 rounded-full bg-white/60"></span>
-            Tidak disetujui
-        </p>
-    </div>
-</div>
-
-        <!-- Menu Section -->
         <div class="mb-4">
             <div class="flex justify-between items-center mb-3">
                 <h1 class="text-sm font-bold text-bpr-dark">Menu Approval</h1>
                 <button id="showAllMenuBtn" class="text-bpr-yellow text-xs font-semibold active:opacity-70">Lihat Semua →</button>
             </div>
-            
-            <!-- Menu Grid (8 menu) -->
             <div class="menu-grid" id="menuGrid"></div>
         </div>
     </div>
 
-    <!-- Bottom Navigation (Fixed) -->
-    
-<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg" style="max-width: 428px; margin: 0 auto;">
-    <div class="flex justify-around items-center py-2">
-        <button class="bottom-nav-item active flex flex-col items-center gap-0.5" data-nav="home">
-            <i data-lucide="home" class="w-5 h-5"></i>
-            <span class="text-[10px]">Beranda</span>
-        </button>
-        <button id="bottomNotificationBtn" class="bottom-nav-item flex flex-col items-center gap-0.5" data-nav="notification">
-            <div class="relative">
-                <i data-lucide="mail" class="w-5 h-5"></i>
-                <span id="bottomNotifBadge" class="notification-badge" style="display: none; background-color: #EF4444; min-width: 18px; height: 18px; top: -5px; right: -5px;">0</span>
-            </div>
-            <span class="text-[10px]">Notifikasi</span>
-        </button>
-        <button class="bottom-nav-item flex flex-col items-center gap-0.5" data-nav="profile">
-            <i data-lucide="user" class="w-5 h-5"></i>
-            <span class="text-[10px]">Profil</span>
-        </button>
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg" style="max-width: 428px; margin: 0 auto;">
+        <div class="flex justify-around items-center py-2">
+            <button class="bottom-nav-item active flex flex-col items-center gap-0.5" data-nav="home">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px]">Beranda</span>
+            </button>
+            <button id="bottomNotificationBtn" class="bottom-nav-item flex flex-col items-center gap-0.5" data-nav="notification">
+                <div class="relative">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                    <span id="bottomNotifBadge" class="notification-badge-footer" style="display: none;"></span>
+                </div>
+                <span class="text-[10px]">Notifikasi</span>
+            </button>
+            <button class="bottom-nav-item flex flex-col items-center gap-0.5" data-nav="profile">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="text-[10px]">Profil</span>
+            </button>
+        </div>
     </div>
-</div>
 
-    <!-- Modal Semua Menu -->
     <div id="allMenuModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-end justify-center" style="display: none;">
         <div class="bg-white rounded-t-3xl w-full max-w-[428px] max-h-[85vh] overflow-y-auto animate-slideUp">
             <div class="sticky top-0 bg-white p-4 border-b border-gray-100 flex justify-between items-center">
@@ -343,11 +263,10 @@
     lucide.createIcons();
 
     // ========== DATA SIMULASI ==========
-  
-let currentUser = {
-    name: localStorage.getItem('userName') || "John Doe",
-    username: localStorage.getItem('loggedInUser') || "john_doe"
-};
+    let currentUser = {
+        name: localStorage.getItem('userName') || "John Doe",
+        username: localStorage.getItem('loggedInUser') || "john_doe"
+    };
     
     let statsData = { pending: 12, rejected: 3, approved: 28, urgent: 4 };
     
@@ -360,185 +279,166 @@ let currentUser = {
     ];
     
     const menus = [
-  { id: 1, name: "Administrasi Pemakai ARB+", icon: "user-cog", pending: 1, urgent: 0, color: "text-blue-500" },
-  { id: 2, name: "Transaksi Umum", icon: "arrow-left-right", pending: 5, urgent: 0, color: "text-slate-600" },
-  { id: 3, name: "Transaksi Antar GL", icon: "book-open", pending: 10, urgent: 0, color: "text-emerald-500" },
-  { id: 4, name: "Pembukaan Rek Deposito", icon: "piggy-bank", pending: 1, urgent: 0, color: "text-amber-500" },
-  { id: 5, name: "Pembukaan Rek Pinjaman", icon: "hand-coins", pending: 1, urgent: 0, color: "text-purple-500" },
-  { id: 6, name: "Pembukaan Rek Tabungan", icon: "wallet", pending: 1, urgent: 0, color: "text-sky-500" },
-  { id: 7, name: "Pencairan/Break Bilyet Deposito", icon: "gavel", pending: 1, urgent: 0, color: "text-rose-500" },
-  { id: 8, name: "Penutupan Rekening Pinjaman", icon: "folder-closed", pending: 1, urgent: 0, color: "text-indigo-500" },
-  { id: 9, name: "Penutupan Rekening Tabungan", icon: "folder-x", pending: 1, urgent: 0, color: "text-cyan-500" },
-  { id: 10, name: "Pinjaman Adendum", icon: "file-plus-2", pending: 1, urgent: 0, color: "text-teal-600" },
-  { id: 11, name: "Kolektabilitas Manual Pinjaman", icon: "activity", pending: 1, urgent: 0, color: "text-yellow-600" },
-  { id: 12, name: "Suku Bunga Khusus Tabungan", icon: "percent", pending: 1, urgent: 0, color: "text-red-500" },
-  { id: 13, name: "Blokir Bilyet Deposito", icon: "shield-alert", pending: 1, urgent: 0, color: "text-orange-600" },
-  { id: 14, name: "Blokir Rekening Tabungan", icon: "ban", pending: 1, urgent: 0, color: "text-rose-600" },
-  { id: 15, name: "Blokir Dana Tabungan", icon: "lock", pending: 1, urgent: 0, color: "text-red-600" },
-  { id: 16, name: "Pembatalan Blokir Rek.Tabungan", icon: "unlock", pending: 1, urgent: 0, color: "text-fuchsia-500" },
-  { id: 17, name: "Pembatalan Blokir Dana Tabungan", icon: "shield-check", pending: 1, urgent: 0, color: "text-pink-500" },
-  { id: 18, name: "Transaksi Setoran Tabungan Instansi", icon: "building-2", pending: 1, urgent: 0, color: "text-indigo-600" },
-  { id: 19, name: "Transaksi Setoran Pinjaman Instansi", icon: "landmark", pending: 0, urgent: 0, color: "text-orange-500" },
-  { id: 20, name: "Transaksi Slisih Kas Teller", icon: "scale", pending: 0, urgent: 0, color: "text-amber-600" },
-  { id: 21, name: "Hapus Buku Pinjaman", icon: "file-minus-2", pending: 0, urgent: 0, color: "text-slate-400" },
-  { id: 22, name: "Restrukturisasi Pinjaman", icon: "refresh-cw", pending: 0, urgent: 0, color: "text-emerald-600" },
-  { id: 23, name: "Batal Restrukturisasi Pinjaman", icon: "rotate-ccw", pending: 0, urgent: 0, color: "text-blue-400" },
-  { id: 24, name: "Batal Adendum Pinjaman", icon: "file-x-2", pending: 0, urgent: 0, color: "text-violet-500" },
-  { id: 25, name: "Pemeliharaan Finansial", icon: "wrench", pending: 1, urgent: 0, color: "text-zinc-500" },
-  { id: 26, name: "Pembatalan Blokir Bilyet Deposito", icon: "key-round", pending: 1, urgent: 0, color: "text-lime-600" }
-];
-    
+        { id: 1, name: "Administrasi Pemakai ARB+", icon: "user-cog", pending: 1, urgent: 0, color: "text-blue-500" },
+        { id: 2, name: "Transaksi Umum", icon: "arrow-left-right", pending: 5, urgent: 0, color: "text-slate-600" },
+        { id: 3, name: "Transaksi Antar GL", icon: "book-open", pending: 10, urgent: 0, color: "text-emerald-500" },
+        { id: 4, name: "Pembukaan Rek Deposito", icon: "piggy-bank", pending: 1, urgent: 0, color: "text-amber-500" },
+        { id: 5, name: "Pembukaan Rek Pinjaman", icon: "hand-coins", pending: 1, urgent: 0, color: "text-purple-500" },
+        { id: 6, name: "Pembukaan Rek Tabungan", icon: "wallet", pending: 1, urgent: 0, color: "text-sky-500" },
+        { id: 7, name: "Pencairan/Break Bilyet Deposito", icon: "gavel", pending: 1, urgent: 0, color: "text-rose-500" },
+        { id: 8, name: "Penutupan Rekening Pinjaman", icon: "folder-closed", pending: 1, urgent: 0, color: "text-indigo-500" },
+        { id: 9, name: "Penutupan Rekening Tabungan", icon: "folder-x", pending: 1, urgent: 0, color: "text-cyan-500" },
+        { id: 10, name: "Pinjaman Adendum", icon: "file-plus-2", pending: 1, urgent: 0, color: "text-teal-600" },
+        { id: 11, name: "Kolektabilitas Manual Pinjaman", icon: "activity", pending: 1, urgent: 0, color: "text-yellow-600" },
+        { id: 12, name: "Suku Bunga Khusus Tabungan", icon: "percent", pending: 1, urgent: 0, color: "text-red-500" },
+        { id: 13, name: "Blokir Bilyet Deposito", icon: "shield-alert", pending: 1, urgent: 0, color: "text-orange-600" },
+        { id: 14, name: "Blokir Rekening Tabungan", icon: "ban", pending: 1, urgent: 0, color: "text-rose-600" },
+        { id: 15, name: "Blokir Dana Tabungan", icon: "lock", pending: 1, urgent: 0, color: "text-red-600" },
+        { id: 16, name: "Pembatalan Blokir Rek.Tabungan", icon: "unlock", pending: 1, urgent: 0, color: "text-fuchsia-500" },
+        { id: 17, name: "Pembatalan Blokir Dana Tabungan", icon: "shield-check", pending: 1, urgent: 0, color: "text-pink-500" },
+        { id: 18, name: "Transaksi Setoran Tabungan Instansi", icon: "building-2", pending: 1, urgent: 0, color: "text-indigo-600" },
+        { id: 19, name: "Transaksi Setoran Pinjaman Instansi", icon: "landmark", pending: 0, urgent: 0, color: "text-orange-500" },
+        { id: 20, name: "Transaksi Slisih Kas Teller", icon: "scale", pending: 0, urgent: 0, color: "text-amber-600" },
+        { id: 21, name: "Hapus Buku Pinjaman", icon: "file-minus-2", pending: 0, urgent: 0, color: "text-slate-400" },
+        { id: 22, name: "Restrukturisasi Pinjaman", icon: "refresh-cw", pending: 0, urgent: 0, color: "text-emerald-600" },
+        { id: 23, name: "Batal Restrukturisasi Pinjaman", icon: "rotate-ccw", pending: 0, urgent: 0, color: "text-blue-400" },
+        { id: 24, name: "Batal Adendum Pinjaman", icon: "file-x-2", pending: 0, urgent: 0, color: "text-violet-500" },
+        { id: 25, name: "Pemeliharaan Finansial", icon: "wrench", pending: 1, urgent: 0, color: "text-zinc-500" },
+        { id: 26, name: "Pembatalan Blokir Bilyet Deposito", icon: "key-round", pending: 1, urgent: 0, color: "text-lime-600" }
+    ];
+        
     // ========== EVENT LISTENER UNTUK HOME (data-menu) ==========
-function setupHomeMenuEvents() {
-    document.querySelectorAll('[data-menu]').forEach(el => {
-        el.addEventListener('click', () => {
-            const menuId = parseInt(el.dataset.menu);
-            const menu = menus.find(m => m.id === menuId);
-            
-            const menuMap = {
-                "Administrasi Pemakai ARB+": "pengguna-arb.html",
-                "Transaksi Umum": "pembukaan-rekening.html",
-                "Transaksi Antar GL": "transaksi-antar-gl.html",
-                "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
-                "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
-                "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
-                "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
-                "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
-                "Pinjaman Adendum": "adendum-pinjaman.html",
-                "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
-                "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
-                "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
-                "Blokir Rekening Tabungan": "blokir-rek-tab.html",
-                "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
-                "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
-                "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
-                "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
-                // "Transaksi Setoran Pinjaman Instansi": "trans-setor-pinj-instans.html", 
-                // "Transaksi Slisih Kas Teller": "trans-selisih-kas.html",
-                // "Hapus Buku Pinjaman": "hapus-buk-pinj.html",
-                // "Restrukturisasi Pinjaman": "rest-pinj.html",
-                // "Batal Restrukturisasi Pinjaman": "batal-rest-pinj.html",
-                // "Batal Adendum Pinjaman": "batal-adendum-pinj.html",
-                "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
-                "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+    function setupHomeMenuEvents() {
+        document.querySelectorAll('[data-menu]').forEach(el => {
+            el.addEventListener('click', () => {
+                const menuId = parseInt(el.dataset.menu);
+                const menu = menus.find(m => m.id === menuId);
                 
-            };
-            
-            const targetPage = menuMap[menu?.name];
-            if (targetPage) {
-                window.location.href = targetPage;
-            } else {
-                alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
-            }
+                const menuMap = {
+                    "Administrasi Pemakai ARB+": "pengguna-arb.html",
+                    "Transaksi Umum": "pembukaan-rekening.html",
+                    "Transaksi Antar GL": "transaksi-antar-gl.html",
+                    "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+                    "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+                    "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+                    "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+                    "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+                    "Pinjaman Adendum": "adendum-pinjaman.html",
+                    "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
+                    "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
+                    "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
+                    "Blokir Rekening Tabungan": "blokir-rek-tab.html",
+                    "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
+                    "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
+                    "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
+                    "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
+                    "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
+                    "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+                };
+                
+                const targetPage = menuMap[menu?.name];
+                if (targetPage) {
+                    window.location.href = targetPage;
+                } else {
+                    alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}\nFitur akan segera hadir`);
+                }
+            });
         });
-    });
-}
-
-// ========== RENDER MENU GRID (HOME) ==========
-function renderMenuGrid() {
-    const menuGrid = document.getElementById('menuGrid');
-    const visibleMenus = menus.slice(0, 12);
-    
-    menuGrid.innerHTML = visibleMenus.map(menu => {
-        const totalPending = menu.pending + menu.urgent;
-        const badgeText = `${totalPending}`;
-        return `
-        <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu="${menu.id}">
-            <div class="relative w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
-                ${totalPending > 0 ? `
-                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
-                        ${badgeText}
-                    </span>` : ''}
-            </div>
-            <span class="text-[10px] text-center text-bpr-dark font-semibold leading-tight px-1">${menu.name}</span>
-        </div>
-    `}).join('');
-    
-    lucide.createIcons();
-    
-    // Pasang event listener untuk home
-    setupHomeMenuEvents();
-}
-
-// ========== RENDER ALL MENU MODAL ==========
-function renderAllMenuModal() {
-    const allMenuList = document.getElementById('allMenuList');
-    allMenuList.innerHTML = menus.map(menu => {
-        const totalPending = menu.pending + menu.urgent;
-        const badgeText = `${totalPending}`;
-        return `
-        <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu-all="${menu.id}">
-            <div class="relative w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
-                ${totalPending > 0 ? `
-                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
-                        ${badgeText}
-                    </span>` : ''}
-            </div>
-            <span class="text-[9px] text-center text-bpr-dark font-medium leading-tight">${menu.name}</span>
-        </div>
-    `}).join('');
-    lucide.createIcons();
-}
-
-// ========== EVENT DELEGATION UNTUK ALL MENU ==========
-// Cukup 1 kali di luar, pake event delegation biar otomatis
-document.getElementById('allMenuList').addEventListener('click', (e) => {
-    const target = e.target.closest('[data-menu-all]');
-    if (!target) return;
-    
-    const menuId = parseInt(target.dataset.menuAll);
-    const menu = menus.find(m => m.id === menuId);
-    
-    const menuMap = {
-                "Administrasi Pemakai ARB+": "pengguna-arb.html",
-                "Transaksi Umum": "pembukaan-rekening.html",
-                "Transaksi Antar GL": "transaksi-antar-gl.html",
-                "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
-                "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
-                "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
-                "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
-                "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
-                "Pinjaman Adendum": "adendum-pinjaman.html",
-                "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
-                "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
-                "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
-                "Blokir Rekening Tabungan": "blokir-rek-tab.html",
-                "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
-                "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
-                "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
-                "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
-                // "Transaksi Setoran Pinjaman Instansi": "trans-setor-pinj-instans.html", 
-                // "Transaksi Slisih Kas Teller": "trans-selisih-kas.html",
-                // "Hapus Buku Pinjaman": "hapus-buk-pinj.html",
-                // "Restrukturisasi Pinjaman": "rest-pinj.html",
-                // "Batal Restrukturisasi Pinjaman": "batal-rest-pinj.html",
-                // "Batal Adendum Pinjaman": "batal-adendum-pinj.html",
-                "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
-                "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
-                
-            };
-    
-    const targetPage = menuMap[menu?.name];
-    if (targetPage) {
-        window.location.href = targetPage;
-        document.getElementById('allMenuModal').style.display = 'none';
-    } else {
-        alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
-        document.getElementById('allMenuModal').style.display = 'none';
     }
-});
 
-// Panggil renderMenuGrid di awal
-renderMenuGrid();
-    
+    // ========== RENDER MENU GRID (HOME) ==========
+    function renderMenuGrid() {
+        const menuGrid = document.getElementById('menuGrid');
+        const visibleMenus = menus.slice(0, 12);
+        
+        menuGrid.innerHTML = visibleMenus.map(menu => {
+            const totalPending = menu.pending + menu.urgent;
+            const badgeText = `${totalPending}`;
+            return `
+            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu="${menu.id}">
+                <div class="relative w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                    ${totalPending > 0 ? `
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                            ${badgeText}
+                        </span>` : ''}
+                </div>
+                <span class="text-[10px] text-center text-bpr-dark font-semibold leading-tight px-1">${menu.name}</span>
+            </div>
+        `}).join('');
+        
+        lucide.createIcons();
+        setupHomeMenuEvents();
+    }
+
+    // ========== RENDER ALL MENU MODAL ==========
+    function renderAllMenuModal() {
+        const allMenuList = document.getElementById('allMenuList');
+        allMenuList.innerHTML = menus.map(menu => {
+            const totalPending = menu.pending + menu.urgent;
+            const badgeText = `${totalPending}`;
+            return `
+            <div class="menu-item flex flex-col items-center gap-1.5 cursor-pointer" data-menu-all="${menu.id}">
+                <div class="relative w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                    <i data-lucide="${menu.icon}" class="w-5 h-5 text-orange-500 stroke-[2.5]"></i>
+                    ${totalPending > 0 ? `
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
+                            ${badgeText}
+                        </span>` : ''}
+                </div>
+                <span class="text-[9px] text-center text-bpr-dark font-medium leading-tight">${menu.name}</span>
+            </div>
+        `}).join('');
+        lucide.createIcons();
+    }
+
+    // ========== EVENT DELEGATION UNTUK ALL MENU ==========
+    document.getElementById('allMenuList').addEventListener('click', (e) => {
+        const target = e.target.closest('[data-menu-all]');
+        if (!target) return;
+        
+        const menuId = parseInt(target.dataset.menuAll);
+        const menu = menus.find(m => m.id === menuId);
+        
+        const menuMap = {
+            "Administrasi Pemakai ARB+": "pengguna-arb.html",
+            "Transaksi Umum": "pembukaan-rekening.html",
+            "Transaksi Antar GL": "transaksi-antar-gl.html",
+            "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+            "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+            "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+            "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+            "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+            "Pinjaman Adendum": "adendum-pinjaman.html",
+            "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
+            "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
+            "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
+            "Blokir Rekening Tabungan": "blokir-rek-tab.html",
+            "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
+            "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
+            "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
+            "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
+            "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
+            "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+        };
+        
+        const targetPage = menuMap[menu?.name];
+        if (targetPage) {
+            window.location.href = targetPage;
+            document.getElementById('allMenuModal').style.display = 'none';
+        } else {
+            alert(`Menu ${menu?.name}\nPending: ${menu?.pending}\nUrgent: ${menu?.urgent}`);
+            document.getElementById('allMenuModal').style.display = 'none';
+        }
+    });
+
+    // ========== UPDATE STATISTICS (FIX CRASH) ==========
     function updateStatistics() {
-    document.getElementById('pendingCount').innerText = statsData.pending;
-    document.getElementById('rejectedCount').innerText = statsData.rejected;
-    document.getElementById('approvedCount').innerText = statsData.approved;
-    document.getElementById('urgentCount').innerText = statsData.urgent;
-}
+        document.getElementById('pendingCount').innerText = statsData.pending;
+        document.getElementById('rejectedCount').innerText = statsData.rejected;
+        document.getElementById('approvedCount').innerText = statsData.approved;
+        // 🛠️ FIX: DI SINI ASALNYA CRASH KARENA ID urgentCount TIDAK ADA DI HTML SEBELUMNYA
+    }
     
     function updateGreetingAndTime() {
         const now = new Date();
@@ -550,49 +450,78 @@ renderMenuGrid();
         document.getElementById('currentDate').innerText = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
     }
     
+    // ========== RENDER DATA NOTIFIKASI YANG SEBENARNYA ==========
     function updateNotificationBell() {
         const unreadCount = notifications.filter(n => !n.read).length;
         const bellBadge = document.getElementById('notificationCount');
         const bottomBadge = document.getElementById('bottomNotifBadge');
+        const notificationList = document.getElementById('notificationList');
+        
+        // Update badge
         if (unreadCount > 0) {
             bellBadge.style.display = 'flex';
             bellBadge.innerText = unreadCount;
             bottomBadge.style.display = 'flex';
-            bottomBadge.innerText = unreadCount;
         } else {
             bellBadge.style.display = 'none';
             bottomBadge.style.display = 'none';
         }
         
-        const notificationList = document.getElementById('notificationList');
-        notificationList.innerHTML = notifications.map(notif => `
-            <div class="p-3 hover:bg-gray-50 cursor-pointer ${!notif.read ? 'bg-yellow-50' : ''}" data-notif-id="${notif.id}">
-                <div class="flex gap-2">
-                    <i data-lucide="bell" class="w-4 h-4 text-bpr-yellow"></i>
-                    <div class="flex-1">
-                        <p class="text-sm font-semibold text-bpr-dark">${notif.title}</p>
-                        <p class="text-xs text-bpr-gray">${notif.message}</p>
-                        <p class="text-[10px] text-bpr-gray mt-1">${notif.time}</p>
+        // Render list notifikasi ke dalam UI dropdown
+        if (notificationList && notifications.length > 0) {
+            let html = '';
+            notifications.forEach(notif => {
+                html += `
+                    <div class="p-3 hover:bg-gray-50 cursor-pointer ${!notif.read ? 'bg-amber-50/50' : ''}" data-notif-id="${notif.id}">
+                        <div class="flex gap-2">
+                            <i data-lucide="bell" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold text-slate-800">${notif.title}</p>
+                                <p class="text-[11px] text-slate-500 truncate mt-0.5">${notif.message}</p>
+                                <p class="text-[9px] text-slate-400 mt-1">${notif.time}</p>
+                            </div>
+                            ${!notif.read ? '<div class="w-2 h-2 bg-amber-400 rounded-full shrink-0 mt-1.5"></div>' : ''}
+                        </div>
                     </div>
-                    ${!notif.read ? '<div class="w-2 h-2 bg-yellow-400 rounded-full"></div>' : ''}
-                </div>
-            </div>
-        `).join('');
-        lucide.createIcons();
-        
-        document.querySelectorAll('[data-notif-id]').forEach(el => {
-            el.addEventListener('click', () => {
-                const id = parseInt(el.dataset.notifId);
-                const notif = notifications.find(n => n.id === id);
-                if (notif) { notif.read = true; updateNotificationBell(); alert(`${notif.title}\n${notif.message}`); }
+                `;
             });
-        });
+            notificationList.innerHTML = html;
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            
+            // Event listener klik notif
+            document.querySelectorAll('[data-notif-id]').forEach(el => {
+                el.replaceWith(el.cloneNode(true)); // Clean listeners lama
+            });
+            
+            document.querySelectorAll('[data-notif-id]').forEach(el => {
+                el.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.notifId);
+                    const notif = notifications.find(n => n.id === id);
+                    if (notif) {
+                        notif.read = true;
+                        updateNotificationBell();
+                        alert(`${notif.title}\n${notif.message}`);
+                    }
+                });
+            });
+        } else {
+            if (notificationList) {
+                notificationList.innerHTML = '<div class="p-4 text-center text-gray-400 text-xs font-medium">Tidak ada notifikasi</div>';
+            }
+        }
     }
     
-    // Event Listeners
+    // Event Listeners Lonceng
     let isNotificationOpen = false;
     document.getElementById('notificationBell').addEventListener('click', (e) => {
         e.stopPropagation();
+        
+        // 🛠️ FIX UTAMA: KETIKA LONCENG DIKLIK, PANGGIL FUNGSI RENDER AGAR DATANYA MUNCUL
+        updateNotificationBell();
+        
         const dropdown = document.getElementById('notificationDropdown');
         isNotificationOpen = !isNotificationOpen;
         dropdown.style.display = isNotificationOpen ? 'block' : 'none';
@@ -620,16 +549,15 @@ renderMenuGrid();
             const nav = e.currentTarget.dataset.nav;
             if (nav === 'home') alert('Anda di Beranda');
             else if (nav === 'notification') document.getElementById('notificationBell').click();
-            else if (nav === 'profile') alert(`👤 ${currentUser.name}\nFitur profil segera hadir`);
+            else if (nav === 'profile') alert(`👤 John Doe\nFitur profil segera hadir`);
             document.querySelectorAll('[data-nav]').forEach(b => b.classList.remove('active'));
             e.currentTarget.classList.add('active');
         });
     });
 
-    // Tambahkan event listener khusus untuk bottom notification button
-document.getElementById('bottomNotificationBtn')?.addEventListener('click', () => {
-    window.location.href = 'list-notif.html';
-});
+    document.getElementById('bottomNotificationBtn')?.addEventListener('click', () => {
+        window.location.href = 'list-notif.html';
+    });
     
     document.getElementById('applyFilter')?.addEventListener('click', () => {
         const filterDate = document.getElementById('filterDate').value;
@@ -639,9 +567,24 @@ document.getElementById('bottomNotificationBtn')?.addEventListener('click', () =
             alert(`📅 Data untuk: ${filterDate}`);
         } else alert('Pilih tanggal!');
     });
-    
+    // ========== FUNGSI TANDAI SEMUA SUDAH DIBACA ==========
+    function markAllNotificationsAsRead() {
+        // Ubah semua status notif menjadi read = true
+        notifications.forEach(notif => {
+            notif.read = true;
+        });
+        
+        // Refresh component badge lonceng & list dropdown agar lingkaran kuning hilang
+        updateNotificationBell();
+    }
+
+    // Bind Event Listener ke Tombol Baru
+    document.getElementById('markAllReadBtn')?.addEventListener('click', (e) => {
+        e.stopPropagation(); // Mencegah dropdown tertutup otomatis saat tombol diklik
+        markAllNotificationsAsRead();
+    });
+    // Initial Booting Scripts
     document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
-    
     setInterval(updateGreetingAndTime, 1000);
     updateGreetingAndTime();
     updateStatistics();
