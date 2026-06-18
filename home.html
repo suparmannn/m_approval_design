@@ -140,31 +140,38 @@
 <div class="mobile-container flex flex-col h-screen overflow-hidden">
     <div class="bg-white sticky top-0 z-40 shadow-sm shrink-0">
         <div class="px-4 pt-4 pb-3">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-xs text-bpr-gray" id="greetingText">Selamat Pagi,</p>
-                    <h2 class="text-lg font-bold text-bpr-dark" id="userName">John Doe</h2>
-                    <div class="flex gap-3 mt-1">
-                        <p class="text-[11px] text-bpr-gray" id="currentTime">--:--</p>
-                        <p class="text-[11px] text-bpr-gray" id="currentDate">---</p>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button id="notificationBell" class="relative p-2 rounded-full active:bg-gray-100 transition">
-                        <i data-lucide="bell" class="w-5 h-5 text-bpr-dark"></i>
-                        <span id="notificationCount" class="notification-badge" style="display: none;">0</span>
-                    </button>
-                    
-                    <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 hidden z-50 notification-dropdown" style="max-height: 400px; overflow-y: auto;">
-                        <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-slate-50 rounded-t-xl">
-                            <span onclick="window.location.href='list-notif.html'" class="font-bold text-bpr-dark text-xs uppercase tracking-wider cursor-pointer hover:text-bpr-yellow transition">Notifikasi</span>
-                            <button id="markAllReadBtn" class="text-[11px] text-amber-600 font-semibold hover:underline active:opacity-70">Tandai dibaca</button>
-                        </div>
-                        <div id="notificationList" class="divide-y divide-gray-100"></div>
-                    </div>
+    <div class="flex justify-between items-center"> <div class="flex items-center gap-3">
+            <div class="w-18 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
+                <img src="images/m_approval.png" alt="Logo M-Approval" class="w-full h-full object-contain p-1.5">
+            </div>
+            
+            <div class="min-w-0">
+                <p class="text-[11px] text-bpr-gray leading-tight" id="greetingText">Selamat Pagi,</p>
+                <h2 class="text-base font-bold text-bpr-dark truncate" id="userName">John Doe</h2>
+                <div class="flex gap-2 mt-0.5">
+                    <p class="text-[10px] text-bpr-gray/80" id="currentTime">--:--</p>
+                    <p class="text-[10px] text-bpr-gray/80" id="currentDate">---</p>
                 </div>
             </div>
         </div>
+        
+        <div class="relative shrink-0">
+            <button id="notificationBell" class="relative p-2 rounded-full active:bg-gray-100 transition">
+                <i data-lucide="bell" class="w-5 h-5 text-bpr-dark"></i>
+                <span id="notificationCount" class="notification-badge" style="display: none;">0</span>
+            </button>
+            
+            <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 hidden z-50 notification-dropdown" style="max-height: 400px; overflow-y: auto;">
+                <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-slate-50 rounded-t-xl">
+                    <span onclick="window.location.href='list-notif.html'" class="font-bold text-bpr-dark text-xs uppercase tracking-wider cursor-pointer hover:text-bpr-yellow transition">Notifikasi</span>
+                    <button id="markAllReadBtn" class="text-[11px] text-amber-600 font-semibold hover:underline active:opacity-70">Tandai dibaca</button>
+                </div>
+                <div id="notificationList" class="divide-y divide-gray-100"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
     </div>
 
     <div class="px-4 py-3 pb-24 overflow-y-auto flex-1 bg-[#F8FAFC]">
