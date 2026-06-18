@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-Approval - Pembukaan Rekening Pinjaman</title>
+    <title>M-Approval - Pemeliharaan Finansial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -114,8 +114,8 @@
                     <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
                 </button>
                 <div class="flex-1">
-                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Pembukaan Rekening Pinjaman</h1>
-                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Pembukaan Rekening Pinjaman</p>
+                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Pemeliharaan Finansial</h1>
+                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Pemeliharaan Finansial</p>
                 </div>
                 <button id="filterBtn" class="p-2 active:bg-slate-100 relative rounded-xl transition border border-slate-200">
                     <i data-lucide="sliders-horizontal" class="w-4 h-4 text-bpr-dark"></i>
@@ -204,8 +204,133 @@
         "id": 1,
         // ===== UNTUK GRID LIST =====
         "noApproval": "TRX/2026/001", //dummy from ai
-        "kategori": "", //default value
-        "judul": "Pembukaan Rekening Pinjaman", //default value
+        "kategori": "deposito", //default value
+        "judul": "Rek Deposito", //default value
+        "namaPengaju": "Ahmad Firmansyah", //dummy from ai
+        "posisiPengaju": "Teller", //dummy from ai
+        "tanggalPengajuan": "2026-06-17", //default value
+        "waktuPengajuan": "09:30", //dummy from ai
+        "prioritas": "Hight", //default value
+        "status": "pending", //default value
+        "approvalBy": null, //default value
+        "tanggalApproval": null, //default value
+        "komentar": "",
+        // ===== UNTUK DETAIL DATA =====
+        "detailData": [
+            {
+                "title": "DATA NASABAH",
+                "fields": [
+                    { "label": "No. CIF", "value": "001113" },
+                    { "label": "Nama Nasabah", "value": "EFANDI ARNELIS NURMIATY" },
+                    { "label": "Tanggal Lahir", "value": "07/07/1965" },
+                    { "label": "Identitas", "value": "KTP - 2672539438023852" },
+                    { "label": "Nomor Handphone", "value": "" },
+                    { "label": "Ibu Kandung", "value": "SUTI" },
+                    { "label": "Alamat Utama", "value": "BANDAR LK GG KEDAMAIAN CITRA GUNUNG RT.009" },
+                    { "label": "Alamat Alternatif", "value": "RT001/RW001 BANDAR SELATAN LAMPUNG" }
+                ]
+            },
+            {
+                "title": "DATA REKENING",
+                "fields": [
+                    { "label": "Nomor Rekening*", "value": "888-3-0083492-4" },
+                    { "label": "Nama Pada Rekening", "value": "EFANDI ARNELIS NURMIATY" },
+                    { "label": "Jenis Produk*", "value": "DB - DEP. BJK03" },
+                    { "label": "Jangka Waktu Pokok", "value": "3 BULAN" },
+                    { "label": "Tgl. Buka Rekening", "value": "13/11/2025" },
+                    { "label": "Tgl. Jatuh Tempo", "value": "13/02/2026" },
+                    { "label": "Nomor Bilyet Tercetak*", "value": "DFDS" },
+                    { "label": "Nominal*", "value": "15,000,000.00" },
+                    { "label": "Tgl. Bunga Berikut", "value": "13/12/2025" },
+                    { "label": "Suku Bunga Produk (%)*", "value": "6.0000" },
+                    { "label": "Variance (%)", "value": "0.00" },
+                    { "label": "Bunga Efektif* (%)", "value": "6.0000" },
+                    { "label": "Cara Pengkreditan Bunga*", "value": "2 - ARO" },
+                    { "label": "No. Rekening Pengkreditan Bunga*", "value": "" },
+                    { "label": "Nama Pemilik Rekening Pengkreditan Bunga*", "value": "" },
+                    { "label": "Nama Bank", "value": "" },
+                    { "label": "Cabang", "value": "" },
+                    { "label": "Cara Pengkreditan Pokok*", "value": "2 - ARO POKOK" },
+                    { "label": "No. Rekening Pengkreditan Pokok*", "value": "" },
+                    { "label": "Nama Pemilik Rekening Pengkreditan Pokok*", "value": "" },
+                    { "label": "Nama Bank", "value": "" },
+                    { "label": "Cabang", "value": "" },
+                    { "label": "Kirim Advis Jatuh Tempo", "value": "TIDAK" },
+                    { "label": "Cadangan Bunga", "value": "96,174.00" },
+                    { "label": "Metode Advis Jatuh Tempo", "value": "-" },
+                    { "label": "Alamat", "value": "-" },
+                    { "label": "Petugas Marketing", "value": "-" },
+                    { "label": "Kantor Kas", "value": "-" },
+                    { "label": "Nama Instansi", "value": "-" },
+                    { "label": "Catatan", "value": "-" },
+                    { "label": "Aktivitas", "value": "UBAH" }
+                ]
+            }
+            
+        ]
+},
+{ //tabungan
+        "id": 2,
+        // ===== UNTUK GRID LIST =====
+        "noApproval": "TRX/2026/001", //dummy from ai
+        "kategori": "tabungan", //default value
+        "judul": "Rek Tabungan", //default value
+        "namaPengaju": "Ahmad Firmansyah", //dummy from ai
+        "posisiPengaju": "Teller", //dummy from ai
+        "tanggalPengajuan": "2026-06-17", //default value
+        "waktuPengajuan": "09:30", //dummy from ai
+        "prioritas": "Hight", //default value
+        "status": "pending", //default value
+        "approvalBy": null, //default value
+        "tanggalApproval": null, //default value
+        "komentar": "",
+        // ===== UNTUK DETAIL DATA =====
+        "detailData": [
+            {
+                "title": "DATA NASABAH",
+                "fields": [
+                    { "label": "No. CIF", "value": "001113" },
+                    { "label": "Nama Nasabah", "value": "EFANDI ARNELIS NURMIATY" },
+                    { "label": "Tanggal Lahir", "value": "07/07/1965" },
+                    { "label": "No.Identitas", "value": "2672539438023852" },
+                    { "label": "Nomor Handphone", "value": "0832122345" },
+                    { "label": "Ibu Kandung", "value": "SUTI" },
+                    { "label": "Alamat Utama", "value": "BANDAR LK GG KEDAMAIAN CITRA GUNUNG RT.009" },
+                    { "label": "Alamat Alternatif", "value": "RT001/RW001 BANDAR SELATAN LAMPUNG" }
+                ]
+            },
+            {
+                "title": "DATA REKENING",
+                "fields": [
+                    { "label": "Nomor Rekening*", "value": "888-1-0164391-4" },
+                    { "label": "Nama Pada Rekening", "value": "EFANDI ARNELIS NURMIATY" },
+                    { "label": "Jenis Produk*", "value": "TABUNGANKU" },
+                    { "label": "Cara Pengkreditan Bunga*", "value": "Dikredit Ke Rek Sendiri" },
+                    { "label": "No. Rekening Pengkreditan Bunga*", "value": "888-4-0003610-9" },
+                    { "label": "Nama Pemilik Rek. Pengkreditan Bunga*", "value": "EFANDI ARNELIS NURMIATY" },
+                    { "label": "Nama Bank", "value": "BPR Alami" },
+                    { "label": "Cabang", "value": "Alam Sutra" },
+                    { "label": "Petugas Marketing", "value": "Abdul" },
+                    { "label": "Kantor Kas", "value": "-" },
+                    { "label": "Nama Instansi", "value": "Dapur Woku" },
+                    { "label": "Wilayah", "value": "Domisili" },
+                    { "label": "Status Rekening", "value": "Menunggu Persetujuan Tambah" },
+                    { "label": "Catat E-Statement", "value": "Ya" },
+                    { "label": "Periode Notifikasi / E-Statement", "value": "Bulanan" },
+                    { "label": "Notifikasi / Statement", "value": "Surat" },
+                    { "label": "Bebas Biaya Admin", "value": "Tidak" },
+                    { "label": "Catatan", "value": "-" },
+                     { "label": "Aktivitas", "value": "UBAH" }
+                ]
+            }
+        ]
+},
+{ //pinjaman
+        "id": 3,
+        // ===== UNTUK GRID LIST =====
+        "noApproval": "TRX/2026/001", //dummy from ai
+        "kategori": "pinjaman", //default value
+        "judul": "Rekening Pinjaman", //default value
         "namaPengaju": "Ahmad Firmansyah", //dummy from ai
         "posisiPengaju": "Teller", //dummy from ai
         "tanggalPengajuan": "2026-06-17", //default value
@@ -289,7 +414,8 @@
                     { "label": "Suku Bunga Grace Period*", "value": "-" },
                     { "label": "% Denda Bunga Grace Period*", "value": "-" },
                     { "label": "Tanggal Grace Period Berakhir*", "value": "-" },
-                    { "label": "Tanggal Bayar Bunga Grace Period Berikut*", "value": "-" }
+                    { "label": "Tanggal Bayar Bunga Grace Period Berikut*", "value": "-" },
+                     { "label": "Aktivitas", "value": "UBAH" }
                 ]
             },
             {
@@ -330,7 +456,8 @@
                     { "label": "Klasifikasi Asset Keuangan", "value": "" },
                     { "label": "Cadangan Kerugian Penurunan Nilai Aset Baik", "value": "" },
                     { "label": "Cadangan Kerugian Penurunan Nilai Aset Kurang Baik", "value": "" },
-                    { "label": "Cadangan Kerugian Penurunan Nilai Aset Tidak Baik", "value": "" }
+                    { "label": "Cadangan Kerugian Penurunan Nilai Aset Tidak Baik", "value": "" },
+                     { "label": "Aktivitas", "value": "UBAH" }
                 ]
             },
             {
@@ -344,15 +471,18 @@
                     { "label": "Program Pemerintah*", "value": "10 - Kredit yang bukan merupakan kredit/pembiayaan dalam rangka program pemerintah" },
                     { "label": "Lokasi Penggunaan*", "value": "3903 - Lampung Utara, Kab." },
                     { "label": "Golongan Kredit*", "value": "NU - Bukan Debitur UMKM" },
-                    { "label": "Orientasi Penggunaan*", "value": "3 - Lainnya" }
+                    { "label": "Orientasi Penggunaan*", "value": "3 - Lainnya" },
+                     { "label": "Aktivitas", "value": "UBAH" }
                 ]
             }
         ]
 }
+
 ];
 	function syncData() {
 	    localStorage.setItem('approvalData', JSON.stringify(approvalData));
 	}
+
 
     let currentTab = "pending";
     let currentFilter = { date: "", priority: "all" };
@@ -474,7 +604,7 @@
                         <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
                         <span class="text-white font-bold text-sm">${item.judul}</span>
                     </div>
-                   
+                    
                 </div>
             </div>
             
@@ -633,21 +763,30 @@ function showErrorPopup(title, message) {
     }, 5000);
 }
 
+     // Detail page functions
     function goToDetail(id) {
         syncData();
     const item = approvalData.find(d => d.id === id);
     if (!item) return;
     
-    // Jika status approved atau rejected, pakai halaman view
+    // Jika status approved atau rejected, pakai halaman view (1 file saja)
     if (item.status === 'approved' || item.status === 'rejected') {
-        window.location.href = `detail-view-openpinjaman.html?id=${id}`;
+        window.location.href = `dv-pemeliharaan-finansial.html?id=${id}`;
         return;
     }
     
-    // Untuk pending, redirect ke halaman detail transaksi GL
-    window.location.href = `detail-openpinjaman.html?id=${id}`;
+    // Untuk status pending, redirect ke halaman detail sesuai kategori
+    if (item.kategori === 'deposito') {
+        window.location.href = `d-pemeliharaan-finansial-depo.html?id=${id}`;
+    } else if (item.kategori === 'tabungan') {
+        window.location.href = `d-pemeliharaan-finansial-tab.html?id=${id}`;
+    } else if (item.kategori === 'pinjaman') {
+        window.location.href = `d-pemeliharaan-finansial-pinj.html?id=${id}`;
+    } else {
+        // Fallback untuk data yang tidak punya kategori
+        window.location.href = `detail-approval1.html?id=${id}`;
+    }
 }
-
 
         function batchApprove() {
     if (selectedItems.size === 0) {
@@ -685,7 +824,9 @@ function batchReject() {
         'reject'
     );
 }
-
+function updateDataAndSave() {
+    localStorage.setItem('approvalData', JSON.stringify(approvalData));
+}
 
 function executeBatchApprove(selectedIds) {
     const successIds = [];
@@ -706,14 +847,16 @@ function executeBatchApprove(selectedIds) {
                 item.komentar = "Disetujui massal";
                 successIds.push(id);
             }
+            
         }
+
     });
     
     successIds.forEach(id => selectedItems.delete(id));
     updateBatchMode();
     updateTabCounts();
     renderList();
-    
+    updateDataAndSave();
     // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(
@@ -753,7 +896,7 @@ function executeBatchReject(selectedIds) {
     updateBatchMode();
     updateTabCounts();
     renderList();
-    
+    updateDataAndSave();
     // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(

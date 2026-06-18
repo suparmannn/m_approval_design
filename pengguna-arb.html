@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-Approval - Pembukaan Rekening Pinjaman</title>
+    <title>M-Approval - Administrasi Pemakai ARB+</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -114,8 +114,8 @@
                     <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
                 </button>
                 <div class="flex-1">
-                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Pembukaan Rekening Pinjaman</h1>
-                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Pembukaan Rekening Pinjaman</p>
+                    <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Administrasi Pemakai ARB+</h1>
+                    <p class="text-xs text-bpr-gray font-medium mt-0.5">Approval Administrasi Pemakai ARB+</p>
                 </div>
                 <button id="filterBtn" class="p-2 active:bg-slate-100 relative rounded-xl transition border border-slate-200">
                     <i data-lucide="sliders-horizontal" class="w-4 h-4 text-bpr-dark"></i>
@@ -201,158 +201,45 @@
     // ========== DATA ==========
     let approvalData = [
     { 
-        "id": 1,
-        // ===== UNTUK GRID LIST =====
-        "noApproval": "TRX/2026/001", //dummy from ai
-        "kategori": "", //default value
-        "judul": "Pembukaan Rekening Pinjaman", //default value
-        "namaPengaju": "Ahmad Firmansyah", //dummy from ai
-        "posisiPengaju": "Teller", //dummy from ai
-        "tanggalPengajuan": "2026-06-17", //default value
-        "waktuPengajuan": "09:30", //dummy from ai
-        "prioritas": "Hight", //default value
-        "status": "pending", //default value
-        "approvalBy": null, //default value
-        "tanggalApproval": null, //default value
-        
-        // ===== UNTUK DETAIL DATA =====
-        "detailData": [
-            {
-                "title": "DATA NASABAH",
-                "fields": [
-                    { "label": "Nomor CIF", "value": "010631" },
-                    { "label": "Nama Nasabah", "value": "YANA PARYONO AMIR" },
-                    { "label": "Tipe Nasabah", "value": "PERORANGAN" },
-                    { "label": "No Identitas", "value": "7534927276596005" },
-                    { "label": "Tanggal Lahir", "value": "25-09-1992" },
-                    { "label": "No. Handphone", "value": "087996676457" },
-                    { "label": "Nama Ibu Kandung", "value": "MARSUNAH" },
-                    { "label": "Alamat Utama", "value": "BAWANG BANDAR BANDAR KEC.BUMI TENGAH DUSUN BLOK TUNGGAL III, GULAKGALIK" },
-                    { "label": "Alamat Alternatif", "value": "MARGOREJO CAMPUREJO RW.002, JL.KAYU" }
-                ]
-            },
-            {
-                "title": "DATA REKENING",
-                "fields": [
-                    { "label": "Produk*", "value": "KA - KIA" },
-                    { "label": "Tanggal Akad*", "value": "18/12/2025" },
-                    { "label": "Kantor Kas", "value": "-" },
-                    { "label": "Nama Pada Rekening*", "value": "YANA PARYONO AMIR" },
-                    { "label": "Nomor Akad*", "value": "xzcqwaa" },
-                    { "label": "Nomor Rekening*", "value": "888-4-0009776-9" },
-                    { "label": "Metode Bayar Angsuran*", "value": "ANUITAS1" },
-                    { "label": "Bayar Angsuran Ke-1*", "value": "IN ARREAR (R)" },
-                    { "label": "Bayar Angsuran Pokok*", "value": "RUTIN" },
-                    { "label": "Bayar Angsuran Bunga*", "value": "RUTIN" },
-                    { "label": "Jenis Plafond*", "value": "NON REVOLVING" },
-                    { "label": "Hitung Bunga*", "value": "PLAFOND" },
-                    { "label": "Tanggal Buka*", "value": "18/12/2025" },
-                    { "label": "Jangka Waktu*", "value": "12 Bulan" },
-                    { "label": "Periode Bayar Pokok*", "value": "1 Bulan" },
-                    { "label": "Periode Bayar Bunga*", "value": "1 Bulan" },
-                    { "label": "Tanggal Bayar Angsuran*", "value": "18" },
-                    { "label": "Angsuran Periode Berikut?", "value": "TIDAK" },
-                    { "label": "Diberikan Grace Period?", "value": "TIDAK" },
-                    { "label": "Tanggal JT Sesuai Tanggal Bayar", "value": "YA" },
-                    { "label": "Tanggal Angsuran Pokok Berikut*", "value": "18/01/2026" },
-                    { "label": "Tanggal Angsuran Bunga Berikut*", "value": "18/01/2026" },
-                    { "label": "Tanggal Jatuh Tempo*", "value": "18/12/2026" },
-                    { "label": "Plafond*", "value": "10,000,000.00" },
-                    { "label": "Jumlah Cicilan Pokok*", "value": "12" },
-                    { "label": "Jumlah Cicilan Bunga*", "value": "12" },
-                    { "label": "Suku Bunga Produk Flat*", "value": "10.0000" },
-                    { "label": "Variance Flat*", "value": "0.0000" },
-                    { "label": "Suku Bunga Rekening Flat*", "value": "10.0000" },
-                    { "label": "Suku Bunga Produk Efektif*", "value": "17.9721" },
-                    { "label": "Variance Efektif*", "value": "0.0000" },
-                    { "label": "Suku Bunga Rekening Efektif*", "value": "17.9721" },
-                    { "label": "Angsuran Pokok*", "value": "766,899.00" },
-                    { "label": "Angsuran Bunga*", "value": "149,768.00" },
-                    { "label": "Angsuran*", "value": "916,667.00" },
-                    { "label": "Nomor Rekening Autodebet", "value": "-" },
-                    { "label": "Nama Nasabah Autodebet", "value": "-" },
-                    { "label": "Efektif Autodebet", "value": "TIDAK" },
-                    { "label": "Denda Pokok*", "value": "72.0000" },
-                    { "label": "Denda Bunga*", "value": "72.0000" },
-                    { "label": "Autodebet Denda", "value": "TIDAK" },
-                    { "label": "Nomor Rekening Pencairan", "value": "-" },
-                    { "label": "Nama Nasabah Pencairan", "value": "-" },
-                    { "label": "Produk Tabungan", "value": "-" },
-                    { "label": "Jumlah Hak Tarik Yang Diblokir", "value": "0.00" }
-                ]
-            },
-            {
-                "title": "DATA GRACE PERIOD",
-                "fields": [
-                    { "label": "Jangka Waktu*", "value": "-" },
-                    { "label": "Bunga Grace Period Berdasarkan*", "value": "-" },
-                    { "label": "Suku Bunga Grace Period*", "value": "-" },
-                    { "label": "% Denda Bunga Grace Period*", "value": "-" },
-                    { "label": "Tanggal Grace Period Berakhir*", "value": "-" },
-                    { "label": "Tanggal Bayar Bunga Grace Period Berikut*", "value": "-" }
-                ]
-            },
-            {
-                "title": "DATA BALLOON PAYMENT",
-                "fields": [
-                    { "label": "Bunga Balloon Payment*", "value": "-" },
-                    { "label": "Jumlah Pembayaran Pokok*", "value": "-" },
-                    { "label": "Porsi Plafond*", "value": "-" },
-                    { "label": "Nominal Porsi Plafond*", "value": "-" },
-                    { "label": "Durasi*", "value": "-" },
-                    { "label": "Bunga Selama Durasi*", "value": "-" },
-                    { "label": "Bunga Setelah Durasi*", "value": "-" }
-                ]
-            },
-            {
-                "title": "DATA LAPBUL APOLO *",
-                "fields": [
-                    { "label": "Jenis Penggunaan*", "value": "10 - Modal kerja" },
-                    { "label": "Hubungan Bank*", "value": "20 - Tidak Terkait" },
-                    { "label": "Kelompok", "value": "" },
-                    { "label": "Jenis*", "value": "99 - Jenis Kredit Lainnya" },
-                    { "label": "Status Restruk*", "value": "10 - Tidak direstrukturisasi" },
-                    { "label": "Sumber Pelunasan Data*", "value": "10 - Gaji/Honor" },
-                    { "label": "Jenis Debitur*", "value": "875 - Perorangan lainnya" },
-                    { "label": "Sandi Bank", "value": "" },
-                    { "label": "Kategori Usaha*", "value": "1 - Mikro" },
-                    { "label": "Penjamin*", "value": "000 - Tanpa penjamin" },
-                    { "label": "Bagian Yang Dijaminkan*", "value": "0.0000" },
-                    { "label": "Status BMPK*", "value": "00 - Tidak Melanggar dan Tidak Melampaui" },
-                    { "label": "Cara Perhitungan Bunga*", "value": "11 - Flat Tetap" },
-                    { "label": "Periode Pembayaran Pokok*", "value": "3 - Bulanan" },
-                    { "label": "Periode Pembayaran Bunga*", "value": "3 - Bulanan" },
-                    { "label": "Sektor Ekonomi*", "value": "001110 - RUMAH TANGGA UNTUK PEMILIKAN RUMAH TINGGAL S.D. TIPE 21" },
-                    { "label": "Sifat Kredit*", "value": "9 - Lainnya" },
-                    { "label": "Kredit Program Pemerintah*", "value": "10 - Kredit yang bukan merupakan kredit/pembiayaan dalam rangka program pemerintah" },
-                    { "label": "Sektor Kredit Usaha Rakyat*", "value": "99 - KUR kepada Sektor Lainnya" },
-                    { "label": "Sandi LPBBTI", "value": "" },
-                    { "label": "Klasifikasi Asset Keuangan", "value": "" },
-                    { "label": "Cadangan Kerugian Penurunan Nilai Aset Baik", "value": "" },
-                    { "label": "Cadangan Kerugian Penurunan Nilai Aset Kurang Baik", "value": "" },
-                    { "label": "Cadangan Kerugian Penurunan Nilai Aset Tidak Baik", "value": "" }
-                ]
-            },
-            {
-                "title": "DATA SLIK *",
-                "fields": [
-                    { "label": "Sifat Kredit*", "value": "9 - Lainnya" },
-                    { "label": "Takeover Kredit", "value": "" },
-                    { "label": "Jenis Kredit*", "value": "N99 - Tanpa Akad - Lainnya" },
-                    { "label": "Jenis Akad*", "value": "000 - Konvensional" },
-                    { "label": "Sektor Ekonomi*", "value": "001110 - RUMAH TANGGA UNTUK PEMILIKAN RUMAH TINGGAL S.D. TIPE 21" },
-                    { "label": "Program Pemerintah*", "value": "10 - Kredit yang bukan merupakan kredit/pembiayaan dalam rangka program pemerintah" },
-                    { "label": "Lokasi Penggunaan*", "value": "3903 - Lampung Utara, Kab." },
-                    { "label": "Golongan Kredit*", "value": "NU - Bukan Debitur UMKM" },
-                    { "label": "Orientasi Penggunaan*", "value": "3 - Lainnya" }
-                ]
-            }
-        ]
+    "id": 1,
+    // ===== UNTUK GRID LIST =====
+    "noApproval": "TRX/2026/001", //dummy from ai
+    "kategori": "", //default value
+    "judul": "Administrasi Pemakai ARB+", //default value
+    "namaPengaju": "Ahmad Firmansyah", //dummy from ai
+    "posisiPengaju": "Teller", //dummy from ai
+    "tanggalPengajuan": "2026-06-17", //default value
+    "waktuPengajuan": "09:30", //dummy from ai
+    "prioritas": "Hight", //default value
+    "status": "pending", //default value
+    "approvalBy": null, //default value
+    "tanggalApproval": null, //default value
+    
+    // ===== UNTUK DETAIL DATA =====
+    "detailData": [
+        {
+            "title": "Data Pengguna",
+            "fields": [
+                 { "label": "Foto", "value": "PNG" },
+                { "label": "Kantor", "value": "888 - KANTOR PUSAT" },
+                { "label": "Inisial", "value": "TS2" },
+                { "label": "Status", "value": "AKTIF" },
+                { "label": "Departemen", "value": "5000 - TEAM SINERGI" },
+                { "label": "Kantor Kas", "value": "-" },
+                { "label": "Username", "value": "TEST1" },
+                { "label": "Nama Lengkap", "value": "TEST1" },
+                { "label": "Email", "value": "yadi.staging@gmail.com" },
+                { "label": "Level", "value": "0 - KOMISARIS" },
+                { "label": "Admin", "value": "TIDAK" }
+            ]
+        }
+    ]
 }
 ];
 	function syncData() {
 	    localStorage.setItem('approvalData', JSON.stringify(approvalData));
 	}
+
 
     let currentTab = "pending";
     let currentFilter = { date: "", priority: "all" };
@@ -474,7 +361,7 @@
                         <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
                         <span class="text-white font-bold text-sm">${item.judul}</span>
                     </div>
-                   
+                    
                 </div>
             </div>
             
@@ -640,12 +527,12 @@ function showErrorPopup(title, message) {
     
     // Jika status approved atau rejected, pakai halaman view
     if (item.status === 'approved' || item.status === 'rejected') {
-        window.location.href = `detail-view-openpinjaman.html?id=${id}`;
+        window.location.href = `dv-pengguna-arb.html?id=${id}`;
         return;
     }
     
     // Untuk pending, redirect ke halaman detail transaksi GL
-    window.location.href = `detail-openpinjaman.html?id=${id}`;
+    window.location.href = `d-pengguna-arb.html?id=${id}`;
 }
 
 
@@ -685,7 +572,9 @@ function batchReject() {
         'reject'
     );
 }
-
+function updateDataAndSave() {
+    localStorage.setItem('approvalData', JSON.stringify(approvalData));
+}
 
 function executeBatchApprove(selectedIds) {
     const successIds = [];
@@ -706,14 +595,16 @@ function executeBatchApprove(selectedIds) {
                 item.komentar = "Disetujui massal";
                 successIds.push(id);
             }
+            
         }
+
     });
     
     successIds.forEach(id => selectedItems.delete(id));
     updateBatchMode();
     updateTabCounts();
     renderList();
-    
+    updateDataAndSave();
     // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(
@@ -753,7 +644,7 @@ function executeBatchReject(selectedIds) {
     updateBatchMode();
     updateTabCounts();
     renderList();
-    
+    updateDataAndSave();
     // Tampilkan popup error jika ada data yang gagal masuk database
     if (failedIds.length > 0) {
         showErrorPopup(

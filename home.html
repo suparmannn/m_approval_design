@@ -168,66 +168,95 @@
 
         <!-- Stats Cards (2 kolom grid) -->
         <!-- Stats Cards - Desain Modern Tanpa Persentase -->
-<div class="grid grid-cols-2 gap-2 mb-2">
-    <!-- Card Pending -->
-    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-2 shadow-lg">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-xs text-white opacity-90">Pending</p>
-                <p class="text-2xl font-bold text-white mt-1" id="pendingCount">0</p>
+<!-- <div class="space-y-2 mb-2">
+    
+    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-3 shadow-lg w-full">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 rounded-full p-2 backdrop-blur shrink-0">
+                    <i data-lucide="clock" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-white opacity-90 font-medium">Pending</p>
+                    <p class="text-[10px] text-white/80">Menunggu persetujuan</p>
+                </div>
             </div>
-            <div class="bg-white/20 rounded-full p-2 backdrop-blur">
-                <i data-lucide="clock" class="w-5 h-5 text-white"></i>
-            </div>
+            <p class="text-3xl font-bold text-white" id="pendingCount">12</p>
         </div>
-        <p class="text-[10px] text-white/80 mt-2">Menunggu persetujuan</p>
     </div>
 
-    <!-- Card Ditolak -->
-    <div class="status-card bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-2 shadow-lg">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-xs text-white opacity-90">Ditolak</p>
-                <p class="text-3xl font-bold text-white mt-1" id="rejectedCount">0</p>
+    <div class="grid grid-cols-2 gap-2">
+        <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-3 shadow-lg">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs text-white opacity-90">Disetujui</p>
+                    <p class="text-2xl font-bold text-white mt-1" id="approvedCount">28</p>
+                </div>
+                <div class="bg-white/20 rounded-full p-1.5 backdrop-blur">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-white"></i>
+                </div>
             </div>
-            <div class="bg-white/20 rounded-full p-2 backdrop-blur">
-                <i data-lucide="x-circle" class="w-6 h-6 text-white"></i>
-            </div>
+            <p class="text-[10px] text-white/80 mt-2">Sudah diproses</p>
         </div>
-        <p class="text-[10px] text-white/80 mt-2">Tidak disetujui</p>
+
+        <div class="status-card relative bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-3 shadow-lg overflow-hidden">
+            <div class="absolute inset-0 bg-white/5 pointer-events-none"></div>
+            <div class="flex justify-between items-start relative z-10">
+                <div>
+                    <p class="text-xs text-white opacity-90">Ditolak</p>
+                    <p class="text-2xl font-bold text-white mt-1" id="rejectedCount">3</p>
+                </div>
+                <div class="bg-white/20 rounded-full p-1.5 backdrop-blur">
+                    <i data-lucide="x-circle" class="w-5 h-5 text-white"></i>
+                </div>
+            </div>
+            <p class="text-[10px] text-white/80 mt-2 relative z-10">Tidak disetujui</p>
+        </div>
     </div>
 
-    <!-- Card Disetujui -->
-    <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-2 shadow-lg">
+</div> -->
+<div class="grid grid-cols-3 gap-2 mb-2">
+    
+    <div class="status-card bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl p-2.5 shadow-lg flex flex-col justify-between">
         <div class="flex justify-between items-start">
             <div>
-                <p class="text-xs text-white opacity-90">Disetujui</p>
-                <p class="text-3xl font-bold text-white mt-1" id="approvedCount">0</p>
+                <p class="text-xs text-white opacity-90 font-medium">Pending</p>
+                <p class="text-2xl font-bold text-white mt-1" id="pendingCount">12</p>
             </div>
-            <div class="bg-white/20 rounded-full p-2 backdrop-blur">
-                <i data-lucide="check-circle" class="w-6 h-6 text-white"></i>
+            <div class="bg-white/20 rounded-full p-1.5 backdrop-blur shrink-0">
+                <i data-lucide="clock" class="w-4 h-4 text-white"></i>
             </div>
         </div>
-        <p class="text-[10px] text-white/80 mt-2">Sudah diproses</p>
+        <p class="text-[10px] text-white/80 mt-2 min-h-[15px]">Menunggu persetujuan</p>
     </div>
 
-    <!-- Card Urgent (sejajar, bukan full width) -->
-    <div class="status-card bg-gradient-to-br from-orange-500 to-red-500 rounded-xl p-2 shadow-lg relative overflow-hidden">
-        <div class="absolute inset-0 bg-white/5"></div>
+    <div class="status-card bg-gradient-to-br from-green-400 to-green-500 rounded-xl p-2.5 shadow-lg flex flex-col justify-between">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-xs text-white opacity-90 font-medium">Disetujui</p>
+                <p class="text-2xl font-bold text-white mt-1" id="approvedCount">28</p>
+            </div>
+            <div class="bg-white/20 rounded-full p-1.5 backdrop-blur shrink-0">
+                <i data-lucide="check-circle" class="w-4 h-4 text-white"></i>
+            </div>
+        </div>
+        <p class="text-[10px] text-white/80 mt-2 min-h-[15px]">Sudah diproses</p>
+    </div>
+
+    <div class="status-card relative bg-gradient-to-br from-red-400 to-red-500 rounded-xl p-2.5 shadow-lg overflow-hidden flex flex-col justify-between">
+        <div class="absolute inset-0 bg-white/5 pointer-events-none"></div>
         <div class="flex justify-between items-start relative z-10">
             <div>
-                <p class="text-xs text-white opacity-90 flex items-center gap-1">
-                    <i data-lucide="alert-triangle" class="w-3 h-3"></i>
-                    Urgent
-                </p>
-                <p class="text-3xl font-bold text-white mt-1" id="urgentCount">0</p>
+                <p class="text-xs text-white opacity-90 font-medium">Ditolak</p>
+                <p class="text-2xl font-bold text-white mt-1" id="rejectedCount">3</p>
             </div>
-            <div class="bg-white/20 rounded-full p-2 backdrop-blur">
-                <i data-lucide="alert-triangle" class="w-6 h-6 text-white"></i>
+            <div class="bg-white/20 rounded-full p-1.5 backdrop-blur shrink-0">
+                <i data-lucide="x-circle" class="w-4 h-4 text-white"></i>
             </div>
         </div>
-        <p class="text-[10px] text-white/80 mt-2 relative z-10">Butuh persetujuan segera</p>
+        <p class="text-[10px] text-white/80 mt-2 relative z-10 min-h-[15px]">Tidak disetujui</p>
     </div>
+
 </div>
 
         <!-- Menu Section -->
@@ -297,27 +326,33 @@ let currentUser = {
     ];
     
     const menus = [
-        { id: 1, name: "Transaksi Umum", icon: "user-plus", pending: 5, urgent: 0, color: "text-blue-500" },
-        { id: 2, name: "Transaksi Antar GL", icon: "users", pending: 10, urgent: 0, color: "text-emerald-500" },
-        { id: 3, name: "Pembukaan Rek Deposito", icon: "credit-card", pending: 1, urgent: 0, color: "text-amber-500" },
-        { id: 4, name: "Pembukaan Rek Pinjaman", icon: "file-check", pending: 1, urgent: 0, color: "text-purple-500" },
-        { id: 5, name: "Pembukaan Rek Tabungan", icon: "file-text", pending: 1, urgent: 0, color: "text-gray-500" },
-        { id: 6, name: "Pencairan/Break Bilyet Deposito", icon: "clipboard", pending: 1, urgent: 0, color: "text-rose-500" },
-        { id: 7, name: "Penutupan Rekening Pinjaman", icon: "check-square", pending: 1, urgent: 0, color: "text-indigo-500" },
-        { id: 8, name: "Penutupan Rekening Tabungan", icon: "shield", pending: 1, urgent: 0, color: "text-cyan-500" },
-        { id: 9, name: "Approval F", icon: "lock", pending: 0, urgent: 0, color: "text-slate-500" },
-        { id: 10, name: "Approval G", icon: "key", pending: 0, urgent: 0, color: "text-yellow-600" },
-        { id: 11, name: "Approval H", icon: "mail", pending: 0, urgent: 0, color: "text-sky-500" },
-        { id: 12, name: "Approval I", icon: "message-circle", pending: 0, urgent: 0, color: "text-lime-500" },
-        { id: 13, name: "Approval J", icon: "phone", pending: 0, urgent: 0, color: "text-teal-500" },
-        { id: 14, name: "Approval K", icon: "video", pending: 0, urgent: 0, color: "text-violet-500" },
-        { id: 15, name: "Approval L", icon: "camera", pending: 0, urgent: 0, color: "text-fuchsia-500" },
-        { id: 16, name: "Approval M", icon: "image", pending: 0, urgent: 0, color: "text-pink-500" },
-        { id: 17, name: "Approval N", icon: "map-pin", pending: 0, urgent: 0, color: "text-red-500" },
-        { id: 18, name: "Approval O", icon: "compass", pending: 0, urgent: 0, color: "text-orange-500" },
-        { id: 19, name: "Approval P", icon: "globe", pending: 0, urgent: 0, color: "text-emerald-600" },
-        { id: 20, name: "Approval Q", icon: "cloud", pending: 0, urgent: 0, color: "text-blue-400" }
-    ];
+  { id: 1, name: "Administrasi Pemakai ARB+", icon: "user-cog", pending: 1, urgent: 0, color: "text-blue-500" },
+  { id: 2, name: "Transaksi Umum", icon: "arrow-left-right", pending: 5, urgent: 0, color: "text-slate-600" },
+  { id: 3, name: "Transaksi Antar GL", icon: "book-open", pending: 10, urgent: 0, color: "text-emerald-500" },
+  { id: 4, name: "Pembukaan Rek Deposito", icon: "piggy-bank", pending: 1, urgent: 0, color: "text-amber-500" },
+  { id: 5, name: "Pembukaan Rek Pinjaman", icon: "hand-coins", pending: 1, urgent: 0, color: "text-purple-500" },
+  { id: 6, name: "Pembukaan Rek Tabungan", icon: "wallet", pending: 1, urgent: 0, color: "text-sky-500" },
+  { id: 7, name: "Pencairan/Break Bilyet Deposito", icon: "gavel", pending: 1, urgent: 0, color: "text-rose-500" },
+  { id: 8, name: "Penutupan Rekening Pinjaman", icon: "folder-closed", pending: 1, urgent: 0, color: "text-indigo-500" },
+  { id: 9, name: "Penutupan Rekening Tabungan", icon: "folder-x", pending: 1, urgent: 0, color: "text-cyan-500" },
+  { id: 10, name: "Pinjaman Adendum", icon: "file-plus-2", pending: 1, urgent: 0, color: "text-teal-600" },
+  { id: 11, name: "Kolektabilitas Manual Pinjaman", icon: "activity", pending: 1, urgent: 0, color: "text-yellow-600" },
+  { id: 12, name: "Suku Bunga Khusus Tabungan", icon: "percent", pending: 1, urgent: 0, color: "text-red-500" },
+  { id: 13, name: "Blokir Bilyet Deposito", icon: "shield-alert", pending: 1, urgent: 0, color: "text-orange-600" },
+  { id: 14, name: "Blokir Rekening Tabungan", icon: "ban", pending: 1, urgent: 0, color: "text-rose-600" },
+  { id: 15, name: "Blokir Dana Tabungan", icon: "lock", pending: 1, urgent: 0, color: "text-red-600" },
+  { id: 16, name: "Pembatalan Blokir Rek.Tabungan", icon: "unlock", pending: 1, urgent: 0, color: "text-fuchsia-500" },
+  { id: 17, name: "Pembatalan Blokir Dana Tabungan", icon: "shield-check", pending: 1, urgent: 0, color: "text-pink-500" },
+  { id: 18, name: "Transaksi Setoran Tabungan Instansi", icon: "building-2", pending: 1, urgent: 0, color: "text-indigo-600" },
+  { id: 19, name: "Transaksi Setoran Pinjaman Instansi", icon: "landmark", pending: 0, urgent: 0, color: "text-orange-500" },
+  { id: 20, name: "Transaksi Slisih Kas Teller", icon: "scale", pending: 0, urgent: 0, color: "text-amber-600" },
+  { id: 21, name: "Hapus Buku Pinjaman", icon: "file-minus-2", pending: 0, urgent: 0, color: "text-slate-400" },
+  { id: 22, name: "Restrukturisasi Pinjaman", icon: "refresh-cw", pending: 0, urgent: 0, color: "text-emerald-600" },
+  { id: 23, name: "Batal Restrukturisasi Pinjaman", icon: "rotate-ccw", pending: 0, urgent: 0, color: "text-blue-400" },
+  { id: 24, name: "Batal Adendum Pinjaman", icon: "file-x-2", pending: 0, urgent: 0, color: "text-violet-500" },
+  { id: 25, name: "Pemeliharaan Finansial", icon: "wrench", pending: 1, urgent: 0, color: "text-zinc-500" },
+  { id: 26, name: "Pembatalan Blokir Bilyet Deposito", icon: "key-round", pending: 1, urgent: 0, color: "text-lime-600" }
+];
     
     // ========== EVENT LISTENER UNTUK HOME (data-menu) ==========
 function setupHomeMenuEvents() {
@@ -327,6 +362,7 @@ function setupHomeMenuEvents() {
             const menu = menus.find(m => m.id === menuId);
             
             const menuMap = {
+                "Administrasi Pemakai ARB+": "pengguna-arb.html",
                 "Transaksi Umum": "pembukaan-rekening.html",
                 "Transaksi Antar GL": "transaksi-antar-gl.html",
                 "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
@@ -334,7 +370,24 @@ function setupHomeMenuEvents() {
                 "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
                 "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
                 "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
-                "Penutupan Rekening Tabungan": "penutupan-rek-tabungan.html"
+                "Pinjaman Adendum": "adendum-pinjaman.html",
+                "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
+                "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
+                "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
+                "Blokir Rekening Tabungan": "blokir-rek-tab.html",
+                "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
+                "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
+                "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
+                "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
+                // "Transaksi Setoran Pinjaman Instansi": "trans-setor-pinj-instans.html", 
+                // "Transaksi Slisih Kas Teller": "trans-selisih-kas.html",
+                // "Hapus Buku Pinjaman": "hapus-buk-pinj.html",
+                // "Restrukturisasi Pinjaman": "rest-pinj.html",
+                // "Batal Restrukturisasi Pinjaman": "batal-rest-pinj.html",
+                // "Batal Adendum Pinjaman": "batal-adendum-pinj.html",
+                "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
+                "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+                
             };
             
             const targetPage = menuMap[menu?.name];
@@ -350,7 +403,7 @@ function setupHomeMenuEvents() {
 // ========== RENDER MENU GRID (HOME) ==========
 function renderMenuGrid() {
     const menuGrid = document.getElementById('menuGrid');
-    const visibleMenus = menus.slice(0, 8);
+    const visibleMenus = menus.slice(0, 12);
     
     menuGrid.innerHTML = visibleMenus.map(menu => {
         const totalPending = menu.pending + menu.urgent;
@@ -405,15 +458,33 @@ document.getElementById('allMenuList').addEventListener('click', (e) => {
     const menu = menus.find(m => m.id === menuId);
     
     const menuMap = {
-        "Transaksi Umum": "pembukaan-rekening.html",
-        "Transaksi Antar GL": "transaksi-antar-gl.html",
-        "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
-        "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
-        "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
-        "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
-        "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
-        "Penutupan Rekening Tabungan": "penutupan-rek-tabungan.html"
-    };
+                "Administrasi Pemakai ARB+": "pengguna-arb.html",
+                "Transaksi Umum": "pembukaan-rekening.html",
+                "Transaksi Antar GL": "transaksi-antar-gl.html",
+                "Pembukaan Rek Deposito": "pembukaan-rek-deposito.html",
+                "Pembukaan Rek Pinjaman": "pembukaan-rek-pinjaman.html",
+                "Pembukaan Rek Tabungan": "pembukaan-rek-tabungan.html",
+                "Pencairan/Break Bilyet Deposito": "pencairan-bilyet-deposito.html",
+                "Penutupan Rekening Pinjaman": "penutupan-rek-pinjaman.html",
+                "Pinjaman Adendum": "adendum-pinjaman.html",
+                "Kolektabilitas Manual Pinjaman": "kolekt-manual-pinjaman.html",
+                "Suku Bunga Khusus Tabungan": "suku-bunga-khusus-tab.html",
+                "Blokir Bilyet Deposito": "blokir-bilyet-deposito.html",
+                "Blokir Rekening Tabungan": "blokir-rek-tab.html",
+                "Blokir Dana Tabungan": "blokir-rek-dana-tab.html",
+                "Pembatalan Blokir Rek.Tabungan": "batal-blok-rek-tab.html",
+                "Pembatalan Blokir Dana Tabungan": "batal-blok-dana-tab.html",
+                "Transaksi Setoran Tabungan Instansi": "trans-setor-tab-instans.html",
+                // "Transaksi Setoran Pinjaman Instansi": "trans-setor-pinj-instans.html", 
+                // "Transaksi Slisih Kas Teller": "trans-selisih-kas.html",
+                // "Hapus Buku Pinjaman": "hapus-buk-pinj.html",
+                // "Restrukturisasi Pinjaman": "rest-pinj.html",
+                // "Batal Restrukturisasi Pinjaman": "batal-rest-pinj.html",
+                // "Batal Adendum Pinjaman": "batal-adendum-pinj.html",
+                "Pemeliharaan Finansial": "pemeliharaan-finansial.html",
+                "Pembatalan Blokir Bilyet Deposito": "batal-blok-bilyet-depo.html"
+                
+            };
     
     const targetPage = menuMap[menu?.name];
     if (targetPage) {

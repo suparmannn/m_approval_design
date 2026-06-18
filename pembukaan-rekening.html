@@ -129,7 +129,7 @@
                         <label class="text-[11px] font-bold text-bpr-dark block mb-1.5">Filter Tanggal</label>
                         <input type="date" id="dateFilter" class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-bpr-primary">
                     </div>
-                    <div>
+                    <!-- <div>
                         <label class="text-[11px] font-bold text-bpr-dark block mb-1.5">Prioritas</label>
                         <select id="priorityFilter" class="w-full text-sm border border-slate-200 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-bpr-primary">
                             <option value="all">Semua</option>
@@ -138,7 +138,7 @@
                             <option value="medium">Medium</option>
                             <option value="low">Low</option>
                         </select>
-                    </div>
+                    </div> -->
                     <button id="resetFilterBtn" class="w-full bg-slate-800 text-white py-2.5 rounded-xl text-xs font-bold active:bg-slate-900 transition shadow-sm">
                         Reset Filter
                     </button>
@@ -315,88 +315,144 @@
             }
         ]
     },
-{ 
-    id:4,
-    noApproval: "TRX/2026/004",
-    kategori: "deposit",
-    judul: "Setor Tunai",
-    namaPengaju: "Rina Andriani",
-    posisiPengaju: "Marketing",
-    tanggalPengajuan: "2026-06-16",
-    waktuPengajuan: "13:20",
-    prioritas: "high",
-    status: "pending",
-    approvalBy: null,
-    tanggalApproval: null,
-    
-    
-    detailData: [
+{
+    "id": 4,
+    "noApproval": "TRX/2026/004",
+    "kategori": "deposit",
+    "judul": "Setor Tunai",
+    "namaPengaju": "Rina Andriani",
+    "posisiPengaju": "Marketing",
+    "tanggalPengajuan": "2026-06-16",
+    "waktuPengajuan": "13:20",
+    "prioritas": "",
+    "status": "pending",
+    "approvalBy": null,
+    "tanggalApproval": null,
+
+    "detailData": [
         {
-            title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" }
-                    
+            "title": "Informasi Transaksi",
+            "fields": [
+                { "label": "No.Slip", "value": "TRX/2026/001" },
+                { "label": "Pelaku Transaksi", "value": "Diri sendiri" },
+                { "label": "Jenis Transaksi", "value": "-" }
             ]
         },
         {
-            title: "Data Rekening",
-            fields: [
-                { label: "No.Rekening", value: "Rina Andriani" },
-                { label: "Nama Rekening", value: "Marketing" },
-                { label: "Total Nominal", value: "Rp.400.000" },
-                { label: "Narasi", value: "-" },
-                { label: "Pokok", value: "-" },
-                { label: "Bunga", value: "-" },
-                { label: "Denda", value: "-" },
-                { label: "Pinalti", value: "-" },
-                { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
+            "title": "Data Rekening",
+            "isTable": true,
+            "rows": [
+                {
+                    "no": "1",
+                    "noRekening": "370-1-0004171-9",
+                    "namaRekening": "Rina Andriani",
+                    "debetKredit": "Kredit",
+                    "totalNominal": "Rp.400.000",
+                    "narasi": "Setoran tunai via teller",
+                    "pokok": "Rp.400.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "Butuh approval untuk transaksi di atas limit"
+                },
+                {
+                    "no": "2",
+                    "noRekening": "370-1-0005678-9",
+                    "namaRekening": "CV MAKMUR JAYA",
+                    "debetKredit": "Kredit",
+                    "totalNominal": "Rp.250.000",
+                    "narasi": "Setoran tunai invoice #INV-002",
+                    "pokok": "Rp.250.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "-"
+                },
+                {
+                    "no": "3",
+                    "noRekening": "370-1-0001234-5",
+                    "namaRekening": "PT SEJAHTERA ABADI",
+                    "debetKredit": "Kredit",
+                    "totalNominal": "Rp.150.000",
+                    "narasi": "Setoran tunai pembayaran jasa",
+                    "pokok": "Rp.150.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "-"
+                }
             ]
         }
     ]
 },
-    { 
-    id: 5,
-    noApproval: "TRX/2026/007",
-    kategori: "transfer",
-    judul: "Pemindahbukuan",
-    namaPengaju: "Nia Kurniawati",
-    posisiPengaju: "Customer Service",
-    tanggalPengajuan: "2026-06-16",
-    waktuPengajuan: "09:15",
-    prioritas: "urgent",
-    status: "pending",
-    approvalBy: null,
-    tanggalApproval: null,
-    
-    
-    detailData: [
+    {
+    "id": 5,
+    "noApproval": "TRX/2026/007",
+    "kategori": "transfer",
+    "judul": "Pemindahbukuan",
+    "namaPengaju": "Nia Kurniawati",
+    "posisiPengaju": "Customer Service",
+    "tanggalPengajuan": "2026-06-16",
+    "waktuPengajuan": "09:15",
+    "prioritas": "",
+    "status": "pending",
+    "approvalBy": null,
+    "tanggalApproval": null,
+
+    "detailData": [
         {
-            title: "",
-                fields: [
-                    { label: "No.Slip", value: "TRX/2026/001" },
-                    { label: "Pelaku Transaksi", value: "Diri sendiri" },
-                    { label: "Jenis Transaksi", value: "-" },
-                    { label: "Tanggal Efektif", value: "2026-06-16 09:15" },
-                    
+            "title": "Informasi Transaksi",
+            "fields": [
+                { "label": "No.Slip", "value": "TRX/2026/001" },
+                { "label": "Pelaku Transaksi", "value": "Diri sendiri" },
+                { "label": "Jenis Transaksi", "value": "-" },
+                { "label": "Tanggal Efektif", "value": "2026-06-16 09:15" }
             ]
         },
         {
-            title: "Data Rekening",
-            fields: [
-                { label: "No.Rekening", value: "Rina Andriani" },
-                { label: "Nama Rekening", value: "Marketing" },
-                { label: "Debet/Kredit", value: "-" },
-                { label: "Total Nominal", value: "Rp.400.000" },
-                { label: "Narasi", value: "-" },
-                { label: "Pokok", value: "-" },
-                { label: "Bunga", value: "-" },
-                { label: "Denda", value: "-" },
-                { label: "Pinalti", value: "-" },
-                { label: "Alasan Membutuhkan Persetujuan", value: "Butuh" }
+            "title": "Data Rekening",
+            "isTable": true,
+            "rows": [
+                {
+                    "no": "1",
+                    "noRekening": "370-1-0004171-9",
+                    "namaRekening": "MOEGIYONO SRIANI",
+                    "debetKredit": "Debet",
+                    "totalNominal": "Rp.400.000",
+                    "narasi": "Pemindahbukuan biaya operasional",
+                    "pokok": "Rp.400.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "Butuh approval karena nominal di atas limit"
+                },
+                {
+                    "no": "2",
+                    "noRekening": "370-1-0001234-5",
+                    "namaRekening": "PT MAJU JAYA",
+                    "debetKredit": "Kredit",
+                    "totalNominal": "Rp.250.000",
+                    "narasi": "Pembayaran invoice #INV-001",
+                    "pokok": "Rp.250.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "-"
+                },
+                {
+                    "no": "3",
+                    "noRekening": "370-1-0005678-9",
+                    "namaRekening": "CV KARYA BERSAMA",
+                    "debetKredit": "Kredit",
+                    "totalNominal": "Rp.150.000",
+                    "narasi": "Pembayaran jasa konsultasi",
+                    "pokok": "Rp.150.000",
+                    "bunga": "Rp.0",
+                    "denda": "Rp.0",
+                    "pinalti": "Rp.0",
+                    "alasanPersetujuan": "-"
+                }
             ]
-
         }
     ]
 }
@@ -564,7 +620,7 @@ function getKategoriText(kategori) {
                         <i data-lucide="${kategoriIcon}" class="w-4 h-4 text-white"></i>
                         <span class="text-white font-bold text-sm">${judulText}</span>
                     </div>
-                    <span class="text-white text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/20">${getPriorityText(item.prioritas)}</span>
+                   
                 </div>
             </div>
             

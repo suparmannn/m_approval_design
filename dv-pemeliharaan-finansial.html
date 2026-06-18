@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-Approval - Detail Setor Tunai</title>
+    <title>M-Approval - Detail Transaksi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -36,21 +36,11 @@
         * { -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         .mobile-container { max-width: 428px; margin: 0 auto; background: #F8FAFC; min-height: 100vh; position: relative; }
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-animate { animation: slideUp 0.3s ease; }
         .modal-backdrop { animation: fadeIn 0.2s ease; }
         .btn-action { transition: all 0.15s ease; }
         .btn-action:active { transform: scale(0.95); }
-        
-        .detail-card {
-            background: white;
-            border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #F1F5F9;
-        }
-        .detail-card:last-child { margin-bottom: 0; }
         
         .card-title {
             font-size: 13px;
@@ -120,7 +110,7 @@
             border-top: 2px solid #E2E8F0;
             margin: 0 0 14px 0;
         }
-        
+
         .badge-dk {
             padding: 2px 8px;
             border-radius: 6px;
@@ -141,34 +131,32 @@
                 <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
             </button>
             <div class="flex-1">
-                <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Detail Setor Tunai</h1>
-                <p class="text-xs text-bpr-gray mt-0.5">Informasi lengkap transaksi</p>
+                <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Detail Transaksi</h1>
+                <p class="text-xs text-bpr-gray mt-0.5" id="statusLabel">Informasi lengkap transaksi</p>
             </div>
         </div>
     </div>
 
     <div class="p-4 pb-28" id="detailContent"></div>
 
-    <div id="actionButtons" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 shadow-lg" style="max-width: 428px; margin: 0 auto;">
-        <div class="flex gap-2">
-            <button id="rejectBtn" class="flex-1 bg-red-500 text-white py-2 rounded-xl text-sm font-semibold btn-action flex items-center justify-center gap-1">
-                <i data-lucide="x-circle" class="w-4 h-4"></i>Tolak
-            </button>
-            <button id="approveBtn" class="flex-1 bg-green-500 text-white py-2 rounded-xl text-sm font-semibold btn-action flex items-center justify-center gap-1">
-                <i data-lucide="check-circle" class="w-4 h-4"></i>Setujui
-            </button>
-            <button onclick="history.back()" class="px-4 bg-gray-200 text-bpr-dark py-2 rounded-xl text-sm font-semibold btn-action">Batal</button>
-        </div>
+    <div id="actionButtons" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 shadow-lg flex gap-2" style="max-width: 428px; margin: 0 auto;">
+        <button id="rejectBtn" class="flex-1 bg-red-500 text-white py-2.5 rounded-xl text-sm font-semibold btn-action hidden items-center justify-center gap-1">
+            <i data-lucide="x-circle" class="w-4 h-4"></i>Tolak
+        </button>
+        <button id="approveBtn" class="flex-1 bg-green-500 text-white py-2.5 rounded-xl text-sm font-semibold btn-action hidden items-center justify-center gap-1">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>Setujui
+        </button>
+        <button onclick="history.back()" class="flex-1 bg-gray-200 text-bpr-dark py-2.5 rounded-xl text-sm font-semibold btn-action text-center">Tutup</button>
     </div>
 </div>
 
 <script>
     lucide.createIcons();
 
+    // ========== GET PARAMS & DATA FROM LOCALSTORAGE ==========
     const urlParams = new URLSearchParams(window.location.search);
-    const itemId = parseInt(urlParams.get('id')) || 1;
-
-    // ========== AMBIL DATA DARI LOCALSTORAGE ==========
+    const itemId = parseInt(urlParams.get('id'));
+    
     let item = null;
     const storedData = localStorage.getItem('approvalData');
     
@@ -177,20 +165,20 @@
         item = allData.find(d => d.id === itemId);
     }
 
-    // ========== RENDER DETAIL ==========
-    function renderDetail() {
-        if (!item) {
-            document.getElementById('detailContent').innerHTML = '<p class="text-center text-bpr-gray py-8 text-xs font-medium">Data tidak ditemukan.</p>';
-            return;
-        }
+    if (!item) {
+        alert("Data transaksi tidak ditemukan!");
+        window.location.href = 'pembukaan-rekening.html';
+    }
 
+    // ========== RENDER DETAIL VIEW ==========
+    function renderDetail() {
         const statusText = item.status === 'pending' ? 'Menunggu Persetujuan' : item.status === 'approved' ? 'Disetujui' : 'Ditolak';
         const statusClass = item.status === 'pending' ? 'status-pending' : item.status === 'approved' ? 'status-approved' : 'status-rejected';
         const dotClass = item.status === 'pending' ? 'dot-pending' : item.status === 'approved' ? 'dot-approved' : 'dot-rejected';
         
         let html = '';
 
-        // ===== HEADER CARD =====
+        // ===== CONTAINER CARD UTAMA =====
         html += `
             <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-4">
                 <div class="px-5 py-4 flex items-center gap-3">
@@ -200,6 +188,7 @@
                         <p class="text-xs text-bpr-gray font-medium">${item.tanggalPengajuan || ''} ${item.waktuPengajuan ? '• ' + item.waktuPengajuan : ''}</p>
                     </div>
                 </div>
+                
                 <hr class="section-divider">
         `;
 
@@ -248,7 +237,7 @@
                             keysToSkip.push(firstKey);
                         }
 
-                        // Akumulasi nominal jurnal secara fleksibel jika ada debetKredit
+                        // Akumulasi dinamis untuk jurnal debet / kredit
                         if (row.debetKredit && row.totalNominal) {
                             hasJournal = true;
                             const cleanNominal = parseFloat(row.totalNominal.replace(/[^\d]/g, '')) || 0;
@@ -311,9 +300,9 @@
                         `;
                     });
 
-                    // --- INJEKSI FOOTER RINGKASAN JURNAL ---
+                    // --- FOOTER RINGKASAN JURNAL ---
                     if (hasJournal) {
-                        // Kunci logika request baru: Hanya tampilkan status balance jika ada Debet DAN Kredit
+                        // Hanya tampilkan status balance badge jika ada mutasi Debet DAN Kredit sekaligus
                         const showBalanceStatus = countDebet > 0 && countKredit > 0;
                         let balanceBadge = '';
 
@@ -367,7 +356,7 @@
             });
         }
 
-        // ===== STATUS & INFO APPROVAL =====
+        // ===== SECTION BADGE STATUS =====
         html += `
                 <hr class="section-divider">
                 <div class="px-5 py-3">
@@ -377,11 +366,12 @@
                     </div>
         `;
 
+        // Tampilkan log approval jika status sudah diproses
         if (item.status !== 'pending') {
             html += `
                     <div class="flex justify-between items-center py-2 border-t border-gray-50 text-xs">
                         <span class="font-bold text-bpr-dark">APPROVAL OLEH</span>
-                        <span class="text-bpr-gray font-medium">${item.approvalBy || '-'}</span>
+                        <span class="text-bpr-gray font-medium">${item.approvalBy || 'John Doe (Direksi)'}</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-t border-gray-50 text-xs">
                         <span class="font-bold text-bpr-dark">TANGGAL APPROVAL</span>
@@ -390,58 +380,45 @@
             `;
         }
 
-        // ===== FIELD KOMENTAR =====
-        if ('komentar' in item) {
+        // ===== FIX KONDISI CATATAN AGAR BENAR-BENAR HILANG JIKA TIDAK ADA DI JSON =====
+        // Kita cek: key-nya harus ada, tipenya bukan undefined, dan isinya bukan string kosong/null/strip
+        // Ambil baris di bawah ini untuk lu lepas pasang (tinggal hapus tanda // di awal baris):
+        
+        if (item.hasOwnProperty('komentar') && item.komentar !== undefined && item.komentar !== null && item.komentar !== "" && item.komentar !== "-") {
             html += `
-                    <div class="flex flex-col py-2 border-t border-gray-50 gap-2 mt-1">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-bpr-dark">KOMENTAR</span>
-                            <span class="text-xs text-bpr-gray font-medium italic">${item.komentar ? 'Tersimpan' : 'Belum ada komentar'}</span>
-                        </div>
-                        
-                        <textarea id="commentInput" rows="2" 
-                            class="w-full text-xs p-3 border border-gray-200 rounded-xl bg-slate-50 text-bpr-dark focus:outline-none focus:ring-1 focus:ring-bpr-primary focus:bg-white resize-none" 
-                            placeholder="Ketik komentar di sini...">${item.komentar || ''}</textarea>
-                        
-                        <div class="flex justify-end">
-                            <button id="saveCommentBtn" onclick="simpanKomentar()" 
-                                class="bg-bpr-primary text-white text-xs px-4 py-1.5 rounded-lg font-semibold active:scale-95 transition shadow-sm">
-                                Simpan Komentar
-                            </button>
-                        </div>
+                    <div class="flex flex-col py-2 border-t border-gray-50 gap-1 mt-1 text-xs">
+                        <span class="font-bold text-bpr-dark tracking-tight">CATATAN</span>
+                        <p class="text-bpr-gray font-medium break-words leading-relaxed">
+                            ${item.komentar}
+                        </p>
                     </div>
             `;
         }
 
+
+        // PENUTUP CARD UTAMA YANG BENAR
         html += `
                 </div>
             </div>
         `;
 
         document.getElementById('detailContent').innerHTML = html;
+        
+        // Atur visibilitas button aksi bawah
+        if (item.status === 'pending') {
+            document.getElementById('rejectBtn').classList.remove('hidden');
+            document.getElementById('rejectBtn').classList.add('flex');
+            document.getElementById('approveBtn').classList.remove('hidden');
+            document.getElementById('approveBtn').classList.add('flex');
+        } else {
+            document.getElementById('rejectBtn').classList.add('hidden');
+            document.getElementById('approveBtn').classList.add('hidden');
+        }
+        
         lucide.createIcons();
     }
 
-    // ========== FUNGSI SIMPAN KOMENTAR DINAMIS ==========
-    function simpanKomentar() {
-        const commentValue = document.getElementById('commentInput').value.trim();
-        item.komentar = commentValue;
-
-        const storedData = localStorage.getItem('approvalData');
-        if (storedData) {
-            const allData = JSON.parse(storedData);
-            const index = allData.findIndex(d => d.id === item.id);
-            if (index !== -1) {
-                allData[index].komentar = commentValue;
-                localStorage.setItem('approvalData', JSON.stringify(allData));
-            }
-        }
-        
-        showToast('✅ Komentar berhasil disimpan!');
-        renderDetail();
-    }
-
-    // ========== FUNGSI APPROVE / REJECT ==========
+    // ========== ACTION CONTROLLER (APPROVE / REJECT) ==========
     function showConfirmPopup(title, message, onConfirm, type = 'approve') {
         const popup = document.createElement('div');
         popup.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6 modal-backdrop';
@@ -476,46 +453,37 @@
         }, 1200);
     }
 
-    function approveTransaction() {
-        showConfirmPopup('Setujui Transaksi', `Setujui transaksi ini?`, () => {
+    function handleAction(statusTarget, successMsg, popupTitle, popupType) {
+        showConfirmPopup(popupTitle, `${popupTitle} ini?`, () => {
             const allData = JSON.parse(localStorage.getItem('approvalData')) || [];
             const index = allData.findIndex(d => d.id === item.id);
-            const currentComment = document.getElementById('commentInput') ? document.getElementById('commentInput').value : (item.komentar || "Disetujui");
 
             if (index !== -1) {
-                allData[index].status = 'approved';
-                allData[index].approvalBy = "John Doe (Direksi)";
+                allData[index].status = statusTarget;
+                allData[index].approvalBy = "Alpa Gustiana (Direksi)";
                 allData[index].tanggalApproval = new Date().toLocaleString('id-ID');
-                if ('komentar' in allData[index]) allData[index].komentar = currentComment;
+                
+                if ('komentar' in allData[index]) {
+                    allData[index].komentar = statusTarget === 'approved' ? 'Disetujui' : 'Ditolak';
+                }
+                
                 localStorage.setItem('approvalData', JSON.stringify(allData));
             }
             
-            showToast('✅ Transaksi berhasil disetujui!');
-            setTimeout(() => { window.location.href = 'pembukaan-rekening.html'; }, 1200);
-        }, 'approve');
+            showToast(successMsg);
+            setTimeout(() => {
+                window.location.href = 'pembukaan-rekening.html';
+            }, 1200);
+        }, popupType);
     }
 
-    function rejectTransaction() {
-        showConfirmPopup('Tolak Transaksi', `Tolak transaksi ini?`, () => {
-            const allData = JSON.parse(localStorage.getItem('approvalData')) || [];
-            const index = allData.findIndex(d => d.id === item.id);
-            const currentComment = document.getElementById('commentInput') ? document.getElementById('commentInput').value : (item.komentar || "Ditolak");
-
-            if (index !== -1) {
-                allData[index].status = 'rejected';
-                allData[index].approvalBy = "John Doe (Direksi)";
-                allData[index].tanggalApproval = new Date().toLocaleString('id-ID');
-                if ('komentar' in allData[index]) allData[index].komentar = currentComment;
-                localStorage.setItem('approvalData', JSON.stringify(allData));
-            }
-            
-            showToast('❌ Transaksi ditolak!');
-            setTimeout(() => { window.location.href = 'pembukaan-rekening.html'; }, 1200);
-        }, 'reject');
-    }
-
-    document.getElementById('approveBtn').addEventListener('click', approveTransaction);
-    document.getElementById('rejectBtn').addEventListener('click', rejectTransaction);
+    document.getElementById('approveBtn').addEventListener('click', () => {
+        handleAction('approved', '✅ Transaksi berhasil disetujui!', 'Setujui Transaksi', 'approve');
+    });
+    
+    document.getElementById('rejectBtn').addEventListener('click', () => {
+        handleAction('rejected', '❌ Transaksi ditolak!', 'Tolak Transaksi', 'reject');
+    });
 
     renderDetail();
 </script>

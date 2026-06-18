@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M-Approval - Detail Setor Tunai</title>
+    <title>M-Approval - Detail Administrasi Pemakai ARB+</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -141,7 +141,7 @@
                 <i data-lucide="arrow-left" class="w-5 h-5 text-bpr-dark"></i>
             </button>
             <div class="flex-1">
-                <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Detail Setor Tunai</h1>
+                <h1 class="text-xl font-bold text-bpr-dark tracking-tight">Detail Administrasi Pemakai ARB+</h1>
                 <p class="text-xs text-bpr-gray mt-0.5">Informasi lengkap transaksi</p>
             </div>
         </div>
@@ -491,7 +491,7 @@
             }
             
             showToast('✅ Transaksi berhasil disetujui!');
-            setTimeout(() => { window.location.href = 'pembukaan-rekening.html'; }, 1200);
+            setTimeout(() => { window.location.href = 'pengguna-arb.html'; }, 1200);
         }, 'approve');
     }
 
@@ -510,7 +510,7 @@
             }
             
             showToast('❌ Transaksi ditolak!');
-            setTimeout(() => { window.location.href = 'pembukaan-rekening.html'; }, 1200);
+            setTimeout(() => { window.location.href = 'pengguna-arb.html'; }, 1200);
         }, 'reject');
     }
 
